@@ -59,9 +59,8 @@ body {
 
 /* Projects Section */
 .projects {
-    position: relative;
-    padding-top: 64px;
-    margin-bottom: 64px;
+    padding-top: 40px;
+    margin-top: 0;
 }
 
 .project-grid {
