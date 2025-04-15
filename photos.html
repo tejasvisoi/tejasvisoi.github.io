@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photos - Tejasvi Soi</title>
+    <title>Photos | Tejasvi Soi</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="photos.css">
     <style>
         @font-face {
             font-family: 'Instrument Serif';
@@ -16,69 +17,66 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="nav-brand">Tejasvi Soi</div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="photos.html">Photos</a></li>
-                    <li><a href="cafeathome.html">Cafe@Home</a></li>
-                    <li><a href="work.html">Work</a></li>
-                </ul>
-            </div>
+        <div class="container nav-content">
+            <a href="/" class="nav-brand">Tejas Visoi</a>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/photos" class="active">Photos</a></li>
+                <li><a href="/cafeathome">Cafe@Home</a></li>
+                <li><a href="/work">Work</a></li>
+            </ul>
         </div>
     </nav>
 
     <main>
-        <section class="hero photo-hero">
+        <section class="photos-hero">
             <div class="container">
-                <h1>Photography</h1>
-                <p class="hero-text">Capturing moments and telling stories through the lens.</p>
+                <h1 class="fade-in">Photography</h1>
+                <p class="fade-in-delay">Capturing moments that tell stories</p>
             </div>
         </section>
 
-        <section class="photo-content">
-            <div class="container">
-                <div class="photo-categories">
-                    <div class="category">
-                        <h2>01</h2>
-                        <h3>Street Photography</h3>
-                        <div class="photo-grid">
-                            <div class="photo-item">
-                                <img src="https://images.unsplash.com/photo-1517701550928-30a09b2a1c4d?ixlib=rb-4.0.3" alt="Street Scene 1">
+        <section class="carousel-section">
+            <div class="carousel-container">
+                <div class="carousel">
+                    <div class="carousel-track">
+                        <!-- Add your images here -->
+                        <div class="carousel-slide">
+                            <img src="path/to/image1.jpg" alt="Photo 1">
+                            <div class="slide-content">
+                                <span class="slide-number">01</span>
+                                <h3>Nature's Beauty</h3>
+                                <p>Exploring the untamed wilderness</p>
                             </div>
-                            <div class="photo-item">
-                                <img src="https://images.unsplash.com/photo-1517701550928-30a09b2a1c4d?ixlib=rb-4.0.3" alt="Street Scene 2">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="path/to/image2.jpg" alt="Photo 2">
+                            <div class="slide-content">
+                                <span class="slide-number">02</span>
+                                <h3>Urban Landscapes</h3>
+                                <p>City life through my lens</p>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="path/to/image3.jpg" alt="Photo 3">
+                            <div class="slide-content">
+                                <span class="slide-number">03</span>
+                                <h3>Street Photography</h3>
+                                <p>Candid moments in everyday life</p>
                             </div>
                         </div>
                     </div>
-
-                    <div class="category">
-                        <h2>02</h2>
-                        <h3>Coffee & Culture</h3>
-                        <div class="photo-grid">
-                            <div class="photo-item">
-                                <img src="https://images.unsplash.com/photo-1517701550928-30a09b2a1c4d?ixlib=rb-4.0.3" alt="Coffee Scene 1">
-                            </div>
-                            <div class="photo-item">
-                                <img src="https://images.unsplash.com/photo-1517701550928-30a09b2a1c4d?ixlib=rb-4.0.3" alt="Coffee Scene 2">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="category">
-                        <h2>03</h2>
-                        <h3>Urban Landscapes</h3>
-                        <div class="photo-grid">
-                            <div class="photo-item">
-                                <img src="https://images.unsplash.com/photo-1517701550928-30a09b2a1c4d?ixlib=rb-4.0.3" alt="Urban Scene 1">
-                            </div>
-                            <div class="photo-item">
-                                <img src="https://images.unsplash.com/photo-1517701550928-30a09b2a1c4d?ixlib=rb-4.0.3" alt="Urban Scene 2">
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-prev">←</button>
+                    <div class="carousel-dots"></div>
+                    <button class="carousel-next">→</button>
                 </div>
             </div>
         </section>
@@ -101,6 +99,36 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="photos.js"></script>
+    <script>
+        // Hamburger menu functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Intersection Observer for fade-in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in, .fade-in-delay').forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html> 
