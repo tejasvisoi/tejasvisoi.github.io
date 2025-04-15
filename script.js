@@ -14,17 +14,17 @@ const experiments = [
     },
     {
         title: "Home Cafe",
-        description: "Experimenting with coffee brewing techniques and recipes.",
-        image: "images/experiments/cafe.jpg",
-        link: "#"
+        description: "Crafting the perfect cup of coffee with latte art and brewing techniques.",
+        image: "images/assets/coffee-art.jpg",
+        link: "#cafeathome"
     }
 ];
 
 // Sample photos data
 const photos = [
     {
-        image: "images/photos/photo1.jpg",
-        caption: "Beautiful Sunset"
+        image: "images/assets/coffee-art.jpg",
+        caption: "Perfect Latte Art"
     },
     {
         image: "images/photos/photo2.jpg",
