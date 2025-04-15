@@ -118,10 +118,28 @@ body {
     transform: translateY(-5px);
 }
 
-.experiment-card img {
+/* Experiment card image */
+.experiment-image {
+    position: relative;
     width: 100%;
-    height: auto;
+    padding-top: 75%; /* 4:3 aspect ratio */
     margin-bottom: 1.5rem;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.experiment-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.experiment-card:hover .experiment-image img {
+    transform: scale(1.05);
 }
 
 .experiment-card h3 {
@@ -157,14 +175,39 @@ body {
     gap: 2rem;
 }
 
-.photo-gallery img {
+.photo-card {
+    position: relative;
     width: 100%;
-    height: auto;
+    margin-bottom: 2rem;
+}
+
+.photo-image {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* 4:3 aspect ratio */
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.photo-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-.photo-gallery img:hover {
-    transform: scale(1.02);
+.photo-card:hover .photo-image img {
+    transform: scale(1.05);
+}
+
+.photo-caption {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--secondary-color);
+    text-align: center;
 }
 
 /* Footer */
