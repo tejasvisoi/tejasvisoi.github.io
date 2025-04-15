@@ -9,9 +9,7 @@
     --primary-color: #000000;
     --secondary-color: #666666;
     --background-color: #ffffff;
-    --accent-color: #007bff;
-    --font-primary: 'Helvetica Neue', Arial, sans-serif;
-    --font-secondary: 'Georgia', serif;
+    --font-primary: 'Instrument Serif', serif;
 }
 
 body {
@@ -45,7 +43,7 @@ body {
 
 .nav-brand {
     font-size: 1.8rem;
-    font-weight: 300;
+    font-weight: normal;
     letter-spacing: 1px;
     color: var(--primary-color);
 }
@@ -60,7 +58,7 @@ body {
     text-decoration: none;
     color: var(--primary-color);
     font-size: 1.1rem;
-    font-weight: 300;
+    font-weight: normal;
     letter-spacing: 0.5px;
     transition: color 0.3s ease;
 }
@@ -69,88 +67,53 @@ body {
     color: var(--secondary-color);
 }
 
-/* Sections */
-.section {
-    padding: 150px 0;
+/* Hero section */
+.hero {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    padding: 150px 0;
 }
 
-.section h1 {
+.hero h1 {
     font-size: 4rem;
-    font-weight: 300;
+    font-weight: normal;
     line-height: 1.2;
     margin-bottom: 2rem;
     letter-spacing: -1px;
 }
 
-.section h2 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    margin-bottom: 3rem;
-    letter-spacing: -0.5px;
-}
-
-/* Home section */
-.about-me {
-    max-width: 800px;
-    margin: 0 auto 5rem;
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: var(--secondary-color);
-}
-
-.experiments-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 3rem;
-    margin-top: 4rem;
-}
-
-.experiment-card {
-    background: var(--background-color);
-    padding: 2rem;
-    transition: transform 0.3s ease;
-}
-
-.experiment-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Experiment card image */
-.experiment-image {
-    position: relative;
-    width: 100%;
-    padding-top: 75%; /* 4:3 aspect ratio */
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-    border-radius: 8px;
-}
-
-.experiment-image img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.experiment-card:hover .experiment-image img {
-    transform: scale(1.05);
-}
-
-.experiment-card h3 {
+.hero-text {
     font-size: 1.5rem;
-    font-weight: 300;
+    color: var(--secondary-color);
+    max-width: 600px;
+}
+
+/* Projects section */
+.projects {
+    padding: 100px 0;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 4rem;
+}
+
+.project-card {
+    text-align: center;
+}
+
+.project-card h2 {
+    font-size: 2rem;
+    font-weight: normal;
     margin-bottom: 1rem;
 }
 
-.experiment-card p {
+.project-card p {
+    font-size: 1.2rem;
     color: var(--secondary-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .btn {
@@ -168,46 +131,60 @@ body {
     background: var(--secondary-color);
 }
 
-/* Photo gallery */
-.photo-gallery {
+/* Cafe section */
+.cafe-hero {
+    background: #f8f8f8;
+}
+
+.cafe-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    gap: 8rem;
+    margin-top: 4rem;
 }
 
-.photo-card {
-    position: relative;
-    width: 100%;
-    margin-bottom: 2rem;
+.cafe-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
 }
 
-.photo-image {
+.cafe-item:nth-child(even) .cafe-text {
+    order: -1;
+}
+
+.cafe-image {
     position: relative;
     width: 100%;
-    padding-top: 75%; /* 4:3 aspect ratio */
+    padding-top: 75%;
     overflow: hidden;
-    border-radius: 8px;
 }
 
-.photo-image img {
+.cafe-image img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
 }
 
-.photo-card:hover .photo-image img {
-    transform: scale(1.05);
+.cafe-text h2 {
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
 }
 
-.photo-caption {
-    margin-top: 1rem;
-    font-size: 1rem;
+.cafe-text h3 {
+    font-size: 2rem;
+    font-weight: normal;
+    margin-bottom: 1.5rem;
+}
+
+.cafe-text p {
+    font-size: 1.1rem;
     color: var(--secondary-color);
-    text-align: center;
+    line-height: 1.8;
 }
 
 /* Footer */
@@ -219,7 +196,7 @@ body {
 
 .contact-info h3 {
     font-size: 2rem;
-    font-weight: 300;
+    font-weight: normal;
     margin-bottom: 2rem;
 }
 
@@ -253,16 +230,16 @@ body {
         padding: 0 20px;
     }
     
-    .section {
+    .hero {
         padding: 100px 0;
     }
     
-    .section h1 {
+    .hero h1 {
         font-size: 3rem;
     }
     
-    .section h2 {
-        font-size: 2rem;
+    .hero-text {
+        font-size: 1.2rem;
     }
     
     .nav-links {
@@ -270,7 +247,17 @@ body {
         gap: 1.5rem;
     }
     
-    .experiments-grid {
+    .project-grid {
         grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .cafe-item {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .cafe-item:nth-child(even) .cafe-text {
+        order: 1;
     }
 } 
