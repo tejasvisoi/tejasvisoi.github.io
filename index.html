@@ -15,26 +15,12 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container nav-content">
-            <a href="/" class="nav-brand">Tejas Visoi</a>
-            <button class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-links">
-                <li><a href="/" class="active">Home</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <main>
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="fade-in">Tejasvi Soi</h1>
-                    <p class="hero-text fade-in-delay">Designer & Developer</p>
+                    <h1 class="fade-in">Experiments</h1>
+                    <p class="hero-text fade-in-delay">A collection of creative explorations and interactive experiences. Each project is a unique journey into design, technology, and storytelling.</p>
                 </div>
             </div>
         </section>
@@ -42,42 +28,12 @@
         <section class="projects">
             <div class="container">
                 <div class="project-grid">
-                    <a href="#" class="project-card fade-in">
-                        <div class="project-content">
-                            <h3>Project Name</h3>
-                            <p>Project description goes here</p>
-                        </div>
-                    </a>
-                    <a href="#" class="project-card fade-in-delay">
-                        <div class="project-content">
-                            <h3>Project Name</h3>
-                            <p>Project description goes here</p>
-                        </div>
-                    </a>
-                    <a href="#" class="project-card fade-in">
-                        <div class="project-content">
-                            <h3>Project Name</h3>
-                            <p>Project description goes here</p>
-                        </div>
-                    </a>
-                    <a href="#" class="project-card fade-in-delay">
-                        <div class="project-content">
-                            <h3>Project Name</h3>
-                            <p>Project description goes here</p>
-                        </div>
-                    </a>
-                    <a href="#" class="project-card fade-in">
-                        <div class="project-content">
-                            <h3>Project Name</h3>
-                            <p>Project description goes here</p>
-                        </div>
-                    </a>
-                    <a href="#" class="project-card fade-in-delay">
-                        <div class="project-content">
-                            <h3>Project Name</h3>
-                            <p>Project description goes here</p>
-                        </div>
-                    </a>
+                    <a href="#" class="project-card fade-in" style="background-image: url('path/to/image1.jpg')"></a>
+                    <a href="#" class="project-card fade-in-delay" style="background-image: url('path/to/image2.jpg')"></a>
+                    <a href="#" class="project-card fade-in" style="background-image: url('path/to/image3.jpg')"></a>
+                    <a href="#" class="project-card fade-in-delay" style="background-image: url('path/to/image4.jpg')"></a>
+                    <a href="#" class="project-card fade-in" style="background-image: url('path/to/image5.jpg')"></a>
+                    <a href="#" class="project-card fade-in-delay" style="background-image: url('path/to/image6.jpg')"></a>
                 </div>
             </div>
         </section>
@@ -98,24 +54,8 @@
     </footer>
 
     <script>
-        // Hamburger menu functionality
+        // Intersection Observer for fade-in animations
         document.addEventListener('DOMContentLoaded', () => {
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                navLinks.classList.toggle('active');
-            });
-
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburger.classList.remove('active');
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // Intersection Observer for fade-in animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -128,5 +68,4 @@
         });
     </script>
 </body>
-</html> 
 </html> 

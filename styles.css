@@ -75,12 +75,13 @@ body {
 .hero {
     min-height: 100vh;
     display: flex;
-    align-items: center;
-    padding: 8rem 0;
+    align-items: flex-start;
+    padding-top: 32px;
 }
 
 .hero-content {
     text-align: center;
+    width: 100%;
 }
 
 .hero h1 {
@@ -100,7 +101,7 @@ body {
 
 /* Projects Section */
 .projects {
-    padding: 4rem 0;
+    padding-top: 64px;
 }
 
 .project-grid {
@@ -110,31 +111,20 @@ body {
 }
 
 .project-card {
-    background-color: white;
-    padding: 2rem;
+    aspect-ratio: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     border-radius: 12px;
     text-decoration: none;
-    color: var(--text-color);
     transition: all 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .project-card:hover {
-    transform: translateY(-4px);
+    transform: scale(1.02);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     border-color: transparent;
-}
-
-.project-content h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    font-family: var(--font-primary);
-    letter-spacing: -0.02em;
-}
-
-.project-content p {
-    color: var(--secondary-color);
-    font-size: 1.1rem;
 }
 
 /* Footer */
