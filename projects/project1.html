@@ -50,15 +50,29 @@
         .game-container {
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             gap: 2rem;
             padding: 2rem;
             min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-wrapper {
+            width: 60vw;
+            aspect-ratio: 1;
+            position: relative;
         }
 
         #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border: 2px solid #333;
             background: #f0f0f0;
+            image-rendering: pixelated;
         }
 
         .controls {
@@ -97,6 +111,17 @@
             margin-bottom: 0.5rem;
             color: #666;
         }
+
+        @media (max-width: 768px) {
+            .game-container {
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .game-wrapper {
+                width: 90vw;
+            }
+        }
     </style>
 </head>
 <body>
@@ -117,7 +142,9 @@
         </section>
 
         <div class="game-container">
-            <canvas id="gameCanvas" width="120" height="120"></canvas>
+            <div class="game-wrapper">
+                <canvas id="gameCanvas" width="120" height="120"></canvas>
+            </div>
             <div class="controls">
                 <button class="control-btn" id="leftBtn">← Move Left</button>
                 <button class="control-btn" id="rightBtn">Move Right →</button>
