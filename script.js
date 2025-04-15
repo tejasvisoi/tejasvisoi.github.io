@@ -1,18 +1,23 @@
-// Sample experiments data - you can replace this with your actual experiments
+// Sample experiments data - replace with your actual experiments
 const experiments = [
     {
-        title: "Experiment 1",
-        description: "A brief description of your first experiment",
-        image: "path/to/experiment1.jpg",
+        title: "Web Development",
+        description: "Exploring modern web technologies and creating interactive experiences.",
+        image: "experiments/web-dev.jpg",
         link: "#"
     },
     {
-        title: "Experiment 2",
-        description: "A brief description of your second experiment",
-        image: "path/to/experiment2.jpg",
+        title: "Photography",
+        description: "Capturing moments and telling stories through the lens.",
+        image: "experiments/photography.jpg",
+        link: "#"
+    },
+    {
+        title: "Home Cafe",
+        description: "Experimenting with coffee brewing techniques and recipes.",
+        image: "experiments/cafe.jpg",
         link: "#"
     }
-    // Add more experiments as needed
 ];
 
 // Function to create experiment cards
@@ -22,7 +27,7 @@ function createExperimentCard(experiment) {
             <img src="${experiment.image}" alt="${experiment.title}">
             <h3>${experiment.title}</h3>
             <p>${experiment.description}</p>
-            <a href="${experiment.link}" class="btn">Learn More</a>
+            <a href="${experiment.link}" class="btn">View Project</a>
         </div>
     `;
 }
@@ -42,19 +47,46 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
             target.scrollIntoView({
-                behavior: 'smooth'
+                behavior: 'smooth',
+                block: 'start'
             });
         }
     });
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
 });
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', () => {
     loadExperiments();
     
-    // Add your introduction paragraph
-    const aboutMe = document.querySelector('.about-me p');
-    if (aboutMe) {
-        aboutMe.textContent = "Hi! I'm Tejasvi Soi, a passionate individual who loves exploring new ideas and conducting experiments. This website showcases my journey, projects, and the various experiments I undertake in my free time.";
-    }
+    // Add fade-in animation to sections
+    const sections = document.querySelectorAll('.section');
+    const observerOptions = {
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
 }); 
