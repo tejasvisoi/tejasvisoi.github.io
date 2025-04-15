@@ -26,36 +26,42 @@ class Carousel {
             }
         });
 
+        // Keyboard navigation
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') this.prevSlide();
+            if (e.key === 'ArrowRight') this.nextSlide();
+        });
+
         // Touch events
         let touchStartX = 0;
         let touchEndX = 0;
         
         this.track.addEventListener('touchstart', e => {
             touchStartX = e.touches[0].clientX;
-        });
+            this.pauseAutoPlay();
+        }, { passive: true });
         
         this.track.addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].clientX;
             this.handleSwipe(touchStartX, touchEndX);
+            this.resumeAutoPlay();
         });
 
         // Auto play
-        this.autoPlayInterval = setInterval(() => this.nextSlide(), 5000);
+        this.startAutoPlay();
         
-        // Pause auto play on hover
-        this.carousel.addEventListener('mouseenter', () => {
-            clearInterval(this.autoPlayInterval);
-        });
-        
-        this.carousel.addEventListener('mouseleave', () => {
-            this.autoPlayInterval = setInterval(() => this.nextSlide(), 5000);
-        });
+        // Pause auto play on hover or focus
+        this.carousel.addEventListener('mouseenter', () => this.pauseAutoPlay());
+        this.carousel.addEventListener('mouseleave', () => this.resumeAutoPlay());
+        this.carousel.addEventListener('focusin', () => this.pauseAutoPlay());
+        this.carousel.addEventListener('focusout', () => this.resumeAutoPlay());
     }
 
     createDots() {
         this.dots = this.slides.map((_, i) => {
             const dot = document.createElement('button');
             dot.classList.add('carousel-dot');
+            dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
             this.dotsNav.appendChild(dot);
             return dot;
         });
@@ -64,25 +70,50 @@ class Carousel {
     updateDots() {
         this.dots.forEach((dot, i) => {
             dot.classList.toggle('active', i === this.currentSlide);
+            dot.setAttribute('aria-current', i === this.currentSlide ? 'true' : 'false');
         });
     }
 
     updateSlides() {
         this.slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === this.currentSlide);
+            // Remove all state classes
+            slide.classList.remove('active', 'prev', 'next');
+            
+            // Calculate the position relative to current slide
+            if (i === this.currentSlide) {
+                slide.classList.add('active');
+            } else if (i === this.getPrevIndex()) {
+                slide.classList.add('prev');
+            } else if (i === this.getNextIndex()) {
+                slide.classList.add('next');
+            }
+
+            // Update transform for smooth transition
             const offset = i - this.currentSlide;
-            const translateX = offset * 100;
-            slide.style.transform = `translateX(${translateX}%)`;
+            slide.style.transform = `translateX(${offset * 100}%)`;
+        });
+
+        // Update ARIA labels
+        this.slides.forEach((slide, i) => {
+            slide.setAttribute('aria-hidden', i !== this.currentSlide);
         });
     }
 
+    getPrevIndex() {
+        return (this.currentSlide - 1 + this.slidesLength) % this.slidesLength;
+    }
+
+    getNextIndex() {
+        return (this.currentSlide + 1) % this.slidesLength;
+    }
+
     nextSlide() {
-        this.currentSlide = (this.currentSlide + 1) % this.slidesLength;
+        this.currentSlide = this.getNextIndex();
         this.updateCarousel();
     }
 
     prevSlide() {
-        this.currentSlide = (this.currentSlide - 1 + this.slidesLength) % this.slidesLength;
+        this.currentSlide = this.getPrevIndex();
         this.updateCarousel();
     }
 
@@ -107,6 +138,18 @@ class Carousel {
                 this.prevSlide();
             }
         }
+    }
+
+    startAutoPlay() {
+        this.autoPlayInterval = setInterval(() => this.nextSlide(), 2000);
+    }
+
+    pauseAutoPlay() {
+        clearInterval(this.autoPlayInterval);
+    }
+
+    resumeAutoPlay() {
+        this.startAutoPlay();
     }
 }
 
