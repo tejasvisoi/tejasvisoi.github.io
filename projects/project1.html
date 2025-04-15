@@ -4,53 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colorful Tetris - Tejasvi Soi</title>
-    <link rel="stylesheet" href="../styles.css">
     <style>
-        @font-face {
-            font-family: 'Instrument Serif';
-            src: url('../fonts/Instrument_Serif/InstrumentSerif-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 2rem;
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: var(--primary-color);
+        body {
+            background: #f8f9fa;
+            color: #212529;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .game-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
             gap: 2rem;
             padding: 2rem;
-            min-height: 100vh;
-            max-width: 1200px;
-            margin: 0 auto;
+            height: 90vh;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
 
         .game-wrapper {
-            width: 60vw;
+            height: 100%;
             aspect-ratio: 1;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         #gameCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            border: 2px solid #333;
-            background: #f0f0f0;
+            border-radius: 12px;
+            background: #1a1a1a;
             image-rendering: pixelated;
+        }
+
+        .game-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .score-display {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            text-shadow: 
+                2px 2px 0 #4CAF50,
+                4px 4px 0 rgba(0,0,0,0.1);
         }
 
         .controls {
@@ -59,126 +72,136 @@
             gap: 1rem;
         }
 
-        .control-btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border: none;
-            background: #333;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+        .control-group {
+            display: flex;
+            gap: 0.5rem;
         }
 
-        .control-btn:hover {
-            background: #555;
+        .control-btn {
+            flex: 1;
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: none;
+            background: #f8f9fa;
+            color: #1a1a1a;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .control-btn:hover:not(:disabled) {
+            background: #e9ecef;
+            transform: translateY(-1px);
         }
 
         .control-btn.start {
             background: #4CAF50;
-            font-weight: bold;
+            color: white;
         }
 
-        .control-btn.start:hover {
+        .control-btn.start:hover:not(:disabled) {
             background: #45a049;
         }
 
         .control-btn:disabled {
-            background: #ccc;
+            background: #e9ecef;
+            color: #adb5bd;
             cursor: not-allowed;
+            transform: none;
+        }
+
+        .difficulty {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .difficulty-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid #dee2e6;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .difficulty-btn.active {
+            background: #4CAF50;
+            border-color: #4CAF50;
+            color: white;
         }
 
         .instructions {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #f5f5f5;
-            border-radius: 8px;
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
         }
 
         .instructions h3 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
         }
 
         .instructions p {
             margin-bottom: 0.5rem;
-            color: #666;
+            color: #495057;
         }
 
         @media (max-width: 768px) {
             .game-container {
                 flex-direction: column;
+                height: auto;
                 padding: 1rem;
             }
 
             .game-wrapper {
-                width: 90vw;
+                height: 60vh;
             }
         }
     </style>
 </head>
 <body>
-    <main>
-    
-        <section class="project-content">
-            <div class="container">
-                <a href="../index.html" class="back-link fade-in">← Back to Experiments</a>
-            </div>
-        </section>
-
-        <div class="game-container">
-            <div class="game-wrapper">
-                <canvas id="gameCanvas" width="120" height="120"></canvas>
-            </div>
+    <div class="game-container">
+        <div class="game-wrapper">
+            <canvas id="gameCanvas" width="200" height="200"></canvas>
+        </div>
+        <div class="game-info">
+            <div class="score-display">0</div>
             <div class="controls">
+                <div class="difficulty">
+                    <button class="difficulty-btn active" data-speed="1000">Easy</button>
+                    <button class="difficulty-btn" data-speed="750">Medium</button>
+                    <button class="difficulty-btn" data-speed="500">Hard</button>
+                </div>
                 <button class="control-btn start" id="startBtn">Start Game</button>
-                <button class="control-btn" id="leftBtn" disabled>← Move Left</button>
-                <button class="control-btn" id="rightBtn" disabled>Move Right →</button>
-                <button class="control-btn" id="rotateBtn" disabled>↻ Rotate</button>
-                <button class="control-btn" id="restartBtn" disabled>↺ Restart</button>
-                <div class="instructions">
-                    <h3>Controls</h3>
-                    <p>← Left Arrow: Move Left</p>
-                    <p>→ Right Arrow: Move Right</p>
-                    <p>↑ Up Arrow: Rotate</p>
-                    <p>↓ Down Arrow: Move Down</p>
-                    <p>Space: Drop</p>
+                <div class="control-group">
+                    <button class="control-btn" id="leftBtn" disabled>←</button>
+                    <button class="control-btn" id="rotateBtn" disabled>↻</button>
+                    <button class="control-btn" id="rightBtn" disabled>→</button>
                 </div>
+                <button class="control-btn" id="restartBtn" disabled>Restart</button>
+            </div>
+            <div class="instructions">
+                <h3>How to Play</h3>
+                <p>← → Keys: Move Left/Right</p>
+                <p>↑ Key: Rotate</p>
+                <p>↓ Key: Move Down</p>
+                <p>Space: Drop</p>
             </div>
         </div>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="social-links">
-                    <a href="#" target="_blank">Instagram</a>
-                    <a href="#" target="_blank">Twitter</a>
-                    <a href="#" target="_blank">LinkedIn</a>
-                    <a href="mailto:your.email@example.com">Email</a>
-                </div>
-                <p class="copyright">&copy; 2024 Tejasvi Soi. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in, .fade-in-delay').forEach(el => observer.observe(el));
-        });
-
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        const BLOCK_SIZE = 12;
-        const GRID_WIDTH = 10;
-        const GRID_HEIGHT = 10;
+        const BLOCK_SIZE = 10; // Reduced block size
+        const GRID_WIDTH = 20;
+        const GRID_HEIGHT = 20;
+        
+        let score = 0;
+        let gameSpeed = 1000; // Default speed (Easy mode)
         
         // Tetris pieces with different colors
         const PIECES = [
@@ -219,6 +242,67 @@
         let gameLoop = null;
         let gameOver = false;
         let gameStarted = false;
+
+        function drawBlock(x, y, color) {
+            const blockSize = BLOCK_SIZE - 1;
+            
+            // Main block face
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, blockSize, blockSize);
+            
+            // Top edge (lighter)
+            ctx.fillStyle = shadeColor(color, 30);
+            ctx.fillRect(x, y, blockSize, 2);
+            
+            // Left edge (lighter)
+            ctx.fillRect(x, y, 2, blockSize);
+            
+            // Bottom edge (darker)
+            ctx.fillStyle = shadeColor(color, -30);
+            ctx.fillRect(x, y + blockSize - 2, blockSize, 2);
+            
+            // Right edge (darker)
+            ctx.fillRect(x + blockSize - 2, y, 2, blockSize);
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.querySelector('.score-display').textContent = score;
+        }
+
+        function checkLines() {
+            let linesCleared = 0;
+            for (let y = GRID_HEIGHT - 1; y >= 0; y--) {
+                if (grid[y].every(cell => cell !== null)) {
+                    grid.splice(y, 1);
+                    grid.unshift(Array(GRID_WIDTH).fill(null));
+                    linesCleared++;
+                }
+            }
+            if (linesCleared > 0) {
+                updateScore(linesCleared * 100);
+            }
+        }
+
+        // Update difficulty buttons click handlers
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (gameStarted) return;
+                
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                gameSpeed = parseInt(e.target.dataset.speed);
+            });
+        });
+
+        function startGame() {
+            gameStarted = true;
+            score = 0;
+            updateScore(0);
+            document.getElementById('startBtn').disabled = true;
+            document.querySelectorAll('.difficulty-btn').forEach(btn => btn.disabled = true);
+            init();
+        }
 
         function createNewPiece() {
             const piece = PIECES[Math.floor(Math.random() * PIECES.length)];
@@ -264,54 +348,6 @@
                     }
                 }
             }
-        }
-
-        function drawBlock(x, y, color) {
-            const blockSize = BLOCK_SIZE - 1;
-            const highlight = shadeColor(color, 50);  // Lighter shade for top/left
-            const shadow = shadeColor(color, -30);    // Darker shade for bottom/right
-            
-            // Main block face
-            ctx.fillStyle = color;
-            ctx.fillRect(x, y, blockSize, blockSize);
-            
-            // Top highlight
-            ctx.fillStyle = highlight;
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(x + blockSize, y);
-            ctx.lineTo(x + blockSize - 2, y + 2);
-            ctx.lineTo(x + 2, y + 2);
-            ctx.closePath();
-            ctx.fill();
-            
-            // Left highlight
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            ctx.lineTo(x, y + blockSize);
-            ctx.lineTo(x + 2, y + blockSize - 2);
-            ctx.lineTo(x + 2, y + 2);
-            ctx.closePath();
-            ctx.fill();
-            
-            // Bottom shadow
-            ctx.fillStyle = shadow;
-            ctx.beginPath();
-            ctx.moveTo(x, y + blockSize);
-            ctx.lineTo(x + blockSize, y + blockSize);
-            ctx.lineTo(x + blockSize - 2, y + blockSize - 2);
-            ctx.lineTo(x + 2, y + blockSize - 2);
-            ctx.closePath();
-            ctx.fill();
-            
-            // Right shadow
-            ctx.beginPath();
-            ctx.moveTo(x + blockSize, y);
-            ctx.lineTo(x + blockSize, y + blockSize);
-            ctx.lineTo(x + blockSize - 2, y + blockSize - 2);
-            ctx.lineTo(x + blockSize - 2, y + 2);
-            ctx.closePath();
-            ctx.fill();
         }
 
         function shadeColor(color, percent) {
@@ -381,15 +417,6 @@
             }
         }
 
-        function checkLines() {
-            for (let y = GRID_HEIGHT - 1; y >= 0; y--) {
-                if (grid[y].every(cell => cell !== null)) {
-                    grid.splice(y, 1);
-                    grid.unshift(Array(GRID_WIDTH).fill(null));
-                }
-            }
-        }
-
         function gameStep() {
             if (!canMove(0, 1)) {
                 mergePiece();
@@ -413,19 +440,10 @@
             gameOver = false;
             createNewPiece();
             if (gameLoop) clearInterval(gameLoop);
-            gameLoop = setInterval(gameStep, 1000);
+            gameLoop = setInterval(gameStep, gameSpeed);
             draw();
             enableControls(true);
         }
-
-        function startGame() {
-            gameStarted = true;
-            document.getElementById('startBtn').disabled = true;
-            init();
-        }
-
-        // Draw empty grid initially
-        draw();
 
         // Controls
         document.addEventListener('keydown', (e) => {
