@@ -41,7 +41,7 @@ body {
 
 .hero h1 {
     font-family: var(--font-primary);
-    font-size: 80px;
+    font-size: 72px;
     line-height: 1.2;
     margin-bottom: 1.5rem;
     letter-spacing: -0.03em;
@@ -58,7 +58,7 @@ body {
 /* Projects Section */
 .projects {
     padding-top: 40px;
-    margin-top: 0;
+    padding-bottom: 0;
 }
 
 .project-grid {
