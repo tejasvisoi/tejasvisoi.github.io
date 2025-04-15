@@ -75,6 +75,20 @@
             background: #555;
         }
 
+        .control-btn.start {
+            background: #4CAF50;
+            font-weight: bold;
+        }
+
+        .control-btn.start:hover {
+            background: #45a049;
+        }
+
+        .control-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
         .instructions {
             margin-top: 2rem;
             padding: 1rem;
@@ -125,10 +139,11 @@
                 <canvas id="gameCanvas" width="120" height="120"></canvas>
             </div>
             <div class="controls">
-                <button class="control-btn" id="leftBtn">← Move Left</button>
-                <button class="control-btn" id="rightBtn">Move Right →</button>
-                <button class="control-btn" id="rotateBtn">↻ Rotate</button>
-                <button class="control-btn" id="restartBtn">↺ Restart</button>
+                <button class="control-btn start" id="startBtn">Start Game</button>
+                <button class="control-btn" id="leftBtn" disabled>← Move Left</button>
+                <button class="control-btn" id="rightBtn" disabled>Move Right →</button>
+                <button class="control-btn" id="rotateBtn" disabled>↻ Rotate</button>
+                <button class="control-btn" id="restartBtn" disabled>↺ Restart</button>
                 <div class="instructions">
                     <h3>Controls</h3>
                     <p>← Left Arrow: Move Left</p>
@@ -212,6 +227,7 @@
         let currentPieceY = 0;
         let gameLoop = null;
         let gameOver = false;
+        let gameStarted = false;
 
         function createNewPiece() {
             const piece = PIECES[Math.floor(Math.random() * PIECES.length)];
@@ -226,6 +242,8 @@
                 gameOver = true;
                 clearInterval(gameLoop);
                 alert('Game Over!');
+                enableControls(false);
+                document.getElementById('startBtn').disabled = false;
             }
         }
 
@@ -236,28 +254,97 @@
             for (let y = 0; y < GRID_HEIGHT; y++) {
                 for (let x = 0; x < GRID_WIDTH; x++) {
                     if (grid[y][x]) {
-                        ctx.fillStyle = grid[y][x];
-                        ctx.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE - 1, BLOCK_SIZE - 1);
+                        drawBlock(x * BLOCK_SIZE, y * BLOCK_SIZE, grid[y][x]);
                     }
                 }
             }
             
             // Draw current piece
             if (currentPiece) {
-                ctx.fillStyle = currentPiece.color;
                 for (let y = 0; y < currentPiece.shape.length; y++) {
                     for (let x = 0; x < currentPiece.shape[y].length; x++) {
                         if (currentPiece.shape[y][x]) {
-                            ctx.fillRect(
+                            drawBlock(
                                 (currentPieceX + x) * BLOCK_SIZE,
                                 (currentPieceY + y) * BLOCK_SIZE,
-                                BLOCK_SIZE - 1,
-                                BLOCK_SIZE - 1
+                                currentPiece.color
                             );
                         }
                     }
                 }
             }
+        }
+
+        function drawBlock(x, y, color) {
+            const blockSize = BLOCK_SIZE - 1;
+            const highlight = shadeColor(color, 50);  // Lighter shade for top/left
+            const shadow = shadeColor(color, -30);    // Darker shade for bottom/right
+            
+            // Main block face
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, blockSize, blockSize);
+            
+            // Top highlight
+            ctx.fillStyle = highlight;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + blockSize, y);
+            ctx.lineTo(x + blockSize - 2, y + 2);
+            ctx.lineTo(x + 2, y + 2);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Left highlight
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x, y + blockSize);
+            ctx.lineTo(x + 2, y + blockSize - 2);
+            ctx.lineTo(x + 2, y + 2);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Bottom shadow
+            ctx.fillStyle = shadow;
+            ctx.beginPath();
+            ctx.moveTo(x, y + blockSize);
+            ctx.lineTo(x + blockSize, y + blockSize);
+            ctx.lineTo(x + blockSize - 2, y + blockSize - 2);
+            ctx.lineTo(x + 2, y + blockSize - 2);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Right shadow
+            ctx.beginPath();
+            ctx.moveTo(x + blockSize, y);
+            ctx.lineTo(x + blockSize, y + blockSize);
+            ctx.lineTo(x + blockSize - 2, y + blockSize - 2);
+            ctx.lineTo(x + blockSize - 2, y + 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function shadeColor(color, percent) {
+            let R = parseInt(color.substring(1,3), 16);
+            let G = parseInt(color.substring(3,5), 16);
+            let B = parseInt(color.substring(5,7), 16);
+
+            R = parseInt(R * (100 + percent) / 100);
+            G = parseInt(G * (100 + percent) / 100);
+            B = parseInt(B * (100 + percent) / 100);
+
+            R = (R < 255) ? R : 255;
+            G = (G < 255) ? G : 255;
+            B = (B < 255) ? B : 255;
+
+            R = (R > 0) ? R : 0;
+            G = (G > 0) ? G : 0;
+            B = (B > 0) ? B : 0;
+
+            const RR = ((R.toString(16).length === 1) ? "0" + R.toString(16) : R.toString(16));
+            const GG = ((G.toString(16).length === 1) ? "0" + G.toString(16) : G.toString(16));
+            const BB = ((B.toString(16).length === 1) ? "0" + B.toString(16) : B.toString(16));
+
+            return "#" + RR + GG + BB;
         }
 
         function canMove(offsetX, offsetY) {
@@ -323,6 +410,13 @@
             draw();
         }
 
+        function enableControls(enabled) {
+            document.getElementById('leftBtn').disabled = !enabled;
+            document.getElementById('rightBtn').disabled = !enabled;
+            document.getElementById('rotateBtn').disabled = !enabled;
+            document.getElementById('restartBtn').disabled = !enabled;
+        }
+
         function init() {
             grid = Array(GRID_HEIGHT).fill().map(() => Array(GRID_WIDTH).fill(null));
             gameOver = false;
@@ -330,11 +424,21 @@
             if (gameLoop) clearInterval(gameLoop);
             gameLoop = setInterval(gameStep, 1000);
             draw();
+            enableControls(true);
         }
+
+        function startGame() {
+            gameStarted = true;
+            document.getElementById('startBtn').disabled = true;
+            init();
+        }
+
+        // Draw empty grid initially
+        draw();
 
         // Controls
         document.addEventListener('keydown', (e) => {
-            if (gameOver) return;
+            if (!gameStarted || gameOver) return;
             
             switch (e.key) {
                 case 'ArrowLeft':
@@ -368,6 +472,8 @@
         });
 
         // Button controls
+        document.getElementById('startBtn').addEventListener('click', startGame);
+
         document.getElementById('leftBtn').addEventListener('click', () => {
             if (!gameOver && canMove(-1, 0)) {
                 currentPieceX--;
@@ -389,9 +495,6 @@
         });
 
         document.getElementById('restartBtn').addEventListener('click', init);
-
-        // Start the game
-        init();
     </script>
 </body>
 </html> 
