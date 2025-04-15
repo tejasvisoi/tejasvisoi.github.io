@@ -27,49 +27,6 @@ body {
     padding: 0 2rem;
 }
 
-/* Navigation */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.98);
-    z-index: 1000;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-}
-
-.nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-}
-
-.nav-brand {
-    font-family: var(--font-primary);
-    font-size: 1.5rem;
-    color: var(--primary-color);
-    text-decoration: none;
-    letter-spacing: -0.02em;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-}
-
-.nav-links a {
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: var(--primary-color);
-}
 
 /* Hero Section */
 .hero {
@@ -93,8 +50,8 @@ body {
 }
 
 .hero-text {
-    font-size: 24px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 300;
     color: var(--secondary-color);
     max-width: 60%;
     margin: 0 auto;
@@ -102,8 +59,9 @@ body {
 
 /* Projects Section */
 .projects {
+    position: relative;
     padding-top: 64px;
-    margin-top: 64px;
+    margin-bottom: 64px;
 }
 
 .project-grid {
