@@ -24,13 +24,11 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
 }
 
 
 /* Hero Section */
 .hero {
-    min-height: 100vh;
     display: flex;
     align-items: flex-start;
     padding-top: 32px;
