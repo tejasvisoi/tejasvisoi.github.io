@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1 - Tejasvi Soi</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        @font-face {
+            font-family: 'Instrument Serif';
+            src: url('../fonts/Instrument_Serif/InstrumentSerif-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .project-header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .project-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .project-content p {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="project-header">
+            <div class="container">
+                <h1 class="fade-in">Project Title</h1>
+                <p class="hero-text fade-in-delay">A brief description of the project and its purpose.</p>
+            </div>
+        </section>
+
+        <section class="project-content">
+            <div class="container">
+                <p class="fade-in">Project details and description go here. This is where you can explain the concept, process, and outcomes of your project.</p>
+                <p class="fade-in-delay">Additional information about the project, including any technical details, challenges faced, and solutions implemented.</p>
+                <a href="../index.html" class="back-link fade-in">← Back to Experiments</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">Twitter</a>
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="mailto:your.email@example.com">Email</a>
+                </div>
+                <p class="copyright">&copy; 2024 Tejasvi Soi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in, .fade-in-delay').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html> 
