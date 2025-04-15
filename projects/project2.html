@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hand Music - Tejasvi Soi</title>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
     <style>
@@ -177,8 +177,10 @@
 
     <script>
         let audioContext;
-        let oscillator;
-        let gainNode;
+        let oscillators = {};
+        let gainNodes = {};
+
+        // Initialize MediaPipe Hands
         const hands = new Hands({
             locateFile: (file) => {
                 return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -204,32 +206,38 @@
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
         }
+        
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Initialize audio context and oscillator
-        function initAudio() {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            oscillator = audioContext.createOscillator();
-            gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            gainNode.gain.value = 0;
-            oscillator.start();
+        // Initialize audio for a specific hand
+        function initAudioForHand(handIndex) {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            if (!oscillators[handIndex]) {
+                oscillators[handIndex] = audioContext.createOscillator();
+                gainNodes[handIndex] = audioContext.createGain();
+                
+                oscillators[handIndex].connect(gainNodes[handIndex]);
+                gainNodes[handIndex].connect(audioContext.destination);
+                
+                gainNodes[handIndex].gain.setValueAtTime(0, audioContext.currentTime);
+                oscillators[handIndex].start();
+            }
         }
 
         // Map hand height to frequency and volume
-        function updateSound(handHeight) {
-            if (!oscillator) return;
+        function updateSound(handIndex, handHeight) {
+            if (!oscillators[handIndex]) return;
             
             // Map hand height (0-1) to frequency (200-2000 Hz)
             const frequency = 200 + (handHeight * 1800);
-            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillators[handIndex].frequency.setValueAtTime(frequency, audioContext.currentTime);
             
-            // Set volume based on hand presence
-            gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+            // Smooth volume transition
+            gainNodes[handIndex].gain.setTargetAtTime(0.2, audioContext.currentTime, 0.1);
         }
 
         // Draw lines for hand tracking
@@ -237,7 +245,10 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             if (results.multiHandLandmarks) {
-                for (const landmarks of results.multiHandLandmarks) {
+                results.multiHandLandmarks.forEach((landmarks, index) => {
+                    // Initialize audio for this hand if needed
+                    initAudioForHand(index);
+
                     // Draw hand connections
                     drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
                         color: '#4CAF50',
@@ -258,37 +269,56 @@
                     ctx.stroke();
                     
                     // Update sound based on hand height
-                    updateSound(handHeight);
-                }
+                    updateSound(index, handHeight);
+                });
+
+                // Mute sounds for hands that are no longer visible
+                Object.keys(gainNodes).forEach(handIndex => {
+                    if (handIndex >= results.multiHandLandmarks.length) {
+                        gainNodes[handIndex].gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
+                    }
+                });
             } else {
-                // No hands detected, mute sound
-                if (gainNode) {
-                    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                }
+                // No hands detected, mute all sounds
+                Object.values(gainNodes).forEach(gainNode => {
+                    gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
+                });
             }
         }
-
-        hands.onResults(drawLines);
 
         // Start camera and hand tracking
         async function startExperience() {
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
-                video.addEventListener('loadedmetadata', () => {
-                    video.play();
-                    const camera = new Camera(video, {
-                        onFrame: async () => {
-                            await hands.send({ image: video });
-                        },
+                // Request camera access first
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
                         width: 1280,
-                        height: 720
-                    });
-                    camera.start();
+                        height: 720,
+                        facingMode: 'user'
+                    }
                 });
+
+                // Set up video
+                video.srcObject = stream;
+                await video.play();
+
+                // Initialize MediaPipe camera after video is ready
+                const camera = new Camera(video, {
+                    onFrame: async () => {
+                        await hands.send({ image: video });
+                    },
+                    width: 1280,
+                    height: 720
+                });
+
+                // Set up hand tracking
+                hands.onResults(drawLines);
                 
-                // Initialize audio
-                initAudio();
+                // Start the camera
+                await camera.start();
+                
+                // Initialize audio context (needs to be after user interaction)
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 
                 // Hide overlay and show instructions
                 permissionOverlay.style.display = 'none';
@@ -299,7 +329,7 @@
                     instructions.classList.remove('visible');
                 }, 5000);
             } catch (error) {
-                console.error('Error accessing camera:', error);
+                console.error('Error starting experience:', error);
                 alert('Unable to access camera. Please ensure you have granted camera permissions.');
             }
         }
