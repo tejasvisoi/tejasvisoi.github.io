@@ -16,46 +16,64 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="nav-brand">Tejasvi Soi</div>
-                <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="photos.html">Photos</a></li>
-                    <li><a href="cafeathome.html">Cafe@Home</a></li>
-                    <li><a href="work.html">Work</a></li>
-                </ul>
-            </div>
+        <div class="container nav-content">
+            <a href="/" class="nav-brand">Tejas Visoi</a>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/photos">Photos</a></li>
+                <li><a href="/cafeathome">Cafe@Home</a></li>
+                <li><a href="/work">Work</a></li>
+            </ul>
         </div>
     </nav>
 
     <main>
         <section class="hero">
-            <div class="container">
-                <h1>Hello, I'm Tejasvi</h1>
-                <p class="hero-text">A passionate individual exploring the intersection of technology, design, and everyday life.</p>
+            <div class="container hero-content">
+                <div class="hero-text-container">
+                    <h1 class="fade-in">Hello, I'm Tejasvi</h1>
+                    <p class="hero-text fade-in-delay">A passionate individual exploring the intersection of technology, design, and everyday life. I create digital experiences that blend form and function.</p>
+                </div>
             </div>
         </section>
 
         <section class="projects">
             <div class="container">
+                <div class="section-header fade-in">
+                    <h2>Featured Work</h2>
+                    <p>A selection of my recent projects and explorations</p>
+                </div>
                 <div class="project-grid">
-                    <div class="project-card">
-                        <h2>01</h2>
-                        <p>Web Development & Design</p>
-                        <a href="work.html" class="btn">View Projects</a>
-                    </div>
-                    <div class="project-card">
-                        <h2>02</h2>
-                        <p>Photography & Visual Storytelling</p>
-                        <a href="photos.html" class="btn">View Gallery</a>
-                    </div>
-                    <div class="project-card">
-                        <h2>03</h2>
-                        <p>Cafe@Home Experience</p>
-                        <a href="cafeathome.html" class="btn">Learn More</a>
-                    </div>
+                    <a href="/work" class="project-card fade-in">
+                        <div class="project-number">01</div>
+                        <div class="project-content">
+                            <h3>Web Development & Design</h3>
+                            <p>Creating digital experiences that matter</p>
+                            <span class="project-link">View Projects →</span>
+                        </div>
+                    </a>
+                    <a href="/photos" class="project-card fade-in">
+                        <div class="project-number">02</div>
+                        <div class="project-content">
+                            <h3>Photography & Visual Storytelling</h3>
+                            <p>Capturing moments that inspire</p>
+                            <span class="project-link">View Gallery →</span>
+                        </div>
+                    </a>
+                    <a href="/cafeathome" class="project-card fade-in">
+                        <div class="project-number">03</div>
+                        <div class="project-content">
+                            <h3>Cafe@Home Experience</h3>
+                            <p>Brewing stories, one cup at a time</p>
+                            <span class="project-link">Learn More →</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -78,6 +96,34 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Intersection Observer for fade-in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in, .fade-in-delay').forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html> 
