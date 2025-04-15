@@ -179,8 +179,10 @@
         let audioContext;
         let oscillators = {};
         let gainNodes = {};
+        let crossoverSynth = null;
+        let crossoverGain = null;
 
-        // Initialize MediaPipe Hands
+        // Initialize MediaPipe Hands with improved settings
         const hands = new Hands({
             locateFile: (file) => {
                 return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -190,8 +192,8 @@
         hands.setOptions({
             maxNumHands: 2,
             modelComplexity: 1,
-            minDetectionConfidence: 0.5,
-            minTrackingConfidence: 0.5
+            minDetectionConfidence: 0.7,  // Increased for better accuracy
+            minTrackingConfidence: 0.7    // Increased for better accuracy
         });
 
         const video = document.querySelector('#video');
@@ -210,15 +212,32 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // Initialize audio for a specific hand
-        function initAudioForHand(handIndex) {
+        // Initialize audio context and crossover synth
+        function initAudio() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Initialize crossover synth
+                crossoverSynth = audioContext.createOscillator();
+                crossoverGain = audioContext.createGain();
+                
+                crossoverSynth.type = 'square'; // Different waveform for crossing sound
+                crossoverSynth.connect(crossoverGain);
+                crossoverGain.connect(audioContext.destination);
+                
+                crossoverGain.gain.setValueAtTime(0, audioContext.currentTime);
+                crossoverSynth.start();
             }
+        }
 
+        // Initialize audio for a specific hand
+        function initAudioForHand(handIndex) {
             if (!oscillators[handIndex]) {
                 oscillators[handIndex] = audioContext.createOscillator();
                 gainNodes[handIndex] = audioContext.createGain();
+                
+                // Different waveforms for each hand
+                oscillators[handIndex].type = handIndex === 0 ? 'sine' : 'triangle';
                 
                 oscillators[handIndex].connect(gainNodes[handIndex]);
                 gainNodes[handIndex].connect(audioContext.destination);
@@ -228,49 +247,101 @@
             }
         }
 
-        // Map hand height to frequency and volume
+        // Map hand height to frequency and volume with different ranges for each hand
         function updateSound(handIndex, handHeight) {
             if (!oscillators[handIndex]) return;
             
-            // Map hand height (0-1) to frequency (200-2000 Hz)
-            const frequency = 200 + (handHeight * 1800);
-            oscillators[handIndex].frequency.setValueAtTime(frequency, audioContext.currentTime);
+            // Different frequency ranges for each hand
+            const baseFreq = handIndex === 0 ? 200 : 400;
+            const freqRange = handIndex === 0 ? 1800 : 2400;
             
-            // Smooth volume transition
+            const frequency = baseFreq + (handHeight * freqRange);
+            oscillators[handIndex].frequency.setTargetAtTime(frequency, audioContext.currentTime, 0.1);
             gainNodes[handIndex].gain.setTargetAtTime(0.2, audioContext.currentTime, 0.1);
         }
 
-        // Draw lines for hand tracking
+        // Check if hands are crossing
+        function checkHandsCrossing(landmarks1, landmarks2) {
+            const hand1Center = landmarks1[0].x;
+            const hand2Center = landmarks2[0].x;
+            
+            // Check if hands have crossed
+            const isCrossing = (hand1Center > hand2Center);
+            
+            if (isCrossing) {
+                // Calculate crossing intensity based on overlap
+                const overlap = Math.abs(hand1Center - hand2Center);
+                const frequency = 300 + (overlap * 1000);
+                crossoverSynth.frequency.setTargetAtTime(frequency, audioContext.currentTime, 0.1);
+                crossoverGain.gain.setTargetAtTime(0.3, audioContext.currentTime, 0.1);
+            } else {
+                crossoverGain.gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
+            }
+        }
+
+        // Draw lines for hand tracking with improved visualization
         function drawLines(results) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             if (results.multiHandLandmarks) {
+                // Draw grid lines for reference
+                ctx.strokeStyle = 'rgba(74, 175, 80, 0.2)';
+                ctx.lineWidth = 1;
+                for (let i = 0; i < 10; i++) {
+                    const y = (i / 10) * canvas.height;
+                    ctx.beginPath();
+                    ctx.setLineDash([5, 5]);
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+
                 results.multiHandLandmarks.forEach((landmarks, index) => {
-                    // Initialize audio for this hand if needed
                     initAudioForHand(index);
 
-                    // Draw hand connections
+                    // Draw hand skeleton
                     drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
-                        color: '#4CAF50',
-                        lineWidth: 2
+                        color: index === 0 ? '#4CAF50' : '#2196F3',
+                        lineWidth: 3
                     });
                     
-                    // Get palm position (wrist landmark)
-                    const wrist = landmarks[0];
-                    const handHeight = 1 - wrist.y; // Invert Y coordinate
+                    // Draw hand points
+                    for (const point of landmarks) {
+                        ctx.beginPath();
+                        ctx.arc(point.x * canvas.width, point.y * canvas.height, 4, 0, 2 * Math.PI);
+                        ctx.fillStyle = index === 0 ? '#4CAF50' : '#2196F3';
+                        ctx.fill();
+                    }
                     
-                    // Draw horizontal line to show hand height
+                    // Get palm position with smoothing
+                    const wrist = landmarks[0];
+                    const handHeight = 1 - wrist.y;
+                    
+                    // Draw horizontal line showing hand height
                     ctx.beginPath();
-                    ctx.strokeStyle = '#4CAF50';
+                    ctx.strokeStyle = index === 0 ? '#4CAF50' : '#2196F3';
                     ctx.lineWidth = 2;
                     ctx.setLineDash([5, 5]);
                     ctx.moveTo(0, wrist.y * canvas.height);
                     ctx.lineTo(canvas.width, wrist.y * canvas.height);
                     ctx.stroke();
                     
-                    // Update sound based on hand height
+                    // Update sound
                     updateSound(index, handHeight);
                 });
+
+                // Check for hand crossing if two hands are present
+                if (results.multiHandLandmarks.length === 2) {
+                    checkHandsCrossing(
+                        results.multiHandLandmarks[0],
+                        results.multiHandLandmarks[1]
+                    );
+                } else {
+                    // Mute crossover sound if only one hand
+                    if (crossoverGain) {
+                        crossoverGain.gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
+                    }
+                }
 
                 // Mute sounds for hands that are no longer visible
                 Object.keys(gainNodes).forEach(handIndex => {
@@ -283,6 +354,9 @@
                 Object.values(gainNodes).forEach(gainNode => {
                     gainNode.gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
                 });
+                if (crossoverGain) {
+                    crossoverGain.gain.setTargetAtTime(0, audioContext.currentTime, 0.1);
+                }
             }
         }
 
@@ -294,13 +368,17 @@
                     video: {
                         width: 1280,
                         height: 720,
-                        facingMode: 'user'
+                        facingMode: 'user',
+                        frameRate: 60  // Higher frame rate for better tracking
                     }
                 });
 
                 // Set up video
                 video.srcObject = stream;
                 await video.play();
+
+                // Initialize audio
+                initAudio();
 
                 // Initialize MediaPipe camera after video is ready
                 const camera = new Camera(video, {
@@ -317,12 +395,10 @@
                 // Start the camera
                 await camera.start();
                 
-                // Initialize audio context (needs to be after user interaction)
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
                 // Hide overlay and show instructions
                 permissionOverlay.style.display = 'none';
                 instructions.classList.add('visible');
+                instructions.textContent = 'Raise hands to create sounds. Each hand produces different tones. Cross hands for special effects!';
                 
                 // Hide instructions after 5 seconds
                 setTimeout(() => {
