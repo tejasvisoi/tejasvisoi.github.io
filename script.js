@@ -59,25 +59,69 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // LoveFrom-style Bear Animation
     function initBearAnimation() {
-        const bear = document.querySelector('.bear-svg');
-        if (!bear) return;
+        const bearContainer = document.querySelector('.bear-container');
+        const phonepeLink = document.querySelector('.phonepe-link');
+        
+        if (!bearContainer || !phonepeLink) return;
 
-        // Bear morphing animation
-        const bearAnimation = () => {
-            // Morph body
-            gsap.to('.bear-body', {
-                duration: 2,
+        // Position bear container relative to PhonePe link
+        const phonepeRect = phonepeLink.getBoundingClientRect();
+        
+        // Position bear at the start of PhonePe text, relative to the link
+        bearContainer.style.left = '0px';
+        bearContainer.style.top = '-30px'; // Slightly above the text
+
+        // Walking animation
+        const walkAnimation = () => {
+            const phonepeWidth = phonepeLink.offsetWidth;
+            const bearWidth = 40; // Bear container width
+            
+            // Walk from left to right across PhonePe
+            gsap.to(bearContainer, {
+                x: phonepeWidth - bearWidth, // Walk across the width of PhonePe
+                duration: 3,
+                ease: "power1.inOut",
+                onComplete: () => {
+                    // Walk back from right to left
+                    gsap.to(bearContainer, {
+                        x: 0,
+                        duration: 3,
+                        ease: "power1.inOut",
+                        onComplete: walkAnimation // Loop the animation
+                    });
+                }
+            });
+        };
+
+        // Bear walking motion (legs and arms)
+        const walkingMotion = () => {
+            // Animate legs for walking effect
+            gsap.to('.bear-leg', {
+                duration: 0.3,
                 attr: {
-                    d: 'M30 60 Q40 55 50 60 Q60 65 50 75 L30 75 Q20 65 30 60 Z'
+                    d: (i) => i === 0 ? 'M35 80 L35 85' : 'M65 80 L65 85'
                 },
                 ease: "power2.inOut",
                 yoyo: true,
-                repeat: -1
+                repeat: -1,
+                stagger: 0.15
             });
 
-            // Morph head
+            // Animate arms for walking effect
+            gsap.to('.bear-arm', {
+                duration: 0.3,
+                attr: {
+                    d: (i) => i === 0 ? 'M25 65 Q20 58 25 52' : 'M75 65 Q80 58 75 52'
+                },
+                ease: "power2.inOut",
+                yoyo: true,
+                repeat: -1,
+                stagger: 0.15
+            });
+
+            // Subtle head bob
             gsap.to('.bear-head', {
-                duration: 2,
+                duration: 0.6,
                 attr: {
                     cy: '43'
                 },
@@ -85,58 +129,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 yoyo: true,
                 repeat: -1
             });
-
-            // Morph ears
-            gsap.to('.bear-ear', {
-                duration: 1.5,
-                attr: {
-                    cy: '36'
-                },
-                ease: "power2.inOut",
-                yoyo: true,
-                repeat: -1,
-                stagger: 0.2
-            });
-
-            // Morph eyes
-            gsap.to('.bear-eye', {
-                duration: 1.8,
-                attr: {
-                    r: '2'
-                },
-                ease: "power2.inOut",
-                yoyo: true,
-                repeat: -1,
-                stagger: 0.1
-            });
-
-            // Morph arms
-            gsap.to('.bear-arm', {
-                duration: 2.2,
-                attr: {
-                    d: (i) => i === 0 ? 'M25 65 Q18 58 25 52' : 'M75 65 Q82 58 75 52'
-                },
-                ease: "power2.inOut",
-                yoyo: true,
-                repeat: -1,
-                stagger: 0.3
-            });
-
-            // Morph legs
-            gsap.to('.bear-leg', {
-                duration: 1.6,
-                attr: {
-                    d: (i) => i === 0 ? 'M35 80 L35 88' : 'M65 80 L65 88'
-                },
-                ease: "power2.inOut",
-                yoyo: true,
-                repeat: -1,
-                stagger: 0.2
-            });
         };
 
-        // Start animation after a delay
-        setTimeout(bearAnimation, 1000);
+        // Start animations after a delay
+        setTimeout(() => {
+            walkAnimation();
+            walkingMotion();
+        }, 1000);
     }
 
     // Initialize bear animation when GSAP is loaded

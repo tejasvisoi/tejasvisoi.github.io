@@ -522,13 +522,14 @@ body {
 
 /* LoveFrom-style Bear Animation */
 .bear-container {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    width: 60px;
-    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
     z-index: 1000;
     pointer-events: none;
+    transform: translateY(-50%);
 }
 
 .bear-svg {
@@ -545,18 +546,14 @@ body {
 /* Responsive bear sizing */
 @media (max-width: 768px) {
     .bear-container {
-        width: 50px;
-        height: 50px;
-        bottom: 1.5rem;
-        left: 1.5rem;
+        width: 35px;
+        height: 35px;
     }
 }
 
 @media (max-width: 480px) {
     .bear-container {
-        width: 40px;
-        height: 40px;
-        bottom: 1rem;
-        left: 1rem;
+        width: 30px;
+        height: 30px;
     }
 } 
