@@ -75,6 +75,10 @@ body {
     transition: all 0.3s ease;
 }
 
+.phonepe-link {
+    cursor: pointer;
+}
+
 .phonepe-link:hover {
     color: #f5f5f5;
     transform: scale(1.02);
@@ -123,13 +127,6 @@ body {
     color: #f5f5f5;
     letter-spacing: 0.3px;
     text-transform: uppercase;
-    transition: all 0.3s ease;
-    display: inline-block;
-    transform-origin: center;
-}
-
-#last-visit-text:hover {
-    transform: scale(1.02);
 }
 
 /* Main Links */
@@ -156,6 +153,10 @@ body {
     transform-origin: center;
 }
 
+.main-link {
+    cursor: pointer;
+}
+
 .main-link:hover {
     color: #f5f5f5;
     text-decoration-color: rgba(245, 245, 245, 0.8);
@@ -175,13 +176,6 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-family: 'Technor', 'Space Mono', monospace;
-    transition: all 0.3s ease;
-    display: inline-block;
-    transform-origin: center;
-}
-
-.past-work-title:hover {
-    transform: scale(1.02);
 }
 
 .past-work-links {
@@ -203,6 +197,10 @@ body {
     text-transform: uppercase;
     display: inline-block;
     transform-origin: center;
+}
+
+.past-work-link {
+    cursor: pointer;
 }
 
 .past-work-link:hover {
@@ -284,6 +282,10 @@ body {
     text-transform: uppercase;
     white-space: nowrap; /* Prevent text wrapping */
     transform-origin: center;
+}
+
+.social-link {
+    cursor: pointer;
 }
 
 .social-link:hover {
