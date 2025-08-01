@@ -35,15 +35,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Pixelated Cat Animation (Based on Reference)
+    // Pixelated Cat Animation (LoveFrom Style)
     const phonepeLink = document.querySelector('.phonepe-link');
     let cat = null;
-    let isWalking = false;
-    let isJumping = false;
-    let currentLetterIndex = 0;
+    let isWalking = true;
     let walkStep = 0;
-    let jumpStep = 0;
     let direction = 1; // 1 for right, -1 for left
+    let currentX = 0;
     const letters = ['P', 'h', 'o', 'n', 'e', 'P', 'e'];
     
     // Create SVG pixelated cat (white with black outlines, side profile)
@@ -195,32 +193,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Animate cat jumping motion
-    function animateJumping() {
-        if (!cat || !isJumping) return;
-        
-        const catBody = cat.querySelector('.cat-body');
-        const catHead = cat.querySelector('.cat-head');
-        const catEar = cat.querySelector('.cat-ear');
-        const frontLeg = cat.querySelector('.cat-front-leg');
-        const backLeg = cat.querySelector('.cat-back-leg');
-        
-        if (catBody && catHead && catEar && frontLeg && backLeg) {
-            const jumpHeight = Math.sin(jumpStep) * 6;
-            
-            // Move cat up and down
-            catBody.setAttribute('y', (8 - jumpHeight) + '');
-            catHead.setAttribute('y', (4 - jumpHeight) + '');
-            catEar.setAttribute('points', `12,${4 - jumpHeight} 14,${2 - jumpHeight} 16,${4 - jumpHeight}`);
-            
-            // Animate legs for jumping
-            frontLeg.setAttribute('y', (14 - jumpHeight) + '');
-            backLeg.setAttribute('y', (14 - jumpHeight) + '');
-            
-            jumpStep += 0.5;
-        }
-    }
-    
     // Create the cat
     function createCat() {
         if (cat) return; // Only create once
@@ -237,173 +209,50 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start cat animation sequence
     function startCatAnimation() {
-        // Start at the first 'P' position
         const phonepeRect = phonepeLink.getBoundingClientRect();
-        const letterWidth = phonepeRect.width / letters.length;
-        const startX = phonepeRect.left + (letterWidth / 2) - 18;
         const catY = phonepeRect.top + (phonepeRect.height / 2) - 12; // At word level
         
-        cat.style.left = startX + 'px';
         cat.style.top = catY + 'px';
+        currentX = phonepeRect.left - 50; // Start off-screen left
+        cat.style.left = currentX + 'px';
         
-        currentLetterIndex = 0;
-        direction = 1;
-        
-        // Start walking
-        setTimeout(() => {
-            isWalking = true;
-            walkToNextLetter();
-        }, 500);
+        // Start continuous walking animation
+        animateCatMovement();
     }
     
-    // Walk to the next letter
-    function walkToNextLetter() {
-        if (currentLetterIndex >= letters.length) {
-            // Reached the end, turn around
-            direction = -1;
-            currentLetterIndex = letters.length - 1;
-            setTimeout(() => {
-                walkToNextLetter();
-            }, 500);
-            return;
-        }
-        
-        if (currentLetterIndex < 0) {
-            // Reached the beginning, turn around
-            direction = 1;
-            currentLetterIndex = 0;
-            setTimeout(() => {
-                walkToNextLetter();
-            }, 500);
-            return;
-        }
-        
+    // Continuous cat movement (LoveFrom style)
+    function animateCatMovement() {
         const phonepeRect = phonepeLink.getBoundingClientRect();
-        const letterWidth = phonepeRect.width / letters.length;
-        const targetX = phonepeRect.left + (currentLetterIndex * letterWidth) + (letterWidth / 2) - 18;
-        const catY = phonepeRect.top + (phonepeRect.height / 2) - 12;
+        const speed = 1; // Pixels per frame
         
-        const currentX = parseFloat(cat.style.left);
-        const distance = targetX - currentX;
-        const steps = Math.abs(distance) / 2;
-        let currentStep = 0;
-        
-        isWalking = true;
-        
-        const walkInterval = setInterval(() => {
-            currentStep++;
-            const progress = currentStep / steps;
-            const newX = currentX + (distance * progress);
+        function moveCat() {
+            if (!cat) return;
             
-            cat.style.left = newX + 'px';
+            // Move cat horizontally
+            currentX += speed * direction;
+            cat.style.left = currentX + 'px';
             
             // Animate walking
             animateWalking();
             
-            if (currentStep >= steps) {
-                clearInterval(walkInterval);
-                isWalking = false;
-                
-                // Step on the letter (make it move down)
-                stepOnLetter(currentLetterIndex);
-                
-                // Jump to next letter
-                setTimeout(() => {
-                    currentLetterIndex += direction;
-                    jumpToNextLetter();
-                }, 300);
+            // Check if cat needs to turn around
+            if (direction === 1 && currentX > phonepeRect.right + 50) {
+                // Reached right edge, turn around
+                direction = -1;
+                // Flip cat horizontally
+                cat.style.transform = 'scaleX(-1)';
+            } else if (direction === -1 && currentX < phonepeRect.left - 50) {
+                // Reached left edge, turn around
+                direction = 1;
+                // Flip cat back to normal
+                cat.style.transform = 'scaleX(1)';
             }
-        }, 50);
-    }
-    
-    // Jump to the next letter
-    function jumpToNextLetter() {
-        if (currentLetterIndex >= letters.length || currentLetterIndex < 0) {
-            walkToNextLetter();
-            return;
+            
+            // Continue animation
+            requestAnimationFrame(moveCat);
         }
         
-        const phonepeRect = phonepeLink.getBoundingClientRect();
-        const letterWidth = phonepeRect.width / letters.length;
-        const targetX = phonepeRect.left + (currentLetterIndex * letterWidth) + (letterWidth / 2) - 18;
-        const catY = phonepeRect.top + (phonepeRect.height / 2) - 12;
-        
-        const currentX = parseFloat(cat.style.left);
-        const distance = targetX - currentX;
-        const steps = Math.abs(distance) / 3;
-        let currentStep = 0;
-        
-        isJumping = true;
-        jumpStep = 0;
-        
-        const jumpInterval = setInterval(() => {
-            currentStep++;
-            const progress = currentStep / steps;
-            const newX = currentX + (distance * progress);
-            
-            cat.style.left = newX + 'px';
-            
-            // Animate jumping
-            animateJumping();
-            
-            if (currentStep >= steps) {
-                clearInterval(jumpInterval);
-                isJumping = false;
-                
-                // Land on the letter (make it move down)
-                stepOnLetter(currentLetterIndex);
-                
-                // Continue to next letter
-                setTimeout(() => {
-                    currentLetterIndex += direction;
-                    walkToNextLetter();
-                }, 200);
-            }
-        }, 50);
-    }
-    
-    // Make letter move down when stepped on
-    function stepOnLetter(letterIndex) {
-        const phonepeLink = document.querySelector('.phonepe-link');
-        const text = phonepeLink.textContent;
-        
-        // Create a temporary span to measure letter positions
-        const tempSpan = document.createElement('span');
-        tempSpan.style.font = window.getComputedStyle(phonepeLink).font;
-        tempSpan.style.visibility = 'hidden';
-        tempSpan.style.position = 'absolute';
-        tempSpan.style.whiteSpace = 'nowrap';
-        document.body.appendChild(tempSpan);
-        
-        // Find the letter position
-        let letterStart = 0;
-        for (let i = 0; i < letterIndex; i++) {
-            letterStart += letters[i].length;
-        }
-        
-        // Create a span for the specific letter
-        const letterSpan = document.createElement('span');
-        letterSpan.textContent = letters[letterIndex];
-        letterSpan.style.transition = 'transform 0.2s ease';
-        letterSpan.style.display = 'inline-block';
-        
-        // Replace the letter in the text
-        const newText = text.substring(0, letterStart) + 
-                       `<span class="stepped-letter" style="transition: transform 0.2s ease; display: inline-block;">${letters[letterIndex]}</span>` + 
-                       text.substring(letterStart + letters[letterIndex].length);
-        
-        phonepeLink.innerHTML = newText;
-        
-        // Move the letter down
-        const steppedLetter = phonepeLink.querySelector('.stepped-letter');
-        if (steppedLetter) {
-            steppedLetter.style.transform = 'translateY(2px)';
-            
-            // Move it back up after a short delay
-            setTimeout(() => {
-                steppedLetter.style.transform = 'translateY(0px)';
-            }, 200);
-        }
+        moveCat();
     }
     
     // Start animation after page load
