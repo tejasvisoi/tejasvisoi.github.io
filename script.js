@@ -35,21 +35,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Walking Minecraft Character Animation
+    // Walking Minecraft Character Animation (Sideways View)
     const phonepeLink = document.querySelector('.phonepe-link');
     let constructionWorker = null;
     let isWalking = true;
-    let currentTarget = 'e'; // Start with 'e', then go to 'P'
+    let currentLetterIndex = 0;
     let walkStep = 0;
+    const letters = ['P', 'h', 'o', 'n', 'e', 'P', 'e'];
     
-    // Create SVG construction worker (Minecraft-style) with walking animation
+    // Create SVG construction worker (Minecraft-style) with sideways walking animation
     function createSVGWorker() {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 20 30');
         svg.setAttribute('width', '30'); // Increased size by 1.5x
         svg.setAttribute('height', '45'); // Increased size by 1.5x
         
-        // Head (brown block with face)
+        // Head (brown block with face - sideways view)
         const head = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         head.setAttribute('x', '6');
         head.setAttribute('y', '0');
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
         head.setAttribute('stroke-width', '0.5');
         svg.appendChild(head);
         
-        // Face (lighter brown)
+        // Face (lighter brown - sideways view)
         const face = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         face.setAttribute('x', '6.5');
         face.setAttribute('y', '0.5');
@@ -69,33 +70,25 @@ document.addEventListener('DOMContentLoaded', function() {
         face.setAttribute('fill', '#D2B48C');
         svg.appendChild(face);
         
-        // Eyes
-        const eye1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        eye1.setAttribute('x', '7.5');
-        eye1.setAttribute('y', '2');
-        eye1.setAttribute('width', '1');
-        eye1.setAttribute('height', '1');
-        eye1.setAttribute('fill', '#000000');
-        svg.appendChild(eye1);
+        // Eye (sideways view - only one visible)
+        const eye = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        eye.setAttribute('x', '11.5');
+        eye.setAttribute('y', '2');
+        eye.setAttribute('width', '1');
+        eye.setAttribute('height', '1');
+        eye.setAttribute('fill', '#000000');
+        svg.appendChild(eye);
         
-        const eye2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        eye2.setAttribute('x', '11.5');
-        eye2.setAttribute('y', '2');
-        eye2.setAttribute('width', '1');
-        eye2.setAttribute('height', '1');
-        eye2.setAttribute('fill', '#000000');
-        svg.appendChild(eye2);
-        
-        // Mouth
+        // Mouth (sideways view)
         const mouth = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        mouth.setAttribute('x', '8.5');
+        mouth.setAttribute('x', '11.5');
         mouth.setAttribute('y', '5');
-        mouth.setAttribute('width', '3');
+        mouth.setAttribute('width', '1');
         mouth.setAttribute('height', '1');
         mouth.setAttribute('fill', '#000000');
         svg.appendChild(mouth);
         
-        // Torso (light blue shirt)
+        // Torso (light blue shirt - sideways view)
         const torso = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         torso.setAttribute('x', '5');
         torso.setAttribute('y', '8');
@@ -106,30 +99,31 @@ document.addEventListener('DOMContentLoaded', function() {
         torso.setAttribute('stroke-width', '0.5');
         svg.appendChild(torso);
         
-        // Arms (skin tone with blue sleeves) - will animate for walking
-        const arm1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        arm1.setAttribute('x', '3');
-        arm1.setAttribute('y', '9');
-        arm1.setAttribute('width', '2');
-        arm1.setAttribute('height', '6');
-        arm1.setAttribute('fill', '#D2B48C');
-        arm1.setAttribute('stroke', '#000000');
-        arm1.setAttribute('stroke-width', '0.5');
-        arm1.setAttribute('class', 'arm-left');
-        svg.appendChild(arm1);
+        // Front arm (skin tone with blue sleeve) - will animate for walking
+        const frontArm = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        frontArm.setAttribute('x', '15');
+        frontArm.setAttribute('y', '9');
+        frontArm.setAttribute('width', '2');
+        frontArm.setAttribute('height', '6');
+        frontArm.setAttribute('fill', '#D2B48C');
+        frontArm.setAttribute('stroke', '#000000');
+        frontArm.setAttribute('stroke-width', '0.5');
+        frontArm.setAttribute('class', 'front-arm');
+        svg.appendChild(frontArm);
         
-        const arm2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        arm2.setAttribute('x', '15');
-        arm2.setAttribute('y', '9');
-        arm2.setAttribute('width', '2');
-        arm2.setAttribute('height', '6');
-        arm2.setAttribute('fill', '#D2B48C');
-        arm2.setAttribute('stroke', '#000000');
-        arm2.setAttribute('stroke-width', '0.5');
-        arm2.setAttribute('class', 'arm-right');
-        svg.appendChild(arm2);
+        // Back arm (skin tone with blue sleeve) - will animate for walking
+        const backArm = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        backArm.setAttribute('x', '3');
+        backArm.setAttribute('y', '9');
+        backArm.setAttribute('width', '2');
+        backArm.setAttribute('height', '6');
+        backArm.setAttribute('fill', '#D2B48C');
+        backArm.setAttribute('stroke', '#000000');
+        backArm.setAttribute('stroke-width', '0.5');
+        backArm.setAttribute('class', 'back-arm');
+        svg.appendChild(backArm);
         
-        // Hammer in right hand
+        // Hammer in front hand
         const hammerHandle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         hammerHandle.setAttribute('x', '17');
         hammerHandle.setAttribute('y', '10');
@@ -138,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hammerHandle.setAttribute('fill', '#8B4513');
         hammerHandle.setAttribute('stroke', '#000000');
         hammerHandle.setAttribute('stroke-width', '0.5');
+        hammerHandle.setAttribute('class', 'hammer-handle');
         svg.appendChild(hammerHandle);
         
         const hammerHead = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -148,82 +143,85 @@ document.addEventListener('DOMContentLoaded', function() {
         hammerHead.setAttribute('fill', '#696969');
         hammerHead.setAttribute('stroke', '#000000');
         hammerHead.setAttribute('stroke-width', '0.5');
+        hammerHead.setAttribute('class', 'hammer-head');
         svg.appendChild(hammerHead);
         
-        // Legs (dark blue pants) - will animate for walking
-        const leg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        leg1.setAttribute('x', '6');
-        leg1.setAttribute('y', '16');
-        leg1.setAttribute('width', '3');
-        leg1.setAttribute('height', '8');
-        leg1.setAttribute('fill', '#000080');
-        leg1.setAttribute('stroke', '#000000');
-        leg1.setAttribute('stroke-width', '0.5');
-        leg1.setAttribute('class', 'leg-left');
-        svg.appendChild(leg1);
+        // Front leg (dark blue pants) - will animate for walking
+        const frontLeg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        frontLeg.setAttribute('x', '11');
+        frontLeg.setAttribute('y', '16');
+        frontLeg.setAttribute('width', '3');
+        frontLeg.setAttribute('height', '8');
+        frontLeg.setAttribute('fill', '#000080');
+        frontLeg.setAttribute('stroke', '#000000');
+        frontLeg.setAttribute('stroke-width', '0.5');
+        frontLeg.setAttribute('class', 'front-leg');
+        svg.appendChild(frontLeg);
         
-        const leg2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        leg2.setAttribute('x', '11');
-        leg2.setAttribute('y', '16');
-        leg2.setAttribute('width', '3');
-        leg2.setAttribute('height', '8');
-        leg2.setAttribute('fill', '#000080');
-        leg2.setAttribute('stroke', '#000000');
-        leg2.setAttribute('stroke-width', '0.5');
-        leg2.setAttribute('class', 'leg-right');
-        svg.appendChild(leg2);
+        // Back leg (dark blue pants) - will animate for walking
+        const backLeg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        backLeg.setAttribute('x', '6');
+        backLeg.setAttribute('y', '16');
+        backLeg.setAttribute('width', '3');
+        backLeg.setAttribute('height', '8');
+        backLeg.setAttribute('fill', '#000080');
+        backLeg.setAttribute('stroke', '#000000');
+        backLeg.setAttribute('stroke-width', '0.5');
+        backLeg.setAttribute('class', 'back-leg');
+        svg.appendChild(backLeg);
         
-        // Feet
-        const foot1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        foot1.setAttribute('x', '5');
-        foot1.setAttribute('y', '24');
-        foot1.setAttribute('width', '4');
-        foot1.setAttribute('height', '2');
-        foot1.setAttribute('fill', '#8B4513');
-        foot1.setAttribute('stroke', '#000000');
-        foot1.setAttribute('stroke-width', '0.5');
-        foot1.setAttribute('class', 'foot-left');
-        svg.appendChild(foot1);
+        // Front foot
+        const frontFoot = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        frontFoot.setAttribute('x', '11');
+        frontFoot.setAttribute('y', '24');
+        frontFoot.setAttribute('width', '4');
+        frontFoot.setAttribute('height', '2');
+        frontFoot.setAttribute('fill', '#8B4513');
+        frontFoot.setAttribute('stroke', '#000000');
+        frontFoot.setAttribute('stroke-width', '0.5');
+        frontFoot.setAttribute('class', 'front-foot');
+        svg.appendChild(frontFoot);
         
-        const foot2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        foot2.setAttribute('x', '11');
-        foot2.setAttribute('y', '24');
-        foot2.setAttribute('width', '4');
-        foot2.setAttribute('height', '2');
-        foot2.setAttribute('fill', '#8B4513');
-        foot2.setAttribute('stroke', '#000000');
-        foot2.setAttribute('stroke-width', '0.5');
-        foot2.setAttribute('class', 'foot-right');
-        svg.appendChild(foot2);
+        // Back foot
+        const backFoot = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        backFoot.setAttribute('x', '5');
+        backFoot.setAttribute('y', '24');
+        backFoot.setAttribute('width', '4');
+        backFoot.setAttribute('height', '2');
+        backFoot.setAttribute('fill', '#8B4513');
+        backFoot.setAttribute('stroke', '#000000');
+        backFoot.setAttribute('stroke-width', '0.5');
+        backFoot.setAttribute('class', 'back-foot');
+        svg.appendChild(backFoot);
         
         return svg;
     }
     
-    // Animate walking motion
+    // Animate sideways walking motion
     function animateWalking() {
         if (!constructionWorker || !isWalking) return;
         
-        const armLeft = constructionWorker.querySelector('.arm-left');
-        const armRight = constructionWorker.querySelector('.arm-right');
-        const legLeft = constructionWorker.querySelector('.leg-left');
-        const legRight = constructionWorker.querySelector('.leg-right');
-        const footLeft = constructionWorker.querySelector('.foot-left');
-        const footRight = constructionWorker.querySelector('.foot-right');
+        const frontArm = constructionWorker.querySelector('.front-arm');
+        const backArm = constructionWorker.querySelector('.back-arm');
+        const frontLeg = constructionWorker.querySelector('.front-leg');
+        const backLeg = constructionWorker.querySelector('.back-leg');
+        const frontFoot = constructionWorker.querySelector('.front-foot');
+        const backFoot = constructionWorker.querySelector('.back-foot');
         
-        if (armLeft && armRight && legLeft && legRight && footLeft && footRight) {
+        if (frontArm && backArm && frontLeg && backLeg && frontFoot && backFoot) {
             const step = Math.sin(walkStep) * 2;
             
             // Animate arms (opposite to legs)
-            armLeft.setAttribute('y', (9 + step) + '');
-            armRight.setAttribute('y', (9 - step) + '');
+            frontArm.setAttribute('y', (9 + step) + '');
+            backArm.setAttribute('y', (9 - step) + '');
             
             // Animate legs
-            legLeft.setAttribute('y', (16 - step) + '');
-            legRight.setAttribute('y', (16 + step) + '');
+            frontLeg.setAttribute('y', (16 - step) + '');
+            backLeg.setAttribute('y', (16 + step) + '');
             
             // Animate feet
-            footLeft.setAttribute('y', (24 - step) + '');
-            footRight.setAttribute('y', (24 + step) + '');
+            frontFoot.setAttribute('y', (24 - step) + '');
+            backFoot.setAttribute('y', (24 + step) + '');
             
             walkStep += 0.3;
         }
@@ -252,37 +250,23 @@ document.addEventListener('DOMContentLoaded', function() {
         constructionWorker.style.left = startX + 'px';
         constructionWorker.style.top = startY + 'px';
         
-        // Walk to 'e' position
-        walkToTarget('e', () => {
-            // Start hammering 'e'
-            startHammering('e', () => {
-                // Walk to 'P' position
-                walkToTarget('P', () => {
-                    // Start hammering 'P'
-                    startHammering('P', () => {
-                        // Reset and start over
-                        setTimeout(() => {
-                            startWalkingAnimation();
-                        }, 2000);
-                    });
-                });
-            });
-        });
+        // Start the letter-by-letter sequence
+        currentLetterIndex = 0;
+        walkToNextLetter();
     }
     
-    // Walk to a specific target
-    function walkToTarget(target, callback) {
-        const phonepeRect = phonepeLink.getBoundingClientRect();
-        const letterWidth = phonepeRect.width / 7;
-        let targetX, targetY;
-        
-        if (target === 'e') {
-            targetX = phonepeRect.left + (6 * letterWidth) + (letterWidth / 2) - 15; // Last 'e'
-        } else {
-            targetX = phonepeRect.left + (letterWidth / 2) - 15; // First 'P'
+    // Walk to the next letter in sequence
+    function walkToNextLetter() {
+        if (currentLetterIndex >= letters.length) {
+            // All letters done, exit to the left
+            exitToLeft();
+            return;
         }
         
-        targetY = phonepeRect.top + (phonepeRect.height / 2) - 22.5;
+        const phonepeRect = phonepeLink.getBoundingClientRect();
+        const letterWidth = phonepeRect.width / letters.length;
+        const targetX = phonepeRect.left + (currentLetterIndex * letterWidth) + (letterWidth / 2) - 15;
+        const targetY = phonepeRect.top + (phonepeRect.height / 2) - 22.5;
         
         const currentX = parseFloat(constructionWorker.style.left);
         const distance = targetX - currentX;
@@ -302,37 +286,70 @@ document.addEventListener('DOMContentLoaded', function() {
             if (currentStep >= steps) {
                 clearInterval(walkInterval);
                 isWalking = false;
-                callback();
+                
+                // Start hammering current letter
+                startHammering(currentLetterIndex, () => {
+                    currentLetterIndex++;
+                    isWalking = true;
+                    walkToNextLetter();
+                });
             }
         }, 50);
     }
     
-    // Start hammering at a position
-    function startHammering(target, callback) {
+    // Exit to the left
+    function exitToLeft() {
+        const exitX = -100; // Off-screen to the left
+        const currentX = parseFloat(constructionWorker.style.left);
+        const distance = exitX - currentX;
+        const steps = Math.abs(distance) / 2;
+        let currentStep = 0;
+        
+        isWalking = true;
+        
+        const walkInterval = setInterval(() => {
+            currentStep++;
+            const progress = currentStep / steps;
+            const newX = currentX + (distance * progress);
+            
+            constructionWorker.style.left = newX + 'px';
+            
+            // Animate walking
+            animateWalking();
+            
+            if (currentStep >= steps) {
+                clearInterval(walkInterval);
+                // Reset and start over after a delay
+                setTimeout(() => {
+                    startWalkingAnimation();
+                }, 2000);
+            }
+        }, 50);
+    }
+    
+    // Start hammering at a specific letter position
+    function startHammering(letterIndex, callback) {
         let hammerCount = 0;
-        const maxHammers = 8;
+        const maxHammers = 6; // Fewer hammers per letter for faster progression
         
         const hammerInterval = setInterval(() => {
             // Create brick pieces
             const phonepeRect = phonepeLink.getBoundingClientRect();
-            const letterWidth = phonepeRect.width / 7;
-            let x, y;
-            
-            if (target === 'e') {
-                x = phonepeRect.left + (6 * letterWidth) + (letterWidth / 2);
-            } else {
-                x = phonepeRect.left + (letterWidth / 2);
-            }
-            y = phonepeRect.top + (phonepeRect.height / 2);
+            const letterWidth = phonepeRect.width / letters.length;
+            const x = phonepeRect.left + (letterIndex * letterWidth) + (letterWidth / 2);
+            const y = phonepeRect.top + (phonepeRect.height / 2);
             
             createBrickPieces(x, y);
             
             // Animate hammer swing
-            const hammer = constructionWorker.querySelector('rect[fill="#8B4513"]');
-            if (hammer) {
-                hammer.style.transform = 'rotate(-20deg)';
+            const hammerHandle = constructionWorker.querySelector('.hammer-handle');
+            const hammerHead = constructionWorker.querySelector('.hammer-head');
+            if (hammerHandle && hammerHead) {
+                hammerHandle.style.transform = 'rotate(-20deg)';
+                hammerHead.style.transform = 'rotate(-20deg)';
                 setTimeout(() => {
-                    hammer.style.transform = 'rotate(0deg)';
+                    hammerHandle.style.transform = 'rotate(0deg)';
+                    hammerHead.style.transform = 'rotate(0deg)';
                 }, 150);
             }
             
@@ -340,9 +357,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (hammerCount >= maxHammers) {
                 clearInterval(hammerInterval);
-                setTimeout(callback, 500);
+                setTimeout(callback, 300);
             }
-        }, 300);
+        }, 250);
     }
     
     // Create brick pieces falling effect
