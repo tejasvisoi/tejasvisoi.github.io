@@ -20,8 +20,8 @@ body {
     min-height: 100vh;
     padding: 30vh 2rem 10vh 2rem; /* 30vh from top, 10vh from bottom */
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    justify-content: flex-start; /* Left align horizontally */
+    align-items: flex-end; /* Align to bottom */
     box-sizing: border-box;
 }
 
@@ -42,9 +42,9 @@ body {
     letter-spacing: 0.005em; /* Reduced from 0.01em to 0.005em */
     color: #f5f5f5;
     width: 60%; /* Occupy only 60% of screen width */
-    margin-left: auto; /* Center the title */
-    margin-right: auto; /* Center the title */
-    text-align: center; /* Center the text within the container */
+    margin-left: 0; /* Left align the title */
+    margin-right: auto; /* Keep right margin auto */
+    text-align: left; /* Left align the text within the container */
     overflow-wrap: break-word; /* Allow text to wrap if needed */
     word-wrap: break-word; /* Fallback for older browsers */
     hyphens: auto; /* Enable automatic hyphenation */
@@ -54,7 +54,7 @@ body {
     display: block;
     margin-bottom: 0.5rem;
     color: #f5f5f5;
-    text-align: center;
+    text-align: left;
     width: 100%;
 }
 
@@ -62,7 +62,7 @@ body {
     display: block;
     position: relative;
     color: #f5f5f5;
-    text-align: center;
+    text-align: left;
     width: 100%;
 }
 
@@ -140,7 +140,7 @@ body {
 /* Visit Tracker */
 .visit-tracker {
     margin-bottom: 6rem; /* Increased from 4rem to 6rem */
-    text-align: center;
+    text-align: left;
 }
 
 #last-visit-text {
