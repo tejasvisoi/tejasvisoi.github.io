@@ -79,27 +79,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 duration: 30, // 30 seconds to reach one end
                 ease: "none", // Linear animation
                 onComplete: () => {
-                    // Flip cat to face right (unflip)
-                    gsap.to(catSprite, {
-                        scaleX: 1,
-                        duration: 0.2
-                    });
-                    
                     // Walk back from right to left
                     gsap.to(catContainer, {
                         x: 0,
                         duration: 30, // 30 seconds to reach other end
                         ease: "none", // Linear animation
                         onComplete: () => {
-                            // Flip cat back to face left
-                            gsap.to(catSprite, {
-                                scaleX: -1,
-                                duration: 0.2,
-                                onComplete: walkAnimation // Loop the animation
-                            });
+                            walkAnimation(); // Loop the animation
                         }
                     });
                 }
+            });
+            
+            // Flip cat when it reaches the rightmost position
+            gsap.to(catSprite, {
+                scaleX: 1,
+                duration: 0.2,
+                delay: 30 // Flip after 30 seconds (when reaching rightmost)
+            });
+            
+            // Flip cat back to left when it reaches the leftmost position
+            gsap.to(catSprite, {
+                scaleX: -1,
+                duration: 0.2,
+                delay: 60 // Flip after 60 seconds (when reaching leftmost)
             });
         };
 
