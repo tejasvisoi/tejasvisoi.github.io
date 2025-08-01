@@ -40,7 +40,7 @@ body {
     margin-bottom: 1rem; /* Reduced from 4rem to 1rem */
     letter-spacing: 0.005em; /* Reduced from 0.01em to 0.005em */
     color: #f5f5f5;
-    width: 60%; /* Occupy only 60% of screen width */
+    width: 80%; /* Occupy only 60% of screen width */
     margin-left: 0; /* Left align the title */
     margin-right: auto; /* Keep right margin auto */
     text-align: left; /* Left align the text within the container */
