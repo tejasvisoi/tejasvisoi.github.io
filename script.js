@@ -57,74 +57,74 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // LoveFrom-style Bear Animation
-    function initBearAnimation() {
-        const bearContainer = document.querySelector('.bear-container');
+    // Minecraft Building Animation
+    function initMinecraftAnimation() {
+        const minecraftContainer = document.querySelector('.minecraft-container');
         const phonepeLink = document.querySelector('.phonepe-link');
         
-        if (!bearContainer || !phonepeLink) return;
+        if (!minecraftContainer || !phonepeLink) return;
 
-        // Position bear container relative to PhonePe link
-        const phonepeRect = phonepeLink.getBoundingClientRect();
-        
-        // Position bear at the start of PhonePe text, relative to the link
-        bearContainer.style.left = '0px';
-        bearContainer.style.top = '-30px'; // Slightly above the text
+        // Position Minecraft character at the start of PhonePe text
+        minecraftContainer.style.left = '0px';
 
-        // Walking animation
-        const walkAnimation = () => {
+        // Building animation - character moves across PhonePe and builds
+        const buildingAnimation = () => {
             const phonepeWidth = phonepeLink.offsetWidth;
-            const bearWidth = 40; // Bear container width
+            const charWidth = 50; // Minecraft character width
             
-            // Walk from left to right across PhonePe
-            gsap.to(bearContainer, {
-                x: phonepeWidth - bearWidth, // Walk across the width of PhonePe
-                duration: 3,
+            // Move from left to right across PhonePe
+            gsap.to(minecraftContainer, {
+                x: phonepeWidth - charWidth,
+                duration: 4,
                 ease: "power1.inOut",
                 onComplete: () => {
-                    // Walk back from right to left
-                    gsap.to(bearContainer, {
+                    // Move back from right to left
+                    gsap.to(minecraftContainer, {
                         x: 0,
-                        duration: 3,
+                        duration: 4,
                         ease: "power1.inOut",
-                        onComplete: walkAnimation // Loop the animation
+                        onComplete: buildingAnimation // Loop the animation
                     });
                 }
             });
         };
 
-        // Bear walking motion (legs and arms)
-        const walkingMotion = () => {
-            // Animate legs for walking effect
-            gsap.to('.bear-leg', {
-                duration: 0.3,
-                attr: {
-                    d: (i) => i === 0 ? 'M35 80 L35 85' : 'M65 80 L65 85'
-                },
+        // Minecraft character building motion
+        const buildingMotion = () => {
+            // Animate arms for building effect (hammering motion)
+            gsap.to('.char-arm', {
+                duration: 0.4,
+                rotation: 15,
                 ease: "power2.inOut",
                 yoyo: true,
                 repeat: -1,
-                stagger: 0.15
+                stagger: 0.2,
+                transformOrigin: "top center"
             });
 
-            // Animate arms for walking effect
-            gsap.to('.bear-arm', {
-                duration: 0.3,
-                attr: {
-                    d: (i) => i === 0 ? 'M25 65 Q20 58 25 52' : 'M75 65 Q80 58 75 52'
-                },
-                ease: "power2.inOut",
-                yoyo: true,
-                repeat: -1,
-                stagger: 0.15
-            });
-
-            // Subtle head bob
-            gsap.to('.bear-head', {
+            // Animate legs for slight movement
+            gsap.to('.char-leg', {
                 duration: 0.6,
-                attr: {
-                    cy: '43'
-                },
+                y: -2,
+                ease: "power2.inOut",
+                yoyo: true,
+                repeat: -1,
+                stagger: 0.3
+            });
+
+            // Animate head for building focus
+            gsap.to('.char-head', {
+                duration: 0.8,
+                y: -1,
+                ease: "power2.inOut",
+                yoyo: true,
+                repeat: -1
+            });
+
+            // Animate body for building motion
+            gsap.to('.char-body', {
+                duration: 0.5,
+                scaleY: 1.05,
                 ease: "power2.inOut",
                 yoyo: true,
                 repeat: -1
@@ -133,19 +133,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Start animations after a delay
         setTimeout(() => {
-            walkAnimation();
-            walkingMotion();
+            buildingAnimation();
+            buildingMotion();
         }, 1000);
     }
 
-    // Initialize bear animation when GSAP is loaded
+    // Initialize Minecraft animation when GSAP is loaded
     if (typeof gsap !== 'undefined') {
-        initBearAnimation();
+        initMinecraftAnimation();
     } else {
         // Wait for GSAP to load
         window.addEventListener('load', () => {
             if (typeof gsap !== 'undefined') {
-                initBearAnimation();
+                initMinecraftAnimation();
             }
         });
     }

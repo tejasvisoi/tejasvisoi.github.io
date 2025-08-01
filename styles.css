@@ -520,40 +520,41 @@ body {
     }
 }
 
-/* LoveFrom-style Bear Animation */
-.bear-container {
+/* Minecraft Building Animation */
+.minecraft-container {
     position: absolute;
-    top: 0;
+    top: -40px;
     left: 0;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     z-index: 1000;
     pointer-events: none;
-    transform: translateY(-50%);
 }
 
-.bear-svg {
+.minecraft-character {
     width: 100%;
     height: 100%;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-/* Bear animation states */
-.bear-body, .bear-head, .bear-ear, .bear-eye, .bear-nose, .bear-arm, .bear-leg {
-    transition: all 0.3s ease;
+/* Minecraft character animation states */
+.char-head, .char-body, .char-arm, .char-leg, .char-eye, .char-mouth {
+    transition: all 0.2s ease;
 }
 
-/* Responsive bear sizing */
+/* Responsive Minecraft character sizing */
 @media (max-width: 768px) {
-    .bear-container {
-        width: 35px;
-        height: 35px;
+    .minecraft-container {
+        width: 40px;
+        height: 40px;
+        top: -35px;
     }
 }
 
 @media (max-width: 480px) {
-    .bear-container {
-        width: 30px;
-        height: 30px;
+    .minecraft-container {
+        width: 35px;
+        height: 35px;
+        top: -30px;
     }
 } 
