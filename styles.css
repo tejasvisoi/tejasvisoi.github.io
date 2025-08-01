@@ -99,8 +99,8 @@ body {
 /* Grid Rows */
 .grid-row {
     display: flex;
-    gap: 8rem; /* Reduced gap for better balance */
-    justify-content: space-between; /* Space sections apart */
+    gap: 12rem; /* Increased gap since we now have only 2 sections */
+    justify-content: center; /* Changed back to center for better balance with 2 sections */
     align-items: flex-start;
     width: 100%;
     max-width: 1200px; /* Increased from 1000px to match title width */
@@ -114,7 +114,6 @@ body {
     min-height: 200px;
     position: relative;
     align-items: flex-start;
-    width: 45%; /* Give each section equal width */
 }
 
 /* Visit Tracker */
@@ -182,6 +181,7 @@ body {
 /* Past Work Section */
 .past-work {
     text-align: left;
+    margin-top: 1rem; /* Add same spacing as Things I am doing section */
 }
 
 .past-work-title {
