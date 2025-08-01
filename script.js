@@ -35,17 +35,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Two Stationary Construction Workers Animation
+    // Walking Minecraft Character Animation
     const phonepeLink = document.querySelector('.phonepe-link');
-    let constructionWorker1 = null;
-    let constructionWorker2 = null;
+    let constructionWorker = null;
+    let isWalking = true;
+    let currentTarget = 'e'; // Start with 'e', then go to 'P'
+    let walkStep = 0;
     
-    // Create SVG construction worker (Minecraft-style)
+    // Create SVG construction worker (Minecraft-style) with walking animation
     function createSVGWorker() {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 20 30');
-        svg.setAttribute('width', '20');
-        svg.setAttribute('height', '30');
+        svg.setAttribute('width', '30'); // Increased size by 1.5x
+        svg.setAttribute('height', '45'); // Increased size by 1.5x
         
         // Head (brown block with face)
         const head = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -104,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         torso.setAttribute('stroke-width', '0.5');
         svg.appendChild(torso);
         
-        // Arms (skin tone with blue sleeves)
+        // Arms (skin tone with blue sleeves) - will animate for walking
         const arm1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         arm1.setAttribute('x', '3');
         arm1.setAttribute('y', '9');
@@ -113,6 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
         arm1.setAttribute('fill', '#D2B48C');
         arm1.setAttribute('stroke', '#000000');
         arm1.setAttribute('stroke-width', '0.5');
+        arm1.setAttribute('class', 'arm-left');
         svg.appendChild(arm1);
         
         const arm2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -123,6 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         arm2.setAttribute('fill', '#D2B48C');
         arm2.setAttribute('stroke', '#000000');
         arm2.setAttribute('stroke-width', '0.5');
+        arm2.setAttribute('class', 'arm-right');
         svg.appendChild(arm2);
         
         // Hammer in right hand
@@ -146,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hammerHead.setAttribute('stroke-width', '0.5');
         svg.appendChild(hammerHead);
         
-        // Legs (dark blue pants)
+        // Legs (dark blue pants) - will animate for walking
         const leg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         leg1.setAttribute('x', '6');
         leg1.setAttribute('y', '16');
@@ -155,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
         leg1.setAttribute('fill', '#000080');
         leg1.setAttribute('stroke', '#000000');
         leg1.setAttribute('stroke-width', '0.5');
+        leg1.setAttribute('class', 'leg-left');
         svg.appendChild(leg1);
         
         const leg2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -165,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
         leg2.setAttribute('fill', '#000080');
         leg2.setAttribute('stroke', '#000000');
         leg2.setAttribute('stroke-width', '0.5');
+        leg2.setAttribute('class', 'leg-right');
         svg.appendChild(leg2);
         
         // Feet
@@ -176,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
         foot1.setAttribute('fill', '#8B4513');
         foot1.setAttribute('stroke', '#000000');
         foot1.setAttribute('stroke-width', '0.5');
+        foot1.setAttribute('class', 'foot-left');
         svg.appendChild(foot1);
         
         const foot2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -186,72 +193,156 @@ document.addEventListener('DOMContentLoaded', function() {
         foot2.setAttribute('fill', '#8B4513');
         foot2.setAttribute('stroke', '#000000');
         foot2.setAttribute('stroke-width', '0.5');
+        foot2.setAttribute('class', 'foot-right');
         svg.appendChild(foot2);
         
         return svg;
     }
     
-    // Create the two stationary construction workers
-    function createConstructionWorkers() {
-        if (constructionWorker1 && constructionWorker2) return; // Only create once
+    // Animate walking motion
+    function animateWalking() {
+        if (!constructionWorker || !isWalking) return;
         
-        // Create first worker (on P)
-        constructionWorker1 = document.createElement('div');
-        constructionWorker1.className = 'construction-worker';
-        constructionWorker1.appendChild(createSVGWorker());
+        const armLeft = constructionWorker.querySelector('.arm-left');
+        const armRight = constructionWorker.querySelector('.arm-right');
+        const legLeft = constructionWorker.querySelector('.leg-left');
+        const legRight = constructionWorker.querySelector('.leg-right');
+        const footLeft = constructionWorker.querySelector('.foot-left');
+        const footRight = constructionWorker.querySelector('.foot-right');
         
-        // Create second worker (on e)
-        constructionWorker2 = document.createElement('div');
-        constructionWorker2.className = 'construction-worker';
-        constructionWorker2.appendChild(createSVGWorker());
-        
-        document.body.appendChild(constructionWorker1);
-        document.body.appendChild(constructionWorker2);
-        
-        // Position workers
-        positionWorkers();
-        
-        // Start continuous brick creation
-        startContinuousBrickCreation();
+        if (armLeft && armRight && legLeft && legRight && footLeft && footRight) {
+            const step = Math.sin(walkStep) * 2;
+            
+            // Animate arms (opposite to legs)
+            armLeft.setAttribute('y', (9 + step) + '');
+            armRight.setAttribute('y', (9 - step) + '');
+            
+            // Animate legs
+            legLeft.setAttribute('y', (16 - step) + '');
+            legRight.setAttribute('y', (16 + step) + '');
+            
+            // Animate feet
+            footLeft.setAttribute('y', (24 - step) + '');
+            footRight.setAttribute('y', (24 + step) + '');
+            
+            walkStep += 0.3;
+        }
     }
     
-    // Position the two workers
-    function positionWorkers() {
+    // Create the walking construction worker
+    function createConstructionWorker() {
+        if (constructionWorker) return; // Only create once
+        
+        constructionWorker = document.createElement('div');
+        constructionWorker.className = 'construction-worker';
+        constructionWorker.appendChild(createSVGWorker());
+        
+        document.body.appendChild(constructionWorker);
+        
+        // Start walking animation
+        startWalkingAnimation();
+    }
+    
+    // Start walking animation sequence
+    function startWalkingAnimation() {
+        // Start position: off-screen to the right
+        const startX = window.innerWidth + 50;
+        const startY = phonepeLink.getBoundingClientRect().top + (phonepeLink.getBoundingClientRect().height / 2) - 22.5; // Center vertically
+        
+        constructionWorker.style.left = startX + 'px';
+        constructionWorker.style.top = startY + 'px';
+        
+        // Walk to 'e' position
+        walkToTarget('e', () => {
+            // Start hammering 'e'
+            startHammering('e', () => {
+                // Walk to 'P' position
+                walkToTarget('P', () => {
+                    // Start hammering 'P'
+                    startHammering('P', () => {
+                        // Reset and start over
+                        setTimeout(() => {
+                            startWalkingAnimation();
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    }
+    
+    // Walk to a specific target
+    function walkToTarget(target, callback) {
         const phonepeRect = phonepeLink.getBoundingClientRect();
-        const letterWidth = phonepeRect.width / 7; // 7 letters in "PhonePe"
+        const letterWidth = phonepeRect.width / 7;
+        let targetX, targetY;
         
-        // Position first worker on P (first letter)
-        const pX = phonepeRect.left + (letterWidth / 2);
-        const pY = phonepeRect.top + (phonepeRect.height / 2);
-        constructionWorker1.style.left = (pX - 30) + 'px';
-        constructionWorker1.style.top = (pY - 15) + 'px';
+        if (target === 'e') {
+            targetX = phonepeRect.left + (6 * letterWidth) + (letterWidth / 2) - 15; // Last 'e'
+        } else {
+            targetX = phonepeRect.left + (letterWidth / 2) - 15; // First 'P'
+        }
         
-        // Position second worker on e (last letter)
-        const eX = phonepeRect.left + (6 * letterWidth) + (letterWidth / 2);
-        const eY = phonepeRect.top + (phonepeRect.height / 2);
-        constructionWorker2.style.left = (eX - 30) + 'px';
-        constructionWorker2.style.top = (eY - 15) + 'px';
+        targetY = phonepeRect.top + (phonepeRect.height / 2) - 22.5;
+        
+        const currentX = parseFloat(constructionWorker.style.left);
+        const distance = targetX - currentX;
+        const steps = Math.abs(distance) / 2;
+        let currentStep = 0;
+        
+        const walkInterval = setInterval(() => {
+            currentStep++;
+            const progress = currentStep / steps;
+            const newX = currentX + (distance * progress);
+            
+            constructionWorker.style.left = newX + 'px';
+            
+            // Animate walking
+            animateWalking();
+            
+            if (currentStep >= steps) {
+                clearInterval(walkInterval);
+                isWalking = false;
+                callback();
+            }
+        }, 50);
     }
     
-    // Start continuous brick creation from both workers
-    function startContinuousBrickCreation() {
-        // Create bricks from first worker (P)
-        setInterval(() => {
-            const phonepeRect = phonepeLink.getBoundingClientRect();
-            const letterWidth = phonepeRect.width / 7;
-            const pX = phonepeRect.left + (letterWidth / 2);
-            const pY = phonepeRect.top + (phonepeRect.height / 2);
-            createBrickPieces(pX, pY);
-        }, 800);
+    // Start hammering at a position
+    function startHammering(target, callback) {
+        let hammerCount = 0;
+        const maxHammers = 8;
         
-        // Create bricks from second worker (e)
-        setInterval(() => {
+        const hammerInterval = setInterval(() => {
+            // Create brick pieces
             const phonepeRect = phonepeLink.getBoundingClientRect();
             const letterWidth = phonepeRect.width / 7;
-            const eX = phonepeRect.left + (6 * letterWidth) + (letterWidth / 2);
-            const eY = phonepeRect.top + (phonepeRect.height / 2);
-            createBrickPieces(eX, eY);
-        }, 800);
+            let x, y;
+            
+            if (target === 'e') {
+                x = phonepeRect.left + (6 * letterWidth) + (letterWidth / 2);
+            } else {
+                x = phonepeRect.left + (letterWidth / 2);
+            }
+            y = phonepeRect.top + (phonepeRect.height / 2);
+            
+            createBrickPieces(x, y);
+            
+            // Animate hammer swing
+            const hammer = constructionWorker.querySelector('rect[fill="#8B4513"]');
+            if (hammer) {
+                hammer.style.transform = 'rotate(-20deg)';
+                setTimeout(() => {
+                    hammer.style.transform = 'rotate(0deg)';
+                }, 150);
+            }
+            
+            hammerCount++;
+            
+            if (hammerCount >= maxHammers) {
+                clearInterval(hammerInterval);
+                setTimeout(callback, 500);
+            }
+        }, 300);
     }
     
     // Create brick pieces falling effect
@@ -277,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start animation after page load
     setTimeout(() => {
-        createConstructionWorkers();
+        createConstructionWorker();
     }, 1000);
     
     // Add hover effects for links
