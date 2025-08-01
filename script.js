@@ -1,39 +1,53 @@
 // Minimal retro effects for the portfolio
 document.addEventListener('DOMContentLoaded', function() {
-    // Visit tracking functionality
+    // Time spent tracking functionality
     const lastVisitText = document.getElementById('last-visit-text');
+    let startTime = Date.now();
+    let totalTimeSpent = 0;
     
-    function updateVisitTracker() {
-        const now = new Date();
-        const lastVisit = localStorage.getItem('lastVisit');
-        
-        if (lastVisit) {
-            const lastVisitDate = new Date(lastVisit);
-            const timeDiff = now - lastVisitDate;
-            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-            
-            let timeString = '';
-            if (days > 0) {
-                timeString = `${days} day${days > 1 ? 's' : ''} back`;
-            } else if (hours > 0) {
-                timeString = `${hours} hour${hours > 1 ? 's' : ''} back`;
-            } else if (minutes > 0) {
-                timeString = `${minutes} minute${minutes > 1 ? 's' : ''} back`;
-            } else {
-                timeString = 'just now';
-            }
-            
-            lastVisitText.textContent = `You last visited this page ${timeString}.`;
-        } else {
-            lastVisitText.textContent = 'Welcome! This is your first visit.';
-        }
-        
-        localStorage.setItem('lastVisit', now.toISOString());
+    // Load total time spent from localStorage
+    const savedTime = localStorage.getItem('totalTimeSpent');
+    if (savedTime) {
+        totalTimeSpent = parseInt(savedTime);
     }
     
-    updateVisitTracker();
+    function formatTime(milliseconds) {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        
+        if (hours > 0) {
+            return `${hours}h ${minutes}m ${seconds}s`;
+        } else if (minutes > 0) {
+            return `${minutes}m ${seconds}s`;
+        } else {
+            return `${seconds}s`;
+        }
+    }
+    
+    function updateTimeTracker() {
+        const currentTime = Date.now();
+        const sessionTime = currentTime - startTime;
+        const totalTime = totalTimeSpent + sessionTime;
+        
+        lastVisitText.textContent = `You have spent ${formatTime(totalTime)} here.`;
+        
+        // Save total time to localStorage
+        localStorage.setItem('totalTimeSpent', totalTime.toString());
+    }
+    
+    // Update timer every second
+    setInterval(updateTimeTracker, 1000);
+    updateTimeTracker(); // Initial update
+    
+    // Update total time when page is about to unload
+    window.addEventListener('beforeunload', function() {
+        const currentTime = Date.now();
+        const sessionTime = currentTime - startTime;
+        const totalTime = totalTimeSpent + sessionTime;
+        localStorage.setItem('totalTimeSpent', totalTime.toString());
+    });
 
     // Line Art Cat Animation (Simplified)
     const phonepeLink = document.querySelector('.phonepe-link');
