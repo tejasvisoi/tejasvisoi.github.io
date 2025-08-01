@@ -33,12 +33,12 @@ body {
 
 .main-heading {
     font-family: 'Rajdhani', 'Technor', 'VT323', monospace;
-    font-size: 9rem; /* 2x of 4.5rem */
-    font-weight: 400; /* Reduced from 700 to 400 */
+    font-size: 10rem; /* Increased from 9rem to 10rem */
+    font-weight: 500; /* Increased from 400 to 500 */
     line-height: 1.1;
     margin-bottom: 4rem;
     white-space: nowrap; /* Prevent wrapping to third line */
-    letter-spacing: 0.01em; /* 1% kerning */
+    letter-spacing: 0.005em; /* Reduced from 0.01em to 0.005em */
     color: rgba(255, 255, 255, 0.9);
 }
 
@@ -70,7 +70,7 @@ body {
     bottom: -4px;
     left: 0;
     width: 100%;
-    height: 1px;
+    height: 3px; /* Increased from 1px to 3px */
     background: rgba(255, 255, 255, 0.6);
     transition: all 0.3s ease;
 }
