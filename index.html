@@ -3,37 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tejasvi Soi</title>
+    <title>Tejasvi Soi - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        @font-face {
-            font-family: 'Instrument Serif';
-            src: url('fonts/Instrument_Serif/InstrumentSerif-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Tejasvi Soi</a>
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#work" class="nav-link">Work</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
     <main>
-        <section class="hero">
+        <!-- Hero Section -->
+        <section class="hero" id="home">
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="fade-in">Experiments</h1>
-                    <p class="hero-text fade-in-delay">A collection of creative explorations and interactive experiences. Each project is a unique journey into design, technology, and storytelling.</p>
+                    <h1 class="hero-title">
+                        <span class="title-line">Hello, I'm</span>
+                        <span class="title-line highlight">Tejasvi Soi</span>
+                        <span class="title-line">Creative Developer</span>
+                    </h1>
+                    <p class="hero-subtitle">I create digital experiences that blend creativity with technology</p>
+                    <div class="hero-cta">
+                        <a href="#work" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="projects">
+        <!-- About Section -->
+        <section class="about" id="about">
             <div class="container">
-                <div class="project-grid">
-                    <a href="projects/project1.html" class="project-card" style="background-color: #000; background-image: linear-gradient(45deg, #FF0000, #00FF00, #0000FF, #FFFF00, #FF00FF, #00FFFF, #FFA500)"></a>
-                    <a href="projects/project2.html" class="project-card" style="background: #4CAF50 url('data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'white\'><path d=\'M7 24h2v-2H7v2zm5-11c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3S9 2.34 9 4v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .56-.44 1-1 1-.55 0-1-.45-1-1V4zm0 18h2v-2h-2v2zm4 0h2v-2h-2v2zm4-12h-1.7c0 3-2.54 5.1-5.3 5.1S6.7 13 6.7 10H5c0 3.41 2.72 6.23 6 6.72V20h2v-3.28c3.28-.49 6-3.31 6-6.72z\'/></svg>') center/50% no-repeat"></a>
-                    <a href="#" class="project-card"></a>
-                    <a href="#" class="project-card"></a>
-                    <a href="#" class="project-card"></a>
-                    <a href="#" class="project-card"></a>
+                <div class="section-header">
+                    <h2 class="section-title">About Me</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>I'm a passionate creative developer who loves building beautiful, functional, and user-centered digital experiences. With a background in both design and development, I bring a unique perspective to every project.</p>
+                        <p>When I'm not coding, you can find me exploring new technologies, experimenting with creative coding, or sharing knowledge with the developer community.</p>
+                        <div class="skills">
+                            <h3>Skills & Technologies</h3>
+                            <div class="skill-tags">
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">CSS3</span>
+                                <span class="skill-tag">HTML5</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">Figma</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Section -->
+        <section class="work" id="work">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Selected Work</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="work-grid">
+                    <article class="work-item">
+                        <div class="work-image">
+                            <div class="work-placeholder">Project 1</div>
+                        </div>
+                        <div class="work-content">
+                            <h3 class="work-title">E-Commerce Platform</h3>
+                            <p class="work-description">A modern e-commerce solution built with React and Node.js, featuring real-time inventory management and seamless payment processing.</p>
+                            <div class="work-tags">
+                                <span class="work-tag">React</span>
+                                <span class="work-tag">Node.js</span>
+                                <span class="work-tag">MongoDB</span>
+                            </div>
+                            <div class="work-links">
+                                <a href="#" class="work-link">View Project</a>
+                                <a href="#" class="work-link">Source Code</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="work-item">
+                        <div class="work-image">
+                            <div class="work-placeholder">Project 2</div>
+                        </div>
+                        <div class="work-content">
+                            <h3 class="work-title">Creative Coding Experiments</h3>
+                            <p class="work-description">A collection of interactive web experiences exploring generative art, animations, and creative coding techniques.</p>
+                            <div class="work-tags">
+                                <span class="work-tag">Canvas API</span>
+                                <span class="work-tag">WebGL</span>
+                                <span class="work-tag">Three.js</span>
+                            </div>
+                            <div class="work-links">
+                                <a href="#" class="work-link">View Project</a>
+                                <a href="#" class="work-link">Source Code</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="work-item">
+                        <div class="work-image">
+                            <div class="work-placeholder">Project 3</div>
+                        </div>
+                        <div class="work-content">
+                            <h3 class="work-title">Task Management App</h3>
+                            <p class="work-description">A productivity app designed to help teams collaborate and manage projects efficiently with real-time updates.</p>
+                            <div class="work-tags">
+                                <span class="work-tag">Vue.js</span>
+                                <span class="work-tag">Firebase</span>
+                                <span class="work-tag">PWA</span>
+                            </div>
+                            <div class="work-links">
+                                <a href="#" class="work-link">View Project</a>
+                                <a href="#" class="work-link">Source Code</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-text">
+                        <p>I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
+                    </div>
+                    <div class="contact-links">
+                        <a href="mailto:hello@tejasvisoi.com" class="contact-link">
+                            <span class="contact-icon">✉️</span>
+                            <span>hello@tejasvisoi.com</span>
+                        </a>
+                        <a href="https://github.com/tejasvisoi" class="contact-link" target="_blank">
+                            <span class="contact-icon">📁</span>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://linkedin.com/in/tejasvisoi" class="contact-link" target="_blank">
+                            <span class="contact-icon">💼</span>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="https://twitter.com/tejasvisoi" class="contact-link" target="_blank">
+                            <span class="contact-icon">🐦</span>
+                            <span>Twitter</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -41,31 +173,10 @@
 
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="social-links">
-                    <a href="#" target="_blank">Instagram</a>
-                    <a href="#" target="_blank">Twitter</a>
-                    <a href="#" target="_blank">LinkedIn</a>
-                    <a href="mailto:your.email@example.com">Email</a>
-                </div>
-                <p class="copyright">&copy; 2024 Tejasvi Soi. All rights reserved.</p>
-            </div>
+            <p>&copy; 2024 Tejasvi Soi. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        // Intersection Observer for fade-in animations
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in, .fade-in-delay').forEach(el => observer.observe(el));
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html> 
