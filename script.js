@@ -35,10 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Construction Animation
-    const constructionAnimation = document.querySelector('.construction-animation');
-    const constructionWorkers = document.querySelector('.construction-workers');
-    const letters = document.querySelectorAll('.letter');
+    // Construction Animation around PhonePe link
+    const phonepeLink = document.querySelector('.phonepe-link');
     
     // Create construction worker
     function createConstructionWorker() {
@@ -50,20 +48,20 @@ document.addEventListener('DOMContentLoaded', function() {
         hammer.className = 'hammer';
         worker.appendChild(hammer);
         
-        // Random position around PhonePe
-        const phonepeRect = document.querySelector('.phonepe-text').getBoundingClientRect();
+        // Position worker around PhonePe link
+        const phonepeRect = phonepeLink.getBoundingClientRect();
         const centerX = phonepeRect.left + phonepeRect.width / 2;
         const centerY = phonepeRect.top + phonepeRect.height / 2;
         
         const angle = Math.random() * Math.PI * 2;
-        const distance = 100 + Math.random() * 50;
+        const distance = 80 + Math.random() * 40;
         const x = centerX + Math.cos(angle) * distance;
         const y = centerY + Math.sin(angle) * distance;
         
         worker.style.left = x + 'px';
         worker.style.top = y + 'px';
         
-        constructionWorkers.appendChild(worker);
+        document.body.appendChild(worker);
         
         // Create brick pieces periodically
         const brickInterval = setInterval(() => {
@@ -89,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
             piece.style.left = (x + Math.random() * 20 - 10) + 'px';
             piece.style.top = (y + Math.random() * 20 - 10) + 'px';
             
-            constructionAnimation.appendChild(piece);
+            document.body.appendChild(piece);
             
             // Remove piece after animation
             setTimeout(() => {
@@ -107,17 +105,15 @@ document.addEventListener('DOMContentLoaded', function() {
             createConstructionWorker();
         }, 800 + Math.random() * 400);
         
-        // Create additional brick pieces around letters
+        // Create additional brick pieces around PhonePe link
         setInterval(() => {
-            letters.forEach((letter, index) => {
-                if (Math.random() > 0.7) {
-                    const letterRect = letter.getBoundingClientRect();
-                    createBrickPieces(
-                        letterRect.left + letterRect.width / 2,
-                        letterRect.top + letterRect.height / 2
-                    );
-                }
-            });
+            if (Math.random() > 0.7) {
+                const phonepeRect = phonepeLink.getBoundingClientRect();
+                createBrickPieces(
+                    phonepeRect.left + phonepeRect.width / 2,
+                    phonepeRect.top + phonepeRect.height / 2
+                );
+            }
         }, 300);
     }
     

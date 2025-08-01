@@ -298,49 +298,7 @@ body {
     justify-content: center;
 }
 
-/* Construction Animation */
-.construction-animation {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 10;
-    opacity: 0;
-    animation: fadeInOut 10s ease-in-out infinite;
-}
-
-.phonepe-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    gap: 0.5rem;
-    font-family: 'VT323', monospace;
-    font-size: 4rem;
-    font-weight: bold;
-    color: #FFFFFF;
-}
-
-.letter {
-    opacity: 1;
-    transform: scale(1);
-    position: relative;
-    color: #FFFFFF;
-}
-
-.construction-workers {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Construction Worker */
+/* Construction Animation Elements */
 .construction-worker {
     position: absolute;
     width: 20px;
@@ -348,6 +306,8 @@ body {
     background: #FFFFFF;
     border-radius: 3px;
     animation: workerMove 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 10;
 }
 
 .construction-worker::before {
@@ -410,11 +370,6 @@ body {
 }
 
 /* Construction Animation Keyframes */
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0; }
-    10%, 90% { opacity: 1; }
-}
-
 @keyframes workerMove {
     0% {
         transform: translateX(-50px) translateY(0);
@@ -490,10 +445,6 @@ body {
         margin-top: 1rem;
     }
     
-    .phonepe-text {
-        font-size: 3rem;
-    }
-    
     #last-visit-text,
     .main-link,
     .past-work-title,
@@ -527,10 +478,6 @@ body {
         gap: 1rem;
     }
     
-    .phonepe-text {
-        font-size: 2.5rem;
-    }
-    
     #last-visit-text,
     .main-link,
     .past-work-title,
@@ -550,10 +497,6 @@ body {
     
     .main-heading {
         font-size: 4.8rem; /* 2x of 2.4rem */
-    }
-    
-    .phonepe-text {
-        font-size: 2rem;
     }
     
     #last-visit-text,
