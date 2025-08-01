@@ -66,10 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const catSprite = catContainer.querySelector('.cat-sprite');
 
-        // Position cat 10px below the visit tracker
+        // Position cat 10px below the visit tracker text
         const visitTrackerRect = visitTracker.getBoundingClientRect();
-        const containerRect = document.querySelector('.main-content').getBoundingClientRect();
-        const relativeTop = visitTrackerRect.bottom - containerRect.top + 10;
+        const relativeTop = visitTrackerRect.bottom + 10;
         catContainer.style.top = relativeTop + 'px';
 
         // Walking animation across the entire screen
