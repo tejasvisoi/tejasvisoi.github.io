@@ -402,6 +402,15 @@ body {
         max-width: 100%; /* Full width on mobile */
     }
     
+    /* Reorder sections on mobile - Work first, then Things I am Building */
+    .section:first-child {
+        order: 2; /* Things I am Building comes second */
+    }
+    
+    .section:last-child {
+        order: 1; /* Work comes first */
+    }
+    
     .social-links {
         position: relative;
         bottom: auto;
@@ -449,7 +458,7 @@ body {
     }
     
     .grid-row {
-        gap: 1.5rem;
+        gap: 3rem;
     }
     
     .social-links {
