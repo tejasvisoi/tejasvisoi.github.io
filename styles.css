@@ -79,7 +79,7 @@ body {
     transition: all 0.3s ease;
     display: inline-block;
     transform-origin: center;
-    opacity: 0.8; /* Make it appear incomplete */
+    opacity: 1; /* Make it same as rest of text */
 }
 
 .phonepe-link::after {
@@ -530,20 +530,10 @@ body {
     pointer-events: none;
 }
 
-/* Position the 3 characters at specific locations */
+/* Position the character at the start of "m" */
 .char-1 {
     top: -35px;
-    left: -20px; /* Left of P */
-}
-
-.char-2 {
-    top: -35px;
-    left: 50px; /* Top of e */
-}
-
-.char-3 {
-    top: -35px;
-    left: 120px; /* Right of the next P */
+    left: -15px; /* At the start of "m" */
 }
 
 .minecraft-character {
@@ -597,17 +587,7 @@ body {
     
     .char-1 {
         top: -30px;
-        left: -15px;
-    }
-    
-    .char-2 {
-        top: -30px;
-        left: 40px;
-    }
-    
-    .char-3 {
-        top: -30px;
-        left: 100px;
+        left: -10px;
     }
 }
 
@@ -619,16 +599,6 @@ body {
     
     .char-1 {
         top: -25px;
-        left: -10px;
-    }
-    
-    .char-2 {
-        top: -25px;
-        left: 35px;
-    }
-    
-    .char-3 {
-        top: -25px;
-        left: 85px;
+        left: -8px;
     }
 } 

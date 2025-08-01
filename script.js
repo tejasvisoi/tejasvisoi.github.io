@@ -64,17 +64,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!phonepeLink || !fallingBricksContainer) return;
 
-        // Create impact particles at random points on PhonePe text
+        // Create impact particles when character hits the "m"
         function createImpactParticles() {
-            const phonepeWidth = phonepeLink.offsetWidth;
-            const phonepeHeight = phonepeLink.offsetHeight;
-            
-            // Random impact point on PhonePe text
-            const impactX = Math.random() * phonepeWidth;
-            const impactY = Math.random() * phonepeHeight;
+            // Impact point at the start of "m" (where character is positioned)
+            const impactX = 15; // Approximate position of "m" start
+            const impactY = 20; // Middle of the text height
             
             // Create multiple particles from impact point
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 6; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'impact-particle';
                 
@@ -84,8 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 fallingBricksContainer.appendChild(particle);
                 
                 // Animate particle flying off from impact point
-                const angle = (i / 8) * 360; // Distribute particles in a circle
-                const distance = 20 + Math.random() * 30;
+                const angle = (i / 6) * 360; // Distribute particles in a circle
+                const distance = 15 + Math.random() * 20;
                 const endX = impactX + Math.cos(angle * Math.PI / 180) * distance;
                 const endY = impactY + Math.sin(angle * Math.PI / 180) * distance;
                 
@@ -93,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     x: endX - impactX,
                     y: endY - impactY,
                     opacity: 0,
-                    duration: 1 + Math.random() * 0.5,
+                    duration: 0.8 + Math.random() * 0.4,
                     ease: "power2.out",
                     onComplete: () => {
                         if (fallingBricksContainer.contains(particle)) {
