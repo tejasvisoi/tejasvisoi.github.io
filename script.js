@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Line Art Cat Animation with SVG PhonePe
+    // Line Art Cat Animation (Simplified)
     const phonepeLink = document.querySelector('.phonepe-link');
     let cat = null;
     let isWalking = true;
@@ -43,173 +43,47 @@ document.addEventListener('DOMContentLoaded', function() {
     let direction = 1; // 1 for right, -1 for left
     let currentX = 0;
     let currentY = 0;
-    let isClimbing = false;
-    let climbStep = 0;
     const letters = ['P', 'h', 'o', 'n', 'e', 'P', 'e'];
-    let letterPaths = [];
     
-    // Convert PhonePe text to SVG
-    function convertTextToSVG() {
-        const phonepeLink = document.querySelector('.phonepe-link');
-        const text = phonepeLink.textContent || 'PhonePe'; // Fallback text
-        const computedStyle = window.getComputedStyle(phonepeLink);
-        
-        // Create SVG container
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('width', '100%');
-        svg.setAttribute('height', '100%');
-        svg.setAttribute('viewBox', '0 0 800 200');
-        svg.style.position = 'absolute';
-        svg.style.top = '0';
-        svg.style.left = '0';
-        svg.style.pointerEvents = 'none';
-        
-        // Create text element
-        const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        textElement.setAttribute('x', '50%');
-        textElement.setAttribute('y', '50%');
-        textElement.setAttribute('text-anchor', 'middle');
-        textElement.setAttribute('dominant-baseline', 'middle');
-        textElement.setAttribute('font-family', computedStyle.fontFamily);
-        textElement.setAttribute('font-size', computedStyle.fontSize);
-        textElement.setAttribute('font-weight', computedStyle.fontWeight);
-        textElement.setAttribute('fill', '#f5f5f5');
-        textElement.textContent = text;
-        
-        svg.appendChild(textElement);
-        
-        // Store original content and replace with SVG
-        phonepeLink.setAttribute('data-original-text', text);
-        phonepeLink.innerHTML = '';
-        phonepeLink.appendChild(svg);
-        
-        // Get letter paths for climbing
-        setTimeout(() => {
-            generateLetterPaths();
-        }, 100);
-    }
-    
-    // Generate paths for each letter
-    function generateLetterPaths() {
-        const phonepeRect = phonepeLink.getBoundingClientRect();
-        const letterWidth = phonepeRect.width / letters.length;
-        
-        letterPaths = letters.map((letter, index) => {
-            const x = phonepeRect.left + (index * letterWidth) + (letterWidth / 2);
-            const y = phonepeRect.top + (phonepeRect.height / 2);
-            const width = letterWidth;
-            const height = phonepeRect.height;
-            
-            return {
-                letter,
-                x,
-                y,
-                width,
-                height,
-                path: generateLetterPath(letter, x, y, width, height)
-            };
-        });
-    }
-    
-    // Generate climbing path for each letter
-    function generateLetterPath(letter, x, y, width, height) {
-        // Create a simple path that follows the letter shape
-        const points = [];
-        
-        switch(letter) {
-            case 'P':
-                // P shape: vertical line, then curve
-                points.push([x - width/3, y - height/2]); // Top left
-                points.push([x - width/3, y + height/2]); // Bottom left
-                points.push([x - width/3, y - height/4]); // Back to middle
-                points.push([x + width/3, y - height/4]); // Top right
-                points.push([x + width/3, y + height/4]); // Bottom right
-                points.push([x - width/3, y + height/4]); // Back to middle
-                break;
-            case 'h':
-                // h shape: vertical line, then curve
-                points.push([x - width/3, y - height/2]); // Top left
-                points.push([x - width/3, y + height/2]); // Bottom left
-                points.push([x - width/3, y]); // Middle
-                points.push([x + width/3, y]); // Middle right
-                points.push([x + width/3, y + height/2]); // Bottom right
-                break;
-            case 'o':
-                // o shape: circle
-                for(let i = 0; i <= 360; i += 30) {
-                    const angle = (i * Math.PI) / 180;
-                    const px = x + (width/3) * Math.cos(angle);
-                    const py = y + (height/3) * Math.sin(angle);
-                    points.push([px, py]);
-                }
-                break;
-            case 'n':
-                // n shape: vertical line, then curve
-                points.push([x - width/3, y - height/2]); // Top left
-                points.push([x - width/3, y + height/2]); // Bottom left
-                points.push([x - width/3, y]); // Middle
-                points.push([x + width/3, y]); // Middle right
-                points.push([x + width/3, y + height/2]); // Bottom right
-                break;
-            case 'e':
-                // e shape: horizontal line with curve
-                points.push([x - width/3, y]); // Left
-                points.push([x + width/3, y]); // Right
-                points.push([x + width/3, y - height/3]); // Top right
-                points.push([x - width/3, y - height/3]); // Top left
-                points.push([x - width/3, y + height/3]); // Bottom left
-                points.push([x + width/3, y + height/3]); // Bottom right
-                break;
-            default:
-                // Default rectangle path
-                points.push([x - width/3, y - height/2]);
-                points.push([x + width/3, y - height/2]);
-                points.push([x + width/3, y + height/2]);
-                points.push([x - width/3, y + height/2]);
-        }
-        
-        return points;
-    }
-    
-    // Create SVG line art cat (based on the reference)
+    // Create SVG line art cat (white with black outlines)
     function createSVGCat() {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 60 40');
         svg.setAttribute('width', '60');
         svg.setAttribute('height', '40');
         
-        // Cat body (seated position)
+        // Cat body (seated position) - WHITE FILL
         const body = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         body.setAttribute('d', 'M 20 25 Q 25 20 30 25 Q 35 30 30 35 L 20 35 Q 15 30 20 25 Z');
-        body.setAttribute('fill', 'none');
+        body.setAttribute('fill', '#FFFFFF'); // WHITE FILL
         body.setAttribute('stroke', '#000000');
         body.setAttribute('stroke-width', '2');
         body.setAttribute('class', 'cat-body');
         svg.appendChild(body);
         
-        // Cat head
+        // Cat head - WHITE FILL
         const head = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         head.setAttribute('cx', '35');
         head.setAttribute('cy', '20');
         head.setAttribute('r', '8');
-        head.setAttribute('fill', 'none');
+        head.setAttribute('fill', '#FFFFFF'); // WHITE FILL
         head.setAttribute('stroke', '#000000');
         head.setAttribute('stroke-width', '2');
         head.setAttribute('class', 'cat-head');
         svg.appendChild(head);
         
-        // Cat ears
+        // Cat ears - WHITE FILL
         const ear1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        ear1.setAttribute('d', 'M 30 15 L 32 10 L 34 15');
-        ear1.setAttribute('fill', 'none');
+        ear1.setAttribute('d', 'M 30 15 L 32 10 L 34 15 Z');
+        ear1.setAttribute('fill', '#FFFFFF'); // WHITE FILL
         ear1.setAttribute('stroke', '#000000');
         ear1.setAttribute('stroke-width', '2');
         ear1.setAttribute('class', 'cat-ear');
         svg.appendChild(ear1);
         
         const ear2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        ear2.setAttribute('d', 'M 36 15 L 38 10 L 40 15');
-        ear2.setAttribute('fill', 'none');
+        ear2.setAttribute('d', 'M 36 15 L 38 10 L 40 15 Z');
+        ear2.setAttribute('fill', '#FFFFFF'); // WHITE FILL
         ear2.setAttribute('stroke', '#000000');
         ear2.setAttribute('stroke-width', '2');
         ear2.setAttribute('class', 'cat-ear');
@@ -245,27 +119,33 @@ document.addEventListener('DOMContentLoaded', function() {
         muzzle.setAttribute('class', 'cat-muzzle');
         svg.appendChild(muzzle);
         
-        // Cat front legs
-        const frontLeg1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        frontLeg1.setAttribute('d', 'M 22 25 L 20 35');
-        frontLeg1.setAttribute('fill', 'none');
+        // Cat front legs - WHITE FILL
+        const frontLeg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        frontLeg1.setAttribute('x', '19');
+        frontLeg1.setAttribute('y', '25');
+        frontLeg1.setAttribute('width', '4');
+        frontLeg1.setAttribute('height', '10');
+        frontLeg1.setAttribute('fill', '#FFFFFF'); // WHITE FILL
         frontLeg1.setAttribute('stroke', '#000000');
         frontLeg1.setAttribute('stroke-width', '2');
         frontLeg1.setAttribute('class', 'cat-front-leg');
         svg.appendChild(frontLeg1);
         
-        const frontLeg2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        frontLeg2.setAttribute('d', 'M 28 25 L 26 35');
-        frontLeg2.setAttribute('fill', 'none');
+        const frontLeg2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        frontLeg2.setAttribute('x', '25');
+        frontLeg2.setAttribute('y', '25');
+        frontLeg2.setAttribute('width', '4');
+        frontLeg2.setAttribute('height', '10');
+        frontLeg2.setAttribute('fill', '#FFFFFF'); // WHITE FILL
         frontLeg2.setAttribute('stroke', '#000000');
         frontLeg2.setAttribute('stroke-width', '2');
         frontLeg2.setAttribute('class', 'cat-front-leg');
         svg.appendChild(frontLeg2);
         
-        // Cat tail (curved like question mark)
+        // Cat tail (curved like question mark) - WHITE FILL
         const tail = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        tail.setAttribute('d', 'M 20 30 Q 15 25 10 30 Q 5 35 10 40');
-        tail.setAttribute('fill', 'none');
+        tail.setAttribute('d', 'M 20 30 Q 15 25 10 30 Q 5 35 10 40 Z');
+        tail.setAttribute('fill', '#FFFFFF'); // WHITE FILL
         tail.setAttribute('stroke', '#000000');
         tail.setAttribute('stroke-width', '2');
         tail.setAttribute('class', 'cat-tail');
@@ -286,39 +166,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const step = Math.sin(walkStep) * 2;
             
             // Animate legs for walking
-            frontLeg1.setAttribute('d', `M 22 ${25 - step} L 20 ${35 - step}`);
-            frontLeg2.setAttribute('d', `M 28 ${25 + step} L 26 ${35 + step}`);
+            frontLeg1.setAttribute('y', (25 - step) + '');
+            frontLeg2.setAttribute('y', (25 + step) + '');
             
             // Animate tail
             const tailCurve = Math.sin(walkStep * 0.5) * 3;
-            tail.setAttribute('d', `M 20 30 Q ${15 - tailCurve} 25 ${10 - tailCurve} 30 Q ${5 - tailCurve} 35 ${10 - tailCurve} 40`);
+            tail.setAttribute('d', `M 20 30 Q ${15 - tailCurve} 25 ${10 - tailCurve} 30 Q ${5 - tailCurve} 35 ${10 - tailCurve} 40 Z`);
             
             walkStep += 0.3;
-        }
-    }
-    
-    // Animate cat climbing motion
-    function animateClimbing() {
-        if (!cat || !isClimbing) return;
-        
-        const body = cat.querySelector('.cat-body');
-        const head = cat.querySelector('.cat-head');
-        const frontLeg1 = cat.querySelector('.cat-front-leg:nth-child(1)');
-        const frontLeg2 = cat.querySelector('.cat-front-leg:nth-child(2)');
-        
-        if (body && head && frontLeg1 && frontLeg2) {
-            const climbHeight = Math.sin(climbStep) * 5;
-            
-            // Move cat up and down while climbing
-            body.setAttribute('d', `M 20 ${25 - climbHeight} Q 25 ${20 - climbHeight} 30 ${25 - climbHeight} Q 35 ${30 - climbHeight} 30 ${35 - climbHeight} L 20 ${35 - climbHeight} Q 15 ${30 - climbHeight} 20 ${25 - climbHeight} Z`);
-            head.setAttribute('cy', (20 - climbHeight) + '');
-            
-            // Animate legs for climbing
-            const legStep = Math.sin(climbStep * 2) * 3;
-            frontLeg1.setAttribute('d', `M 22 ${25 - climbHeight} L 20 ${35 - climbHeight + legStep}`);
-            frontLeg2.setAttribute('d', `M 28 ${25 - climbHeight} L 26 ${35 - climbHeight - legStep}`);
-            
-            climbStep += 0.4;
         }
     }
     
@@ -350,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
         animateCatMovement();
     }
     
-    // Continuous cat movement with climbing
+    // Continuous cat movement (simplified)
     function animateCatMovement() {
         const phonepeRect = phonepeLink.getBoundingClientRect();
         const speed = 0.8; // Pixels per frame
@@ -362,41 +217,8 @@ document.addEventListener('DOMContentLoaded', function() {
             currentX += speed * direction;
             cat.style.left = currentX + 'px';
             
-            // Check if cat should climb on letters
-            const currentLetterIndex = Math.floor((currentX - phonepeRect.left) / (phonepeRect.width / letters.length));
-            
-            if (currentLetterIndex >= 0 && currentLetterIndex < letters.length) {
-                // Cat is over a letter, start climbing
-                if (!isClimbing) {
-                    isClimbing = true;
-                    isWalking = false;
-                    climbStep = 0;
-                }
-                
-                // Move cat up slightly while on letter
-                const letterY = phonepeRect.top + (phonepeRect.height / 2) - 25;
-                cat.style.top = letterY + 'px';
-                currentY = letterY;
-                
-                // Animate climbing
-                animateClimbing();
-                
-                // Make letter move down slightly
-                moveLetterDown(currentLetterIndex);
-            } else {
-                // Cat is not on a letter, walk normally
-                if (isClimbing) {
-                    isClimbing = false;
-                    isWalking = true;
-                }
-                
-                const groundY = phonepeRect.top + (phonepeRect.height / 2) - 20;
-                cat.style.top = groundY + 'px';
-                currentY = groundY;
-                
-                // Animate walking
-                animateWalking();
-            }
+            // Animate walking
+            animateWalking();
             
             // Check if cat needs to turn around
             if (direction === 1 && currentX > phonepeRect.right + 60) {
@@ -418,28 +240,10 @@ document.addEventListener('DOMContentLoaded', function() {
         moveCat();
     }
     
-    // Make letter move down when cat is on it
-    function moveLetterDown(letterIndex) {
-        const phonepeLink = document.querySelector('.phonepe-link');
-        const svg = phonepeLink.querySelector('svg');
-        const textElement = svg.querySelector('text');
-        
-        if (textElement) {
-            // Add a subtle bounce effect to the text
-            textElement.style.transform = 'translateY(1px)';
-            setTimeout(() => {
-                textElement.style.transform = 'translateY(0px)';
-            }, 100);
-        }
-    }
-    
-    // Convert text to SVG and start animation
+    // Start animation after page load
     setTimeout(() => {
-        convertTextToSVG();
-        setTimeout(() => {
-            createCat();
-        }, 200);
-    }, 1000); // Increased delay to ensure font loads
+        createCat();
+    }, 1000);
     
     // Add hover effects for links
     const allLinks = document.querySelectorAll('a');
