@@ -98,6 +98,7 @@ body {
     align-items: flex-start;
     width: 100%;
     max-width: 1200px; /* Increased from 1000px to match title width */
+    padding: 0 40px; /* Added 40px padding left and right */
 }
 
 /* Sections */
@@ -264,6 +265,7 @@ body {
     position: absolute;
     bottom: 0;
     left: 0;
+    flex-wrap: nowrap; /* Prevent wrapping */
 }
 
 .social-link {
@@ -280,7 +282,7 @@ body {
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
     text-transform: uppercase;
-    display: inline-block;
+    white-space: nowrap; /* Prevent text wrapping */
     transform-origin: center;
 }
 
@@ -297,6 +299,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
 /* Construction Animation Elements */

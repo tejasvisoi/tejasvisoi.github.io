@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 timeString = 'just now';
             }
             
-            lastVisitText.textContent = `You visited this page ${timeString}`;
+            lastVisitText.textContent = `Nice to see you here again, you last visited this page ${timeString}.`;
         } else {
             lastVisitText.textContent = 'Welcome! This is your first visit.';
         }
