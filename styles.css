@@ -32,9 +32,9 @@ body {
 }
 
 .main-heading {
-    font-family: 'Rajdhani', 'Technor', 'VT323', monospace;
+    font-family: 'Hoover', sans-serif;
     font-size: 10rem; /* Increased from 9rem to 10rem */
-    font-weight: 500; /* Increased from 400 to 500 */
+    font-weight: 700; /* Bold weight for Hoover */
     line-height: 1.1;
     margin-bottom: 1rem; /* Reduced from 4rem to 1rem */
     white-space: nowrap; /* Prevent wrapping to third line */
