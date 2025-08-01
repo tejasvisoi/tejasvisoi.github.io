@@ -41,6 +41,9 @@ body {
     margin-bottom: 1rem; /* Reduced from 4rem to 1rem */
     letter-spacing: 0.005em; /* Reduced from 0.01em to 0.005em */
     color: #f5f5f5;
+    width: 60%; /* Occupy only 60% of screen width */
+    margin-left: auto; /* Center the title */
+    margin-right: auto; /* Center the title */
     text-align: center; /* Center the text within the container */
     overflow-wrap: break-word; /* Allow text to wrap if needed */
     word-wrap: break-word; /* Fallback for older browsers */
@@ -63,7 +66,11 @@ body {
     width: 100%;
 }
 
-
+.at-symbol {
+    font-size: 0.3em; /* Very small @ symbol */
+    vertical-align: super; /* Position it slightly above the baseline */
+    opacity: 0.8; /* Slightly transparent */
+}
 
 /* PhonePe Link Styling */
 .phonepe-link {
@@ -113,11 +120,8 @@ body {
     justify-content: space-between; /* Auto-space objects */
     align-items: flex-start;
     width: 100%;
-    max-width: 400px; /* Match PhonePe word width more precisely */
+    max-width: 600px; /* Match PhonePe text width (approximately 7 chars * 85px) */
     margin: 0 auto; /* Center the container */
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%); /* Center the grid */
 }
 
 /* Sections */
@@ -348,6 +352,7 @@ body {
     
     .main-heading {
         font-size: clamp(5rem, 7vw, 12rem); /* Larger font for big screens */
+        width: 70%; /* Slightly wider on large screens */
     }
 }
 
@@ -358,6 +363,7 @@ body {
     }
     
     .main-heading {
+        width: 90%; /* Increase width on smaller screens for better readability */
         font-size: clamp(2.5rem, 5vw, 6rem); /* Better responsive font size for tablets */
         margin-bottom: 2.5rem;
         white-space: normal; /* Allow text to wrap on smaller screens */
@@ -400,6 +406,7 @@ body {
     }
     
     .main-heading {
+        width: 100%; /* Full width on mobile for better readability */
         font-size: clamp(2rem, 4.5vw, 4.5rem); /* Better responsive font size for mobile */
         margin-bottom: 2rem;
         white-space: normal; /* Allow text to wrap on mobile */
@@ -437,6 +444,7 @@ body {
     }
     
     .main-heading {
+        width: 100%; /* Full width on very small screens */
         font-size: clamp(1.8rem, 4vw, 3.5rem); /* Smaller font for very small screens */
         margin-bottom: 1.5rem;
     }
