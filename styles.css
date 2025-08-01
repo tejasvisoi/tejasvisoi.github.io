@@ -544,14 +544,6 @@ body {
     .section {
         max-width: 100%;
         width: 100%;
-        flex: none; /* Remove flex to ensure equal sizing */
-    }
-    
-    /* Make both sections the same size on mobile */
-    .main-links,
-    .past-work {
-        width: 100%;
-        max-width: 300px; /* Same max-width for both sections */
     }
     
     .social-links {
@@ -597,13 +589,6 @@ body {
     
     .section {
         max-width: 100%;
-        flex: none;
-    }
-    
-    .main-links,
-    .past-work {
-        width: 100%;
-        max-width: 280px;
     }
     
     .social-links {
@@ -652,13 +637,6 @@ body {
     
     .section {
         max-width: 100%;
-        flex: none;
-    }
-    
-    .main-links,
-    .past-work {
-        width: 100%;
-        max-width: 260px;
     }
     
     .social-links {
