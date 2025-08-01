@@ -358,7 +358,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 25vh 1.5rem 8vh 1.5rem; /* Adjust padding for tablets */
+        padding: 20vh 1.5rem 8vh 1.5rem; /* Adjust padding for tablets */
         justify-content: flex-start; /* Left align on tablets */
         align-items: flex-start; /* Left align on tablets */
     }
@@ -392,7 +392,7 @@ body {
     .grid-row {
         flex-direction: column;
         gap: 3rem; /* More spacing between sections */
-        align-items: center;
+        align-items: left;
         max-width: 100%; /* Full width on mobile */
     }
     
@@ -421,14 +421,14 @@ body {
 
 @media (max-width: 480px) {
     .container {
-        padding: 20vh 1rem 6vh 1rem; /* Adjust padding for mobile */
+        padding: 20vh 1.5rem 6vh 1.5rem; /* Adjust padding for mobile */
         justify-content: flex-start; /* Left align on mobile */
         align-items: flex-start; /* Left align on mobile */
     }
     
     .main-heading {
         width: 100%; /* Full width on mobile for better readability */
-        font-size: clamp(3rem, 4.5vw, 4.5rem); /* Better responsive font size for mobile */
+        font-size: clamp(2.5rem, 4.5vw, 4.5rem); /* Better responsive font size for mobile */
         margin-bottom: 2rem;
         white-space: normal; /* Allow text to wrap on mobile */
         text-align: left; /* Left align text on mobile */
