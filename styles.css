@@ -365,7 +365,7 @@ body {
     
     .main-heading {
         width: 90%; /* Increase width on smaller screens for better readability */
-        font-size: clamp(2.5rem, 5vw, 6rem); /* Better responsive font size for tablets */
+        font-size: clamp(3.5rem, 5vw, 6rem); /* Better responsive font size for tablets */
         margin-bottom: 2.5rem;
         white-space: normal; /* Allow text to wrap on smaller screens */
         text-align: center; /* Center align text on tablets */
@@ -391,8 +391,15 @@ body {
     
     .grid-row {
         flex-direction: column;
-        gap: 2rem;
+        gap: 3rem; /* More spacing between sections */
         align-items: center;
+        max-width: 100%; /* Full width on mobile */
+    }
+    
+    .section {
+        align-items: center; /* Center align section content on mobile */
+        text-align: center; /* Center align text on mobile */
+        max-width: 100%; /* Full width on mobile */
     }
     
     .social-links {
@@ -408,7 +415,7 @@ body {
     .past-work-title,
     .past-work-link,
     .social-link {
-        font-size: 14px;
+        font-size: 16px; /* Keep consistent with desktop */
     }
 }
 
@@ -421,7 +428,7 @@ body {
     
     .main-heading {
         width: 100%; /* Full width on mobile for better readability */
-        font-size: clamp(2rem, 4.5vw, 4.5rem); /* Better responsive font size for mobile */
+        font-size: clamp(3rem, 4.5vw, 4.5rem); /* Better responsive font size for mobile */
         margin-bottom: 2rem;
         white-space: normal; /* Allow text to wrap on mobile */
         text-align: center; /* Center align text on mobile */
@@ -454,7 +461,7 @@ body {
     .past-work-title,
     .past-work-link,
     .social-link {
-        font-size: 12px;
+        font-size: 16px; /* Keep consistent with desktop */
     }
 }
 
@@ -472,7 +479,7 @@ body {
     
     .main-heading {
         width: 100%; /* Full width on very small screens */
-        font-size: clamp(1.8rem, 4vw, 3.5rem); /* Smaller font for very small screens */
+        font-size: clamp(2rem, 4vw, 3.5rem); /* Smaller font for very small screens */
         margin-bottom: 1.5rem;
         text-align: center; /* Center align text on very small screens */
         margin-left: auto; /* Center the title */
@@ -492,6 +499,6 @@ body {
     .past-work-title,
     .past-work-link,
     .social-link {
-        font-size: 11px;
+        font-size: 16px; /* Keep consistent with desktop */
     }
 } 
