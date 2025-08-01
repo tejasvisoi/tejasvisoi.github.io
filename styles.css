@@ -82,6 +82,101 @@ body {
     background: rgba(255, 255, 255, 0.8);
 }
 
+/* P Letter Building Effect */
+.phonepe-link.building-p {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        rgba(255, 255, 255, 0.1) 20%, 
+        rgba(255, 255, 255, 0) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: buildingP 2.4s ease-in-out;
+}
+
+@keyframes buildingP {
+    0% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0) 0%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    12.5% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 12.5%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    25% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 25%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    37.5% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 37.5%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    50% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 50%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    62.5% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 62.5%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    75% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 75%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    87.5% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 87.5%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    100% {
+        background: linear-gradient(90deg, 
+            rgba(255, 255, 255, 0.3) 0%, 
+            rgba(255, 255, 255, 0.1) 100%, 
+            rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
 /* Content Grid */
 .content-grid {
     display: flex;
@@ -306,9 +401,9 @@ body {
     height: 30px;
     background: #FFFFFF;
     border-radius: 3px;
-    animation: workerMove 3s ease-in-out infinite;
     pointer-events: none;
     z-index: 10;
+    transition: all 0.5s ease;
 }
 
 .construction-worker::before {
@@ -371,24 +466,6 @@ body {
 }
 
 /* Construction Animation Keyframes */
-@keyframes workerMove {
-    0% {
-        transform: translateX(-50px) translateY(0);
-    }
-    25% {
-        transform: translateX(0) translateY(-20px);
-    }
-    50% {
-        transform: translateX(50px) translateY(0);
-    }
-    75% {
-        transform: translateX(0) translateY(20px);
-    }
-    100% {
-        transform: translateX(-50px) translateY(0);
-    }
-}
-
 @keyframes hammerSwing {
     0%, 100% {
         transform: rotate(0deg);

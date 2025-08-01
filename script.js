@@ -35,51 +35,116 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Construction Animation around PhonePe link
+    // Single Construction Worker Animation
     const phonepeLink = document.querySelector('.phonepe-link');
+    let constructionWorker = null;
+    let currentLetterIndex = 0;
+    const letters = ['P', 'h', 'o', 'n', 'e', 'P', 'e'];
     
-    // Create construction worker
+    // Create the single construction worker
     function createConstructionWorker() {
-        const worker = document.createElement('div');
-        worker.className = 'construction-worker';
+        if (constructionWorker) return; // Only create one worker
+        
+        constructionWorker = document.createElement('div');
+        constructionWorker.className = 'construction-worker';
         
         // Add hammer to worker
         const hammer = document.createElement('div');
         hammer.className = 'hammer';
-        worker.appendChild(hammer);
+        constructionWorker.appendChild(hammer);
         
-        // Position worker around PhonePe link
+        document.body.appendChild(constructionWorker);
+        
+        // Start the building sequence
+        startBuildingSequence();
+    }
+    
+    // Start building sequence
+    function startBuildingSequence() {
+        if (currentLetterIndex >= letters.length) {
+            // Reset and start over
+            currentLetterIndex = 0;
+            setTimeout(() => {
+                startBuildingSequence();
+            }, 2000);
+            return;
+        }
+        
+        const letter = letters[currentLetterIndex];
         const phonepeRect = phonepeLink.getBoundingClientRect();
-        const centerX = phonepeRect.left + phonepeRect.width / 2;
-        const centerY = phonepeRect.top + phonepeRect.height / 2;
         
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 80 + Math.random() * 40;
-        const x = centerX + Math.cos(angle) * distance;
-        const y = centerY + Math.sin(angle) * distance;
+        // Calculate position for current letter
+        const letterWidth = phonepeRect.width / letters.length;
+        const letterX = phonepeRect.left + (currentLetterIndex * letterWidth) + (letterWidth / 2);
+        const letterY = phonepeRect.top + (phonepeRect.height / 2);
         
-        worker.style.left = x + 'px';
-        worker.style.top = y + 'px';
+        // Position worker near the letter
+        constructionWorker.style.left = (letterX - 30) + 'px';
+        constructionWorker.style.top = (letterY - 15) + 'px';
         
-        document.body.appendChild(worker);
+        // If it's the first P, show building animation
+        if (currentLetterIndex === 0) {
+            buildLetterP();
+        } else {
+            // For other letters, just hammer and move on
+            hammerAndMove();
+        }
+    }
+    
+    // Build the letter P
+    function buildLetterP() {
+        const phonepeRect = phonepeLink.getBoundingClientRect();
+        const letterWidth = phonepeRect.width / letters.length;
+        const letterX = phonepeRect.left + (letterWidth / 2);
+        const letterY = phonepeRect.top + (phonepeRect.height / 2);
         
-        // Create brick pieces periodically
-        const brickInterval = setInterval(() => {
-            createBrickPieces(x, y);
-        }, 500 + Math.random() * 1000);
+        // Add building effect to PhonePe link
+        phonepeLink.classList.add('building-p');
         
-        // Remove worker after some time
-        setTimeout(() => {
-            if (worker.parentNode) {
-                worker.parentNode.removeChild(worker);
-                clearInterval(brickInterval);
+        // Create brick pieces while building
+        let hammerCount = 0;
+        const maxHammers = 8;
+        
+        const hammerInterval = setInterval(() => {
+            createBrickPieces(letterX, letterY);
+            hammerCount++;
+            
+            if (hammerCount >= maxHammers) {
+                clearInterval(hammerInterval);
+                // P is now fully built, remove building effect and move to next letter
+                phonepeLink.classList.remove('building-p');
+                currentLetterIndex++;
+                setTimeout(() => {
+                    startBuildingSequence();
+                }, 500);
             }
-        }, 3000 + Math.random() * 2000);
+        }, 300);
+    }
+    
+    // Hammer and move to next letter
+    function hammerAndMove() {
+        const phonepeRect = phonepeLink.getBoundingClientRect();
+        const letterWidth = phonepeRect.width / letters.length;
+        const letterX = phonepeRect.left + (currentLetterIndex * letterWidth) + (letterWidth / 2);
+        const letterY = phonepeRect.top + (phonepeRect.height / 2);
+        
+        // Create a few brick pieces
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                createBrickPieces(letterX, letterY);
+            }, i * 200);
+        }
+        
+        // Move to next letter after a short delay
+        setTimeout(() => {
+            currentLetterIndex++;
+            startBuildingSequence();
+        }, 1000);
     }
     
     // Create brick pieces falling effect
     function createBrickPieces(x, y) {
-        const numPieces = 3 + Math.floor(Math.random() * 4);
+        const numPieces = 2 + Math.floor(Math.random() * 3);
         
         for (let i = 0; i < numPieces; i++) {
             const piece = document.createElement('div');
@@ -98,28 +163,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Start continuous construction animation
-    function startConstructionAnimation() {
-        // Create workers periodically
-        setInterval(() => {
-            createConstructionWorker();
-        }, 800 + Math.random() * 400);
-        
-        // Create additional brick pieces around PhonePe link
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                const phonepeRect = phonepeLink.getBoundingClientRect();
-                createBrickPieces(
-                    phonepeRect.left + phonepeRect.width / 2,
-                    phonepeRect.top + phonepeRect.height / 2
-                );
-            }
-        }, 300);
-    }
-    
     // Start animation after page load
     setTimeout(() => {
-        startConstructionAnimation();
+        createConstructionWorker();
     }, 1000);
     
     // Add hover effects for links
