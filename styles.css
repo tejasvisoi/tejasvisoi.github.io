@@ -99,11 +99,11 @@ body {
 /* Grid Rows */
 .grid-row {
     display: flex;
-    gap: 16rem; /* Increased gap for more spacing between sections */
-    justify-content: center; /* Changed back to center for better balance with 2 sections */
+    justify-content: space-between; /* Auto-space objects */
     align-items: flex-start;
     width: 100%;
-    max-width: 1200px; /* Increased from 1000px to match title width */
+    max-width: 600px; /* Match PhonePe text width (approximately 7 chars * 85px) */
+    margin: 0 auto; /* Center the container */
 }
 
 /* Sections */
@@ -115,7 +115,8 @@ body {
     align-items: flex-start;
     justify-content: space-between;
     height: -webkit-fill-available;
-    width: 250px; /* Reduced width for both sections */
+    flex: 1; /* Allow sections to grow equally within the container */
+    max-width: 280px; /* Maximum width for each section */
 }
 
 /* Visit Tracker */
