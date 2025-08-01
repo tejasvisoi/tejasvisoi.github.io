@@ -301,17 +301,17 @@ body {
     flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
-/* SVG Construction Workers */
-.construction-worker {
+/* SVG Cat */
+.cat {
     position: absolute;
-    width: 30px; /* Increased from 20px to 30px */
-    height: 45px; /* Increased from 30px to 45px */
+    width: 30px;
+    height: 24px;
     pointer-events: none;
     z-index: 10;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
 }
 
-.construction-worker svg {
+.cat svg {
     width: 100%;
     height: 100%;
 }

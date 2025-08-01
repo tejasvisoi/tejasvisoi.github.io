@@ -35,357 +35,275 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Walking Minecraft Character Animation (Sideways View)
+    // Pixelated Cat Animation
     const phonepeLink = document.querySelector('.phonepe-link');
-    let constructionWorker = null;
-    let isWalking = true;
+    let cat = null;
+    let isJumping = false;
     let currentLetterIndex = 0;
-    let walkStep = 0;
+    let jumpStep = 0;
     const letters = ['P', 'h', 'o', 'n', 'e', 'P', 'e'];
     
-    // Create SVG construction worker (Minecraft-style) with sideways walking animation
-    function createSVGWorker() {
+    // Create SVG pixelated cat (sideways view)
+    function createSVGCat() {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 20 30');
-        svg.setAttribute('width', '30'); // Increased size by 1.5x
-        svg.setAttribute('height', '45'); // Increased size by 1.5x
+        svg.setAttribute('viewBox', '0 0 20 16');
+        svg.setAttribute('width', '30');
+        svg.setAttribute('height', '24');
         
-        // Head (brown block with face - sideways view)
+        // Cat body (orange/brown)
+        const body = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        body.setAttribute('x', '4');
+        body.setAttribute('y', '6');
+        body.setAttribute('width', '8');
+        body.setAttribute('height', '6');
+        body.setAttribute('fill', '#FFA500');
+        body.setAttribute('stroke', '#000000');
+        body.setAttribute('stroke-width', '0.5');
+        body.setAttribute('class', 'cat-body');
+        svg.appendChild(body);
+        
+        // Cat head (orange/brown)
         const head = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        head.setAttribute('x', '6');
-        head.setAttribute('y', '0');
-        head.setAttribute('width', '8');
-        head.setAttribute('height', '8');
-        head.setAttribute('fill', '#8B4513');
+        head.setAttribute('x', '12');
+        head.setAttribute('y', '4');
+        head.setAttribute('width', '6');
+        head.setAttribute('height', '6');
+        head.setAttribute('fill', '#FFA500');
         head.setAttribute('stroke', '#000000');
         head.setAttribute('stroke-width', '0.5');
+        head.setAttribute('class', 'cat-head');
         svg.appendChild(head);
         
-        // Face (lighter brown - sideways view)
-        const face = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        face.setAttribute('x', '6.5');
-        face.setAttribute('y', '0.5');
-        face.setAttribute('width', '7');
-        face.setAttribute('height', '7');
-        face.setAttribute('fill', '#D2B48C');
-        svg.appendChild(face);
+        // Cat ear (triangle shape)
+        const ear = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        ear.setAttribute('points', '12,4 14,2 16,4');
+        ear.setAttribute('fill', '#FFA500');
+        ear.setAttribute('stroke', '#000000');
+        ear.setAttribute('stroke-width', '0.5');
+        ear.setAttribute('class', 'cat-ear');
+        svg.appendChild(ear);
         
-        // Eye (sideways view - only one visible)
+        // Cat eye (green)
         const eye = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        eye.setAttribute('x', '11.5');
-        eye.setAttribute('y', '2');
+        eye.setAttribute('x', '14');
+        eye.setAttribute('y', '5');
         eye.setAttribute('width', '1');
         eye.setAttribute('height', '1');
-        eye.setAttribute('fill', '#000000');
+        eye.setAttribute('fill', '#00FF00');
+        eye.setAttribute('class', 'cat-eye');
         svg.appendChild(eye);
         
-        // Mouth (sideways view)
-        const mouth = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        mouth.setAttribute('x', '11.5');
-        mouth.setAttribute('y', '5');
-        mouth.setAttribute('width', '1');
-        mouth.setAttribute('height', '1');
-        mouth.setAttribute('fill', '#000000');
-        svg.appendChild(mouth);
+        // Cat nose (pink)
+        const nose = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        nose.setAttribute('x', '17');
+        nose.setAttribute('y', '6');
+        nose.setAttribute('width', '1');
+        nose.setAttribute('height', '1');
+        nose.setAttribute('fill', '#FF69B4');
+        nose.setAttribute('class', 'cat-nose');
+        svg.appendChild(nose);
         
-        // Torso (light blue shirt - sideways view)
-        const torso = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        torso.setAttribute('x', '5');
-        torso.setAttribute('y', '8');
-        torso.setAttribute('width', '10');
-        torso.setAttribute('height', '8');
-        torso.setAttribute('fill', '#87CEEB');
-        torso.setAttribute('stroke', '#000000');
-        torso.setAttribute('stroke-width', '0.5');
-        svg.appendChild(torso);
+        // Cat whiskers (white lines)
+        const whisker1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        whisker1.setAttribute('x1', '18');
+        whisker1.setAttribute('y1', '6');
+        whisker1.setAttribute('x2', '20');
+        whisker1.setAttribute('y2', '5');
+        whisker1.setAttribute('stroke', '#FFFFFF');
+        whisker1.setAttribute('stroke-width', '0.5');
+        whisker1.setAttribute('class', 'cat-whisker');
+        svg.appendChild(whisker1);
         
-        // Front arm (skin tone with blue sleeve) - will animate for walking
-        const frontArm = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        frontArm.setAttribute('x', '15');
-        frontArm.setAttribute('y', '9');
-        frontArm.setAttribute('width', '2');
-        frontArm.setAttribute('height', '6');
-        frontArm.setAttribute('fill', '#D2B48C');
-        frontArm.setAttribute('stroke', '#000000');
-        frontArm.setAttribute('stroke-width', '0.5');
-        frontArm.setAttribute('class', 'front-arm');
-        svg.appendChild(frontArm);
+        const whisker2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        whisker2.setAttribute('x1', '18');
+        whisker2.setAttribute('y1', '7');
+        whisker2.setAttribute('x2', '20');
+        whisker2.setAttribute('y2', '7');
+        whisker2.setAttribute('stroke', '#FFFFFF');
+        whisker2.setAttribute('stroke-width', '0.5');
+        whisker2.setAttribute('class', 'cat-whisker');
+        svg.appendChild(whisker2);
         
-        // Back arm (skin tone with blue sleeve) - will animate for walking
-        const backArm = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        backArm.setAttribute('x', '3');
-        backArm.setAttribute('y', '9');
-        backArm.setAttribute('width', '2');
-        backArm.setAttribute('height', '6');
-        backArm.setAttribute('fill', '#D2B48C');
-        backArm.setAttribute('stroke', '#000000');
-        backArm.setAttribute('stroke-width', '0.5');
-        backArm.setAttribute('class', 'back-arm');
-        svg.appendChild(backArm);
+        const whisker3 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        whisker3.setAttribute('x1', '18');
+        whisker3.setAttribute('y1', '8');
+        whisker3.setAttribute('x2', '20');
+        whisker3.setAttribute('y2', '9');
+        whisker3.setAttribute('stroke', '#FFFFFF');
+        whisker3.setAttribute('stroke-width', '0.5');
+        whisker3.setAttribute('class', 'cat-whisker');
+        svg.appendChild(whisker3);
         
-        // Hammer in front hand
-        const hammerHandle = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        hammerHandle.setAttribute('x', '17');
-        hammerHandle.setAttribute('y', '10');
-        hammerHandle.setAttribute('width', '4');
-        hammerHandle.setAttribute('height', '1');
-        hammerHandle.setAttribute('fill', '#8B4513');
-        hammerHandle.setAttribute('stroke', '#000000');
-        hammerHandle.setAttribute('stroke-width', '0.5');
-        hammerHandle.setAttribute('class', 'hammer-handle');
-        svg.appendChild(hammerHandle);
+        // Cat tail (curved)
+        const tail = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        tail.setAttribute('d', 'M 4 9 Q 2 7 0 9');
+        tail.setAttribute('fill', 'none');
+        tail.setAttribute('stroke', '#FFA500');
+        tail.setAttribute('stroke-width', '1');
+        tail.setAttribute('class', 'cat-tail');
+        svg.appendChild(tail);
         
-        const hammerHead = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        hammerHead.setAttribute('x', '20');
-        hammerHead.setAttribute('y', '9');
-        hammerHead.setAttribute('width', '2');
-        hammerHead.setAttribute('height', '3');
-        hammerHead.setAttribute('fill', '#696969');
-        hammerHead.setAttribute('stroke', '#000000');
-        hammerHead.setAttribute('stroke-width', '0.5');
-        hammerHead.setAttribute('class', 'hammer-head');
-        svg.appendChild(hammerHead);
-        
-        // Front leg (dark blue pants) - will animate for walking
+        // Cat front leg
         const frontLeg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        frontLeg.setAttribute('x', '11');
-        frontLeg.setAttribute('y', '16');
-        frontLeg.setAttribute('width', '3');
-        frontLeg.setAttribute('height', '8');
-        frontLeg.setAttribute('fill', '#000080');
+        frontLeg.setAttribute('x', '10');
+        frontLeg.setAttribute('y', '12');
+        frontLeg.setAttribute('width', '2');
+        frontLeg.setAttribute('height', '4');
+        frontLeg.setAttribute('fill', '#FFA500');
         frontLeg.setAttribute('stroke', '#000000');
         frontLeg.setAttribute('stroke-width', '0.5');
-        frontLeg.setAttribute('class', 'front-leg');
+        frontLeg.setAttribute('class', 'cat-front-leg');
         svg.appendChild(frontLeg);
         
-        // Back leg (dark blue pants) - will animate for walking
+        // Cat back leg
         const backLeg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         backLeg.setAttribute('x', '6');
-        backLeg.setAttribute('y', '16');
-        backLeg.setAttribute('width', '3');
-        backLeg.setAttribute('height', '8');
-        backLeg.setAttribute('fill', '#000080');
+        backLeg.setAttribute('y', '12');
+        backLeg.setAttribute('width', '2');
+        backLeg.setAttribute('height', '4');
+        backLeg.setAttribute('fill', '#FFA500');
         backLeg.setAttribute('stroke', '#000000');
         backLeg.setAttribute('stroke-width', '0.5');
-        backLeg.setAttribute('class', 'back-leg');
+        backLeg.setAttribute('class', 'cat-back-leg');
         svg.appendChild(backLeg);
-        
-        // Front foot
-        const frontFoot = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        frontFoot.setAttribute('x', '11');
-        frontFoot.setAttribute('y', '24');
-        frontFoot.setAttribute('width', '4');
-        frontFoot.setAttribute('height', '2');
-        frontFoot.setAttribute('fill', '#8B4513');
-        frontFoot.setAttribute('stroke', '#000000');
-        frontFoot.setAttribute('stroke-width', '0.5');
-        frontFoot.setAttribute('class', 'front-foot');
-        svg.appendChild(frontFoot);
-        
-        // Back foot
-        const backFoot = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        backFoot.setAttribute('x', '5');
-        backFoot.setAttribute('y', '24');
-        backFoot.setAttribute('width', '4');
-        backFoot.setAttribute('height', '2');
-        backFoot.setAttribute('fill', '#8B4513');
-        backFoot.setAttribute('stroke', '#000000');
-        backFoot.setAttribute('stroke-width', '0.5');
-        backFoot.setAttribute('class', 'back-foot');
-        svg.appendChild(backFoot);
         
         return svg;
     }
     
-    // Animate sideways walking motion
-    function animateWalking() {
-        if (!constructionWorker || !isWalking) return;
+    // Animate cat jumping motion
+    function animateJumping() {
+        if (!cat || !isJumping) return;
         
-        const frontArm = constructionWorker.querySelector('.front-arm');
-        const backArm = constructionWorker.querySelector('.back-arm');
-        const frontLeg = constructionWorker.querySelector('.front-leg');
-        const backLeg = constructionWorker.querySelector('.back-leg');
-        const frontFoot = constructionWorker.querySelector('.front-foot');
-        const backFoot = constructionWorker.querySelector('.back-foot');
+        const catBody = cat.querySelector('.cat-body');
+        const catHead = cat.querySelector('.cat-head');
+        const catTail = cat.querySelector('.cat-tail');
+        const frontLeg = cat.querySelector('.cat-front-leg');
+        const backLeg = cat.querySelector('.cat-back-leg');
         
-        if (frontArm && backArm && frontLeg && backLeg && frontFoot && backFoot) {
-            const step = Math.sin(walkStep) * 2;
+        if (catBody && catHead && catTail && frontLeg && backLeg) {
+            const jumpHeight = Math.sin(jumpStep) * 8;
+            const legBend = Math.sin(jumpStep * 2) * 2;
             
-            // Animate arms (opposite to legs)
-            frontArm.setAttribute('y', (9 + step) + '');
-            backArm.setAttribute('y', (9 - step) + '');
+            // Move cat up and down
+            catBody.setAttribute('y', (6 - jumpHeight) + '');
+            catHead.setAttribute('y', (4 - jumpHeight) + '');
             
-            // Animate legs
-            frontLeg.setAttribute('y', (16 - step) + '');
-            backLeg.setAttribute('y', (16 + step) + '');
+            // Animate legs for jumping
+            frontLeg.setAttribute('y', (12 - jumpHeight + legBend) + '');
+            backLeg.setAttribute('y', (12 - jumpHeight - legBend) + '');
             
-            // Animate feet
-            frontFoot.setAttribute('y', (24 - step) + '');
-            backFoot.setAttribute('y', (24 + step) + '');
+            // Animate tail
+            if (jumpHeight > 0) {
+                catTail.setAttribute('d', `M 4 ${9 - jumpHeight} Q 2 ${7 - jumpHeight} 0 ${9 - jumpHeight}`);
+            } else {
+                catTail.setAttribute('d', 'M 4 9 Q 2 7 0 9');
+            }
             
-            walkStep += 0.3;
+            jumpStep += 0.4;
         }
     }
     
-    // Create the walking construction worker
-    function createConstructionWorker() {
-        if (constructionWorker) return; // Only create once
+    // Create the cat
+    function createCat() {
+        if (cat) return; // Only create once
         
-        constructionWorker = document.createElement('div');
-        constructionWorker.className = 'construction-worker';
-        constructionWorker.appendChild(createSVGWorker());
+        cat = document.createElement('div');
+        cat.className = 'cat';
+        cat.appendChild(createSVGCat());
         
-        document.body.appendChild(constructionWorker);
+        document.body.appendChild(cat);
         
-        // Start walking animation
-        startWalkingAnimation();
+        // Start cat animation
+        startCatAnimation();
     }
     
-    // Start walking animation sequence
-    function startWalkingAnimation() {
-        // Start position: off-screen to the right
-        const startX = window.innerWidth + 50;
-        const startY = phonepeLink.getBoundingClientRect().top + (phonepeLink.getBoundingClientRect().height / 2) - 22.5; // Center vertically
+    // Start cat animation sequence
+    function startCatAnimation() {
+        // Start hidden behind the last 'e'
+        const phonepeRect = phonepeLink.getBoundingClientRect();
+        const letterWidth = phonepeRect.width / letters.length;
+        const lastEX = phonepeRect.left + (6 * letterWidth) + (letterWidth / 2) - 15;
+        const catY = phonepeRect.top + (phonepeRect.height / 2) - 12;
         
-        constructionWorker.style.left = startX + 'px';
-        constructionWorker.style.top = startY + 'px';
+        cat.style.left = lastEX + 'px';
+        cat.style.top = catY + 'px';
+        cat.style.opacity = '0.3'; // Partially hidden
         
-        // Start the letter-by-letter sequence
-        currentLetterIndex = 0;
-        walkToNextLetter();
+        // Wait a moment, then start jumping sequence
+        setTimeout(() => {
+            cat.style.opacity = '1';
+            currentLetterIndex = 6; // Start from last 'e'
+            jumpToNextLetter();
+        }, 1000);
     }
     
-    // Walk to the next letter in sequence
-    function walkToNextLetter() {
-        if (currentLetterIndex >= letters.length) {
-            // All letters done, exit to the left
-            exitToLeft();
+    // Jump to the next letter in sequence
+    function jumpToNextLetter() {
+        if (currentLetterIndex < 0) {
+            // All letters done, hide behind first 'P'
+            hideBehindFirstP();
             return;
         }
         
         const phonepeRect = phonepeLink.getBoundingClientRect();
         const letterWidth = phonepeRect.width / letters.length;
         const targetX = phonepeRect.left + (currentLetterIndex * letterWidth) + (letterWidth / 2) - 15;
-        const targetY = phonepeRect.top + (phonepeRect.height / 2) - 22.5;
+        const targetY = phonepeRect.top + (phonepeRect.height / 2) - 12;
         
-        const currentX = parseFloat(constructionWorker.style.left);
-        const distance = targetX - currentX;
-        const steps = Math.abs(distance) / 2;
+        const currentX = parseFloat(cat.style.left);
+        const currentY = parseFloat(cat.style.top);
+        const distanceX = targetX - currentX;
+        const distanceY = targetY - currentY;
+        const steps = Math.abs(distanceX) / 3;
         let currentStep = 0;
         
-        const walkInterval = setInterval(() => {
+        isJumping = true;
+        
+        const jumpInterval = setInterval(() => {
             currentStep++;
             const progress = currentStep / steps;
-            const newX = currentX + (distance * progress);
+            const newX = currentX + (distanceX * progress);
+            const newY = currentY + (distanceY * progress);
             
-            constructionWorker.style.left = newX + 'px';
+            cat.style.left = newX + 'px';
+            cat.style.top = newY + 'px';
             
-            // Animate walking
-            animateWalking();
+            // Animate jumping
+            animateJumping();
             
             if (currentStep >= steps) {
-                clearInterval(walkInterval);
-                isWalking = false;
+                clearInterval(jumpInterval);
+                isJumping = false;
                 
-                // Start hammering current letter
-                startHammering(currentLetterIndex, () => {
-                    currentLetterIndex++;
-                    isWalking = true;
-                    walkToNextLetter();
-                });
+                // Pause briefly at each letter
+                setTimeout(() => {
+                    currentLetterIndex--;
+                    jumpToNextLetter();
+                }, 500);
             }
         }, 50);
     }
     
-    // Exit to the left
-    function exitToLeft() {
-        const exitX = -100; // Off-screen to the left
-        const currentX = parseFloat(constructionWorker.style.left);
-        const distance = exitX - currentX;
-        const steps = Math.abs(distance) / 2;
-        let currentStep = 0;
+    // Hide behind first 'P' and restart
+    function hideBehindFirstP() {
+        const phonepeRect = phonepeLink.getBoundingClientRect();
+        const letterWidth = phonepeRect.width / letters.length;
+        const firstPX = phonepeRect.left + (letterWidth / 2) - 15;
+        const catY = phonepeRect.top + (phonepeRect.height / 2) - 12;
         
-        isWalking = true;
+        cat.style.left = firstPX + 'px';
+        cat.style.top = catY + 'px';
+        cat.style.opacity = '0.3';
         
-        const walkInterval = setInterval(() => {
-            currentStep++;
-            const progress = currentStep / steps;
-            const newX = currentX + (distance * progress);
-            
-            constructionWorker.style.left = newX + 'px';
-            
-            // Animate walking
-            animateWalking();
-            
-            if (currentStep >= steps) {
-                clearInterval(walkInterval);
-                // Reset and start over after a delay
-                setTimeout(() => {
-                    startWalkingAnimation();
-                }, 2000);
-            }
-        }, 50);
-    }
-    
-    // Start hammering at a specific letter position
-    function startHammering(letterIndex, callback) {
-        let hammerCount = 0;
-        const maxHammers = 6; // Fewer hammers per letter for faster progression
-        
-        const hammerInterval = setInterval(() => {
-            // Create brick pieces
-            const phonepeRect = phonepeLink.getBoundingClientRect();
-            const letterWidth = phonepeRect.width / letters.length;
-            const x = phonepeRect.left + (letterIndex * letterWidth) + (letterWidth / 2);
-            const y = phonepeRect.top + (phonepeRect.height / 2);
-            
-            createBrickPieces(x, y);
-            
-            // Animate hammer swing
-            const hammerHandle = constructionWorker.querySelector('.hammer-handle');
-            const hammerHead = constructionWorker.querySelector('.hammer-head');
-            if (hammerHandle && hammerHead) {
-                hammerHandle.style.transform = 'rotate(-20deg)';
-                hammerHead.style.transform = 'rotate(-20deg)';
-                setTimeout(() => {
-                    hammerHandle.style.transform = 'rotate(0deg)';
-                    hammerHead.style.transform = 'rotate(0deg)';
-                }, 150);
-            }
-            
-            hammerCount++;
-            
-            if (hammerCount >= maxHammers) {
-                clearInterval(hammerInterval);
-                setTimeout(callback, 300);
-            }
-        }, 250);
-    }
-    
-    // Create brick pieces falling effect
-    function createBrickPieces(x, y) {
-        const numPieces = 2 + Math.floor(Math.random() * 3);
-        
-        for (let i = 0; i < numPieces; i++) {
-            const piece = document.createElement('div');
-            piece.className = 'brick-piece';
-            piece.style.left = (x + Math.random() * 20 - 10) + 'px';
-            piece.style.top = (y + Math.random() * 20 - 10) + 'px';
-            
-            document.body.appendChild(piece);
-            
-            // Remove piece after animation
-            setTimeout(() => {
-                if (piece.parentNode) {
-                    piece.parentNode.removeChild(piece);
-                }
-            }, 1000);
-        }
+        // Restart after a delay
+        setTimeout(() => {
+            startCatAnimation();
+        }, 2000);
     }
     
     // Start animation after page load
     setTimeout(() => {
-        createConstructionWorker();
+        createCat();
     }, 1000);
     
     // Add hover effects for links
