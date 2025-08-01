@@ -65,7 +65,7 @@ body {
 .phonepe-link::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: -4px;
     left: 0;
     width: 100%;
     height: 1px;
@@ -115,12 +115,10 @@ body {
 
 #last-visit-text {
     font-family: 'Space Mono', monospace;
-    font-size: 0.9rem;
+    font-size: 40px;
     color: #FFFFFF;
     letter-spacing: 0.3px;
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.6);
-    text-decoration-thickness: 1px;
+    text-transform: uppercase;
     transition: all 0.3s ease;
     display: inline-block;
     transform-origin: center;
@@ -128,7 +126,6 @@ body {
 
 #last-visit-text:hover {
     transform: scale(1.02);
-    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Main Links */
@@ -145,7 +142,8 @@ body {
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
-    font-size: 0.9rem;
+    text-underline-offset: 4px;
+    font-size: 40px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.5px;
@@ -166,16 +164,13 @@ body {
 }
 
 .past-work-title {
-    font-size: 0.9rem;
+    font-size: 40px;
     color: #FFFFFF;
     margin-bottom: 1rem;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-family: 'Space Mono', monospace;
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.6);
-    text-decoration-thickness: 1px;
     transition: all 0.3s ease;
     display: inline-block;
     transform-origin: center;
@@ -183,7 +178,6 @@ body {
 
 .past-work-title:hover {
     transform: scale(1.02);
-    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 .past-work-links {
@@ -197,10 +191,12 @@ body {
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
-    font-size: 0.8rem;
+    text-underline-offset: 4px;
+    font-size: 40px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
+    text-transform: uppercase;
     display: inline-block;
     transform-origin: center;
 }
@@ -217,16 +213,13 @@ body {
 }
 
 .outside-work-title {
-    font-size: 0.9rem;
+    font-size: 40px;
     color: #FFFFFF;
     margin-bottom: 1rem;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-family: 'Space Mono', monospace;
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.6);
-    text-decoration-thickness: 1px;
     transition: all 0.3s ease;
     display: inline-block;
     transform-origin: center;
@@ -234,7 +227,6 @@ body {
 
 .outside-work-title:hover {
     transform: scale(1.02);
-    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 .outside-work-links {
@@ -248,10 +240,12 @@ body {
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
-    font-size: 0.8rem;
+    text-underline-offset: 4px;
+    font-size: 40px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
+    text-transform: uppercase;
     display: inline-block;
     transform-origin: center;
 }
@@ -279,10 +273,12 @@ body {
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
-    font-size: 0.8rem;
+    text-underline-offset: 4px;
+    font-size: 40px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
+    text-transform: uppercase;
     display: inline-block;
     transform-origin: center;
 }
@@ -302,8 +298,8 @@ body {
     justify-content: center;
 }
 
-/* Lumberjack Animation */
-.lumberjack-animation {
+/* Construction Animation */
+.construction-animation {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -313,63 +309,7 @@ body {
     pointer-events: none;
     z-index: 10;
     opacity: 0;
-    animation: fadeInOut 8s ease-in-out;
-}
-
-.lumberjack-character {
-    position: absolute;
-    width: 50px;
-    height: 70px;
-    background: linear-gradient(45deg, #8B4513, #A0522D);
-    border-radius: 6px;
-    animation: lumberjackHammer 8s ease-in-out;
-}
-
-.lumberjack-character::before {
-    content: '';
-    position: absolute;
-    top: -12px;
-    left: 10px;
-    width: 30px;
-    height: 30px;
-    background: #FFB6C1;
-    border-radius: 50%;
-    border: 2px solid #8B4513;
-}
-
-.lumberjack-character::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 8px;
-    width: 34px;
-    height: 12px;
-    background: #8B4513;
-    border-radius: 3px;
-}
-
-/* Hammer */
-.lumberjack-character .hammer {
-    position: absolute;
-    right: -15px;
-    top: 20px;
-    width: 25px;
-    height: 8px;
-    background: #696969;
-    border-radius: 2px;
-    transform-origin: left center;
-    animation: hammerSwing 0.5s ease-in-out infinite;
-}
-
-.lumberjack-character .hammer::before {
-    content: '';
-    position: absolute;
-    right: -5px;
-    top: -3px;
-    width: 8px;
-    height: 14px;
-    background: #696969;
-    border-radius: 2px;
+    animation: fadeInOut 10s ease-in-out infinite;
 }
 
 .phonepe-text {
@@ -386,38 +326,110 @@ body {
 }
 
 .letter {
-    opacity: 0;
-    transform: scale(0);
-    animation: letterHammer 8s ease-in-out;
+    opacity: 1;
+    transform: scale(1);
     position: relative;
+    color: #FFFFFF;
 }
 
-/* Lumberjack Animation Keyframes */
+.construction-workers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Construction Worker */
+.construction-worker {
+    position: absolute;
+    width: 20px;
+    height: 30px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    animation: workerMove 3s ease-in-out infinite;
+}
+
+.construction-worker::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    border: 1px solid #000000;
+}
+
+.construction-worker::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 3px;
+    width: 14px;
+    height: 6px;
+    background: #FFFFFF;
+    border-radius: 2px;
+}
+
+/* Hammer */
+.construction-worker .hammer {
+    position: absolute;
+    right: -8px;
+    top: 10px;
+    width: 12px;
+    height: 4px;
+    background: #FFFFFF;
+    border-radius: 1px;
+    transform-origin: left center;
+    animation: hammerSwing 0.3s ease-in-out infinite;
+}
+
+.construction-worker .hammer::before {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    width: 4px;
+    height: 8px;
+    background: #FFFFFF;
+    border-radius: 1px;
+}
+
+/* Brick Pieces */
+.brick-piece {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #FFFFFF;
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 11;
+    animation: brickFall 1s ease-in forwards;
+}
+
+/* Construction Animation Keyframes */
 @keyframes fadeInOut {
     0%, 100% { opacity: 0; }
     10%, 90% { opacity: 1; }
 }
 
-@keyframes lumberjackHammer {
+@keyframes workerMove {
     0% {
-        left: -60px;
-        top: 50%;
-        transform: translateY(-50%);
+        transform: translateX(-50px) translateY(0);
     }
-    20% {
-        left: 30%;
-        top: 50%;
-        transform: translateY(-50%);
+    25% {
+        transform: translateX(0) translateY(-20px);
     }
-    80% {
-        left: 70%;
-        top: 50%;
-        transform: translateY(-50%);
+    50% {
+        transform: translateX(50px) translateY(0);
+    }
+    75% {
+        transform: translateX(0) translateY(20px);
     }
     100% {
-        left: calc(100% + 60px);
-        top: 50%;
-        transform: translateY(-50%);
+        transform: translateX(-50px) translateY(0);
     }
 }
 
@@ -426,45 +438,24 @@ body {
         transform: rotate(0deg);
     }
     50% {
-        transform: rotate(-30deg);
+        transform: rotate(-20deg);
     }
 }
 
-@keyframes letterHammer {
+@keyframes brickFall {
     0% {
-        opacity: 0;
-        transform: scale(0) rotate(0deg);
-    }
-    15% {
-        opacity: 0;
-        transform: scale(0) rotate(0deg);
-    }
-    25% {
         opacity: 1;
-        transform: scale(1.2) rotate(5deg);
+        transform: translate(0, 0) rotate(0deg);
     }
-    30% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-    }
-    85% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
+    50% {
+        opacity: 0.8;
+        transform: translate(10px, 30px) rotate(180deg);
     }
     100% {
         opacity: 0;
-        transform: scale(0.8) rotate(-5deg);
+        transform: translate(20px, 60px) rotate(360deg);
     }
 }
-
-/* Letter-specific delays */
-.letter:nth-child(1) { animation-delay: 1s; }
-.letter:nth-child(2) { animation-delay: 1.5s; }
-.letter:nth-child(3) { animation-delay: 2s; }
-.letter:nth-child(4) { animation-delay: 2.5s; }
-.letter:nth-child(5) { animation-delay: 3s; }
-.letter:nth-child(6) { animation-delay: 3.5s; }
-.letter:nth-child(7) { animation-delay: 4s; }
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -502,6 +493,16 @@ body {
     .phonepe-text {
         font-size: 3rem;
     }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .outside-work-title,
+    .outside-work-link,
+    .social-link {
+        font-size: 30px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -512,10 +513,6 @@ body {
     .main-heading {
         font-size: 5.6rem; /* 2x of 2.8rem */
         margin-bottom: 2rem;
-    }
-    
-    .main-link {
-        font-size: 0.8rem;
     }
     
     .content-grid {
@@ -533,6 +530,16 @@ body {
     .phonepe-text {
         font-size: 2.5rem;
     }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .outside-work-title,
+    .outside-work-link,
+    .social-link {
+        font-size: 24px;
+    }
 }
 
 /* Ensure proper spacing on very small screens */
@@ -547,5 +554,15 @@ body {
     
     .phonepe-text {
         font-size: 2rem;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .outside-work-title,
+    .outside-work-link,
+    .social-link {
+        font-size: 20px;
     }
 } 
