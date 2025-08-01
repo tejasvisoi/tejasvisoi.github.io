@@ -57,58 +57,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Cat Animation
+    // Cat Animation - End to End Screen Walking
     function initCatAnimation() {
         const catContainer = document.querySelector('.cat-container');
-        const phonepeLink = document.querySelector('.phonepe-link');
         
-        if (!catContainer || !phonepeLink) return;
+        if (!catContainer) return;
 
-        // Position cat at the start of "making things"
-        catContainer.style.left = '0px';
+        const catSprite = catContainer.querySelector('.cat-sprite');
+        let isFlipped = false; // Track flip state
 
-        // Walking animation around the text
+        // Walking animation across the entire screen
         const walkAnimation = () => {
-            const textWidth = phonepeLink.offsetWidth;
-            const catWidth = 60; // Cat container width
-            const catSprite = catContainer.querySelector('.cat-sprite');
-            let isFlipped = false; // Track flip state
+            const screenWidth = window.innerWidth;
+            const catWidth = 60;
             
-            // Walk from left to right across "making things"
+            // Start from right edge (off-screen)
+            catContainer.style.left = screenWidth + 'px';
+            
+            // Walk from right to left across entire screen
             gsap.to(catContainer, {
-                x: textWidth - catWidth,
-                duration: 30, // 30 seconds to reach one end
+                x: -(screenWidth + catWidth),
+                duration: 20, // 20 seconds to cross screen
                 ease: "none", // Linear animation
                 onUpdate: function() {
-                    // Check if cat is near the right edge and flip if needed
-                    if (this.progress() > 0.95 && !isFlipped) {
+                    // Flip cat to face left when starting
+                    if (this.progress() < 0.05 && !isFlipped) {
                         gsap.to(catSprite, {
-                            scaleX: 1,
+                            scaleX: -1,
                             duration: 0.2
                         });
                         isFlipped = true;
                     }
                 },
                 onComplete: () => {
-                    // Walk back from right to left
-                    gsap.to(catContainer, {
-                        x: 0,
-                        duration: 30, // 30 seconds to reach other end
-                        ease: "none", // Linear animation
-                        onUpdate: function() {
-                            // Check if cat is near the left edge and flip back if needed
-                            if (this.progress() > 0.95 && isFlipped) {
-                                gsap.to(catSprite, {
-                                    scaleX: -1,
-                                    duration: 0.2
-                                });
-                                isFlipped = false;
-                            }
-                        },
-                        onComplete: () => {
-                            walkAnimation(); // Loop the animation
-                        }
-                    });
+                    // Reset position to right edge and continue
+                    setTimeout(() => {
+                        walkAnimation(); // Loop the animation
+                    }, 500); // Small pause before restarting
                 }
             });
         };
