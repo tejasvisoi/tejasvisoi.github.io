@@ -72,37 +72,44 @@ document.addEventListener('DOMContentLoaded', function() {
             const textWidth = phonepeLink.offsetWidth;
             const catWidth = 60; // Cat container width
             const catSprite = catContainer.querySelector('.cat-sprite');
+            let isFlipped = false; // Track flip state
             
             // Walk from left to right across "making things"
             gsap.to(catContainer, {
                 x: textWidth - catWidth,
                 duration: 30, // 30 seconds to reach one end
                 ease: "none", // Linear animation
+                onUpdate: function() {
+                    // Check if cat is near the right edge and flip if needed
+                    if (this.progress() > 0.95 && !isFlipped) {
+                        gsap.to(catSprite, {
+                            scaleX: 1,
+                            duration: 0.2
+                        });
+                        isFlipped = true;
+                    }
+                },
                 onComplete: () => {
                     // Walk back from right to left
                     gsap.to(catContainer, {
                         x: 0,
                         duration: 30, // 30 seconds to reach other end
                         ease: "none", // Linear animation
+                        onUpdate: function() {
+                            // Check if cat is near the left edge and flip back if needed
+                            if (this.progress() > 0.95 && isFlipped) {
+                                gsap.to(catSprite, {
+                                    scaleX: -1,
+                                    duration: 0.2
+                                });
+                                isFlipped = false;
+                            }
+                        },
                         onComplete: () => {
                             walkAnimation(); // Loop the animation
                         }
                     });
                 }
-            });
-            
-            // Flip cat when it reaches the rightmost position
-            gsap.to(catSprite, {
-                scaleX: 1,
-                duration: 0.2,
-                delay: 30 // Flip after 30 seconds (when reaching rightmost)
-            });
-            
-            // Flip cat back to left when it reaches the leftmost position
-            gsap.to(catSprite, {
-                scaleX: -1,
-                duration: 0.2,
-                delay: 60 // Flip after 60 seconds (when reaching leftmost)
             });
         };
 
