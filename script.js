@@ -59,37 +59,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Minecraft Building Animation
     function initMinecraftAnimation() {
-        const minecraftContainer = document.querySelector('.minecraft-container');
         const phonepeLink = document.querySelector('.phonepe-link');
+        const fallingBricksContainer = document.querySelector('.falling-bricks-container');
         
-        if (!minecraftContainer || !phonepeLink) return;
+        if (!phonepeLink || !fallingBricksContainer) return;
 
-        // Position Minecraft character at the start of PhonePe text
-        minecraftContainer.style.left = '0px';
-
-        // Building animation - character moves across PhonePe and builds
-        const buildingAnimation = () => {
-            const phonepeWidth = phonepeLink.offsetWidth;
-            const charWidth = 50; // Minecraft character width
+        // Create falling bricks
+        function createFallingBrick() {
+            const brick = document.createElement('div');
+            brick.className = 'falling-brick';
             
-            // Move from left to right across PhonePe
-            gsap.to(minecraftContainer, {
-                x: phonepeWidth - charWidth,
-                duration: 4,
-                ease: "power1.inOut",
+            // Random position within PhonePe text area
+            const phonepeWidth = phonepeLink.offsetWidth;
+            const randomX = Math.random() * phonepeWidth;
+            
+            brick.style.left = randomX + 'px';
+            brick.style.top = '-10px';
+            
+            fallingBricksContainer.appendChild(brick);
+            
+            // Animate brick falling
+            gsap.to(brick, {
+                y: 100,
+                rotation: Math.random() * 360,
+                duration: 2 + Math.random() * 2,
+                ease: "power2.in",
                 onComplete: () => {
-                    // Move back from right to left
-                    gsap.to(minecraftContainer, {
-                        x: 0,
-                        duration: 4,
-                        ease: "power1.inOut",
-                        onComplete: buildingAnimation // Loop the animation
-                    });
+                    fallingBricksContainer.removeChild(brick);
                 }
             });
-        };
+        }
 
-        // Minecraft character building motion
+        // Minecraft character building motion (stationary characters)
         const buildingMotion = () => {
             // Animate arms for building effect (hammering motion)
             gsap.to('.char-arm', {
@@ -133,8 +134,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Start animations after a delay
         setTimeout(() => {
-            buildingAnimation();
             buildingMotion();
+            
+            // Create falling bricks periodically
+            setInterval(createFallingBrick, 800);
         }, 1000);
     }
 

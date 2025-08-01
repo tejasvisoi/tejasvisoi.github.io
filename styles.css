@@ -523,12 +523,26 @@ body {
 /* Minecraft Building Animation */
 .minecraft-container {
     position: absolute;
-    top: -40px;
-    left: 0;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     z-index: 1000;
     pointer-events: none;
+}
+
+/* Position the 3 characters at specific locations */
+.char-1 {
+    top: -35px;
+    left: -20px; /* Left of P */
+}
+
+.char-2 {
+    top: -35px;
+    left: 50px; /* Top of e */
+}
+
+.char-3 {
+    top: -35px;
+    left: 120px; /* Right of the next P */
 }
 
 .minecraft-character {
@@ -542,19 +556,68 @@ body {
     transition: all 0.2s ease;
 }
 
+/* Falling Bricks */
+.falling-bricks-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.falling-brick {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #8B4513;
+    border: 1px solid #654321;
+    border-radius: 1px;
+    pointer-events: none;
+}
+
 /* Responsive Minecraft character sizing */
 @media (max-width: 768px) {
     .minecraft-container {
-        width: 40px;
-        height: 40px;
-        top: -35px;
+        width: 35px;
+        height: 35px;
+    }
+    
+    .char-1 {
+        top: -30px;
+        left: -15px;
+    }
+    
+    .char-2 {
+        top: -30px;
+        left: 40px;
+    }
+    
+    .char-3 {
+        top: -30px;
+        left: 100px;
     }
 }
 
 @media (max-width: 480px) {
     .minecraft-container {
-        width: 35px;
-        height: 35px;
-        top: -30px;
+        width: 30px;
+        height: 30px;
+    }
+    
+    .char-1 {
+        top: -25px;
+        left: -10px;
+    }
+    
+    .char-2 {
+        top: -25px;
+        left: 35px;
+    }
+    
+    .char-3 {
+        top: -25px;
+        left: 85px;
     }
 } 
