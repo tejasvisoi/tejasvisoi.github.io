@@ -497,6 +497,7 @@ body {
     pointer-events: none;
     top: 10px;
     left: 0;
+    opacity: 0; /* Hide initially to prevent glitch */
 }
 
 .cat-sprite {

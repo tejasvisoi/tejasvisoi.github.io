@@ -60,18 +60,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cat Animation - End to End Screen Walking
     function initCatAnimation() {
         const catContainer = document.querySelector('.cat-container');
+        const visitTracker = document.querySelector('.visit-tracker');
         
-        if (!catContainer) return;
+        if (!catContainer || !visitTracker) return;
 
         const catSprite = catContainer.querySelector('.cat-sprite');
+
+        // Position cat 10px below the visit tracker
+        const visitTrackerRect = visitTracker.getBoundingClientRect();
+        const containerRect = document.querySelector('.main-content').getBoundingClientRect();
+        const relativeTop = visitTrackerRect.bottom - containerRect.top + 10;
+        catContainer.style.top = relativeTop + 'px';
 
         // Walking animation across the entire screen
         const walkAnimation = () => {
             const screenWidth = window.innerWidth;
             const catWidth = 60;
             
-            // Reset position and flip
-            gsap.set(catContainer, { x: screenWidth });
+            // Show cat and reset position
+            gsap.set(catContainer, { 
+                x: screenWidth,
+                opacity: 1 
+            });
             gsap.set(catSprite, { scaleX: -1 }); // Face left
             
             // Walk from right to left across entire screen
