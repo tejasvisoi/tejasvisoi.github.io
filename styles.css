@@ -33,6 +33,10 @@ body {
     min-height: 80vh;
     margin: 0 auto;
     padding: 0 2rem; /* Add padding to prevent edge overflow */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .main-heading {
@@ -339,6 +343,10 @@ body {
         width: 80%;
         min-width: 80%;
         min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     
     .main-heading {
@@ -369,6 +377,10 @@ body {
         width: 80%;
         min-width: 80%;
         min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     
     .main-heading {
@@ -399,6 +411,10 @@ body {
         width: 80%;
         min-width: 80%;
         min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     
     .main-heading {
@@ -429,6 +445,10 @@ body {
         width: 80%;
         min-width: 80%;
         min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     
     .main-heading {
@@ -460,6 +480,10 @@ body {
         min-width: 80%;
         min-height: 80vh;
         padding: 0 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     
     .main-heading {
@@ -495,6 +519,10 @@ body {
         min-width: 80%;
         min-height: 80vh;
         padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     
     .main-heading {
