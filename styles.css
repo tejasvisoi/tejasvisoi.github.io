@@ -27,7 +27,7 @@ body {
 /* Main Content (Centered) */
 .main-content {
     text-align: center;
-    max-width: 1000px;
+    max-width: 1200px;
     width: 100%;
 }
 
@@ -37,6 +37,7 @@ body {
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 4rem;
+    white-space: nowrap; /* Prevent wrapping to third line */
 }
 
 .line-1 {
@@ -77,7 +78,15 @@ body {
     justify-content: center;
     align-items: flex-start;
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
+}
+
+/* Sections */
+.section {
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    position: relative;
 }
 
 /* Visit Tracker */
@@ -97,7 +106,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    align-items: center;
+    align-items: flex-start;
+    margin-bottom: 2rem;
 }
 
 .main-link {
@@ -195,7 +205,9 @@ body {
 .social-links {
     display: flex;
     gap: 2rem;
-    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .social-link {
@@ -226,6 +238,136 @@ body {
     justify-content: center;
 }
 
+/* Minecraft Animation */
+.minecraft-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeInOut 8s ease-in-out;
+}
+
+.minecraft-character {
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    background: linear-gradient(45deg, #8B4513, #A0522D);
+    border-radius: 4px;
+    animation: minecraftWalk 8s ease-in-out;
+}
+
+.minecraft-character::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    background: #FFB6C1;
+    border-radius: 50%;
+    border: 2px solid #8B4513;
+}
+
+.minecraft-character::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 5px;
+    width: 30px;
+    height: 10px;
+    background: #8B4513;
+    border-radius: 2px;
+}
+
+.phonepe-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 0.5rem;
+    font-family: 'VT323', monospace;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.letter {
+    opacity: 0;
+    transform: scale(0);
+    animation: letterBuild 8s ease-in-out;
+}
+
+/* Minecraft Animation Keyframes */
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+}
+
+@keyframes minecraftWalk {
+    0% {
+        left: -50px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    20% {
+        left: 30%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    80% {
+        left: 70%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    100% {
+        left: calc(100% + 50px);
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes letterBuild {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    15% {
+        opacity: 0;
+        transform: scale(0) rotate(0deg);
+    }
+    25% {
+        opacity: 1;
+        transform: scale(1.2) rotate(5deg);
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    85% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+    }
+}
+
+/* Letter-specific delays */
+.letter:nth-child(1) { animation-delay: 1s; }
+.letter:nth-child(2) { animation-delay: 1.5s; }
+.letter:nth-child(3) { animation-delay: 2s; }
+.letter:nth-child(4) { animation-delay: 2.5s; }
+.letter:nth-child(5) { animation-delay: 3s; }
+.letter:nth-child(6) { animation-delay: 3.5s; }
+.letter:nth-child(7) { animation-delay: 4s; }
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -252,7 +394,15 @@ body {
     }
     
     .social-links {
-        gap: 1.5rem;
+        position: relative;
+        bottom: auto;
+        left: auto;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    .phonepe-text {
+        font-size: 3rem;
     }
 }
 
@@ -281,6 +431,10 @@ body {
     .social-links {
         gap: 1rem;
     }
+    
+    .phonepe-text {
+        font-size: 2.5rem;
+    }
 }
 
 /* Ensure proper spacing on very small screens */
@@ -291,5 +445,9 @@ body {
     
     .main-heading {
         font-size: 4.8rem; /* 2x of 2.4rem */
+    }
+    
+    .phonepe-text {
+        font-size: 2rem;
     }
 } 
