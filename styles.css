@@ -28,7 +28,9 @@ body {
 .main-content {
     text-align: center;
     max-width: 1400px; /* Increased to accommodate larger text */
-    width: 100%;
+    width: 80%;
+    min-width: 80%;
+    min-height: 80vh;
     margin: 0 auto;
     padding: 0 2rem; /* Add padding to prevent edge overflow */
 }
@@ -334,6 +336,9 @@ body {
 @media (min-width: 1920px) {
     .main-content {
         max-width: 1600px;
+        width: 80%;
+        min-width: 80%;
+        min-height: 80vh;
     }
     
     .main-heading {
@@ -361,6 +366,9 @@ body {
 @media (max-width: 1919px) and (min-width: 1440px) {
     .main-content {
         max-width: 1500px;
+        width: 80%;
+        min-width: 80%;
+        min-height: 80vh;
     }
     
     .main-heading {
@@ -388,6 +396,9 @@ body {
 @media (max-width: 1439px) and (min-width: 1280px) {
     .main-content {
         max-width: 1400px;
+        width: 80%;
+        min-width: 80%;
+        min-height: 80vh;
     }
     
     .main-heading {
@@ -415,6 +426,9 @@ body {
 @media (max-width: 1279px) and (min-width: 1024px) {
     .main-content {
         max-width: 1300px;
+        width: 80%;
+        min-width: 80%;
+        min-height: 80vh;
     }
     
     .main-heading {
@@ -442,6 +456,9 @@ body {
 @media (max-width: 1023px) and (min-width: 768px) {
     .main-content {
         max-width: 1200px;
+        width: 80%;
+        min-width: 80%;
+        min-height: 80vh;
         padding: 0 1.5rem;
     }
     
@@ -474,6 +491,9 @@ body {
     
     .main-content {
         max-width: 100%;
+        width: 80%;
+        min-width: 80%;
+        min-height: 80vh;
         padding: 0 1rem;
     }
     
