@@ -97,8 +97,11 @@ body {
 #last-visit-text {
     font-family: 'Space Mono', monospace;
     font-size: 0.9rem;
-    color: #888888;
+    color: #FFFFFF;
     letter-spacing: 0.3px;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.6);
+    text-decoration-thickness: 1px;
 }
 
 /* Main Links */
@@ -113,7 +116,7 @@ body {
 .main-link {
     color: #FFFFFF;
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.2);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     font-size: 0.9rem;
     font-family: 'Space Mono', monospace;
@@ -124,7 +127,7 @@ body {
 
 .main-link:hover {
     color: #FFFFFF;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Past Work Section */
@@ -133,13 +136,16 @@ body {
 }
 
 .past-work-title {
-    font-size: 0.8rem;
-    color: #888888;
+    font-size: 0.9rem;
+    color: #FFFFFF;
     margin-bottom: 1rem;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-family: 'Space Mono', monospace;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.6);
+    text-decoration-thickness: 1px;
 }
 
 .past-work-links {
@@ -151,7 +157,7 @@ body {
 .past-work-link {
     color: #FFFFFF;
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.2);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     font-size: 0.8rem;
     font-family: 'Space Mono', monospace;
@@ -161,7 +167,7 @@ body {
 
 .past-work-link:hover {
     color: #FFFFFF;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Outside Work Section */
@@ -170,13 +176,16 @@ body {
 }
 
 .outside-work-title {
-    font-size: 0.8rem;
-    color: #888888;
+    font-size: 0.9rem;
+    color: #FFFFFF;
     margin-bottom: 1rem;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-family: 'Space Mono', monospace;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.6);
+    text-decoration-thickness: 1px;
 }
 
 .outside-work-links {
@@ -188,7 +197,7 @@ body {
 .outside-work-link {
     color: #FFFFFF;
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.2);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     font-size: 0.8rem;
     font-family: 'Space Mono', monospace;
@@ -198,7 +207,7 @@ body {
 
 .outside-work-link:hover {
     color: #FFFFFF;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Social Links */
@@ -216,7 +225,7 @@ body {
     gap: 0.5rem;
     color: #FFFFFF;
     text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.2);
+    text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     font-size: 0.8rem;
     font-family: 'Space Mono', monospace;
@@ -226,7 +235,7 @@ body {
 
 .social-link:hover {
     color: #FFFFFF;
-    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 .social-icon {
@@ -238,8 +247,8 @@ body {
     justify-content: center;
 }
 
-/* Minecraft Animation */
-.minecraft-animation {
+/* Lumberjack Animation */
+.lumberjack-animation {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -252,35 +261,59 @@ body {
     animation: fadeInOut 8s ease-in-out;
 }
 
-.minecraft-character {
+.lumberjack-character {
     position: absolute;
-    width: 40px;
-    height: 60px;
+    width: 50px;
+    height: 70px;
     background: linear-gradient(45deg, #8B4513, #A0522D);
-    border-radius: 4px;
-    animation: minecraftWalk 8s ease-in-out;
+    border-radius: 6px;
+    animation: lumberjackHammer 8s ease-in-out;
 }
 
-.minecraft-character::before {
+.lumberjack-character::before {
     content: '';
     position: absolute;
-    top: -10px;
-    left: 8px;
-    width: 24px;
-    height: 24px;
+    top: -12px;
+    left: 10px;
+    width: 30px;
+    height: 30px;
     background: #FFB6C1;
     border-radius: 50%;
     border: 2px solid #8B4513;
 }
 
-.minecraft-character::after {
+.lumberjack-character::after {
     content: '';
     position: absolute;
-    bottom: -5px;
-    left: 5px;
-    width: 30px;
-    height: 10px;
+    bottom: -8px;
+    left: 8px;
+    width: 34px;
+    height: 12px;
     background: #8B4513;
+    border-radius: 3px;
+}
+
+/* Hammer */
+.lumberjack-character .hammer {
+    position: absolute;
+    right: -15px;
+    top: 20px;
+    width: 25px;
+    height: 8px;
+    background: #696969;
+    border-radius: 2px;
+    transform-origin: left center;
+    animation: hammerSwing 0.5s ease-in-out infinite;
+}
+
+.lumberjack-character .hammer::before {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: -3px;
+    width: 8px;
+    height: 14px;
+    background: #696969;
     border-radius: 2px;
 }
 
@@ -300,18 +333,19 @@ body {
 .letter {
     opacity: 0;
     transform: scale(0);
-    animation: letterBuild 8s ease-in-out;
+    animation: letterHammer 8s ease-in-out;
+    position: relative;
 }
 
-/* Minecraft Animation Keyframes */
+/* Lumberjack Animation Keyframes */
 @keyframes fadeInOut {
     0%, 100% { opacity: 0; }
     10%, 90% { opacity: 1; }
 }
 
-@keyframes minecraftWalk {
+@keyframes lumberjackHammer {
     0% {
-        left: -50px;
+        left: -60px;
         top: 50%;
         transform: translateY(-50%);
     }
@@ -326,13 +360,22 @@ body {
         transform: translateY(-50%);
     }
     100% {
-        left: calc(100% + 50px);
+        left: calc(100% + 60px);
         top: 50%;
         transform: translateY(-50%);
     }
 }
 
-@keyframes letterBuild {
+@keyframes hammerSwing {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(-30deg);
+    }
+}
+
+@keyframes letterHammer {
     0% {
         opacity: 0;
         transform: scale(0) rotate(0deg);

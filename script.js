@@ -35,91 +35,85 @@ document.addEventListener('DOMContentLoaded', function() {
     
     updateVisitTracker();
 
-    // Enhanced Minecraft Animation
-    const minecraftAnimation = document.querySelector('.minecraft-animation');
-    const minecraftCharacter = document.querySelector('.minecraft-character');
+    // Enhanced Lumberjack Animation
+    const lumberjackAnimation = document.querySelector('.lumberjack-animation');
+    const lumberjackCharacter = document.querySelector('.lumberjack-character');
     const letters = document.querySelectorAll('.letter');
     
-    // Add breaking/building effects
-    function createBlockEffect(x, y, isBreaking = true) {
-        const block = document.createElement('div');
-        block.style.position = 'absolute';
-        block.style.left = x + 'px';
-        block.style.top = y + 'px';
-        block.style.width = '8px';
-        block.style.height = '8px';
-        block.style.background = isBreaking ? '#8B4513' : '#90EE90';
-        block.style.borderRadius = '1px';
-        block.style.pointerEvents = 'none';
-        block.style.zIndex = '11';
+    // Add hammer to lumberjack character
+    const hammer = document.createElement('div');
+    hammer.className = 'hammer';
+    lumberjackCharacter.appendChild(hammer);
+    
+    // Create brick pieces falling effect
+    function createBrickPieces(x, y, letter) {
+        const colors = ['#8B4513', '#A0522D', '#CD853F', '#D2691E'];
+        const numPieces = 8;
         
-        // Add breaking animation
-        if (isBreaking) {
-            block.style.animation = 'blockBreak 0.5s ease-out forwards';
-        } else {
-            block.style.animation = 'blockBuild 0.3s ease-out forwards';
+        for (let i = 0; i < numPieces; i++) {
+            const piece = document.createElement('div');
+            piece.style.position = 'absolute';
+            piece.style.left = x + 'px';
+            piece.style.top = y + 'px';
+            piece.style.width = Math.random() * 6 + 4 + 'px';
+            piece.style.height = Math.random() * 6 + 4 + 'px';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.borderRadius = '1px';
+            piece.style.pointerEvents = 'none';
+            piece.style.zIndex = '11';
+            piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+            
+            // Random falling animation
+            const fallDistance = 100 + Math.random() * 100;
+            const fallDuration = 0.8 + Math.random() * 0.4;
+            const horizontalDistance = (Math.random() - 0.5) * 60;
+            
+            piece.style.animation = `brickFall ${fallDuration}s ease-in forwards`;
+            piece.style.setProperty('--fall-distance', fallDistance + 'px');
+            piece.style.setProperty('--horizontal-distance', horizontalDistance + 'px');
+            
+            lumberjackAnimation.appendChild(piece);
+            
+            // Remove piece after animation
+            setTimeout(() => {
+                if (piece.parentNode) {
+                    piece.parentNode.removeChild(piece);
+                }
+            }, fallDuration * 1000);
         }
-        
-        minecraftAnimation.appendChild(block);
-        
-        // Remove block after animation
-        setTimeout(() => {
-            if (block.parentNode) {
-                block.parentNode.removeChild(block);
-            }
-        }, isBreaking ? 500 : 300);
     }
     
-    // Add CSS for block effects
+    // Add CSS for brick falling effects
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes blockBreak {
+        @keyframes brickFall {
             0% {
                 opacity: 1;
-                transform: scale(1) rotate(0deg);
+                transform: translate(0, 0) rotate(0deg);
             }
             50% {
                 opacity: 0.8;
-                transform: scale(1.2) rotate(180deg);
+                transform: translate(var(--horizontal-distance), calc(var(--fall-distance) * 0.5)) rotate(180deg);
             }
             100% {
                 opacity: 0;
-                transform: scale(0) rotate(360deg);
+                transform: translate(var(--horizontal-distance), var(--fall-distance)) rotate(360deg);
             }
         }
         
-        @keyframes blockBuild {
-            0% {
-                opacity: 0;
-                transform: scale(0) translateY(-10px);
-            }
-            50% {
-                opacity: 0.8;
-                transform: scale(1.1) translateY(-5px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        
-        .minecraft-character {
+        .lumberjack-character {
             transition: transform 0.1s ease;
         }
         
-        .minecraft-character.mining {
+        .lumberjack-character.hammering {
             transform: translateY(-50%) scale(1.1);
         }
         
-        .minecraft-character.building {
-            transform: translateY(-50%) scale(1.05);
-        }
-        
         .letter.building {
-            animation: letterBuildEnhanced 0.5s ease-out forwards;
+            animation: letterHammerEnhanced 0.5s ease-out forwards;
         }
         
-        @keyframes letterBuildEnhanced {
+        @keyframes letterHammerEnhanced {
             0% {
                 opacity: 0;
                 transform: scale(0) rotate(-10deg);
@@ -136,11 +130,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 filter: brightness(1);
             }
         }
+        
+        .letter.brick {
+            background: linear-gradient(45deg, #8B4513, #A0522D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
     `;
     document.head.appendChild(style);
     
     // Enhanced animation sequence
-    function startMinecraftAnimation() {
+    function startLumberjackAnimation() {
         let currentLetterIndex = 0;
         
         // Start the animation sequence
@@ -148,29 +150,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (currentLetterIndex < letters.length) {
                 const letter = letters[currentLetterIndex];
                 const letterRect = letter.getBoundingClientRect();
-                const characterRect = minecraftCharacter.getBoundingClientRect();
+                const characterRect = lumberjackCharacter.getBoundingClientRect();
                 
                 // Position character near the letter
                 const targetX = letterRect.left + letterRect.width / 2 - characterRect.width / 2;
-                minecraftCharacter.style.left = targetX + 'px';
+                lumberjackCharacter.style.left = targetX + 'px';
                 
-                // Mining animation
-                minecraftCharacter.classList.add('mining');
-                createBlockEffect(targetX + 20, letterRect.top + 10, true);
+                // Hammering animation
+                lumberjackCharacter.classList.add('hammering');
+                createBrickPieces(targetX + 25, letterRect.top + 20, letter.textContent);
                 
                 setTimeout(() => {
-                    minecraftCharacter.classList.remove('mining');
-                    minecraftCharacter.classList.add('building');
-                    
-                    // Building animation
-                    createBlockEffect(targetX + 20, letterRect.top + 10, false);
-                    letter.classList.add('building');
+                    lumberjackCharacter.classList.remove('hammering');
+                    letter.classList.add('building', 'brick');
                     
                     setTimeout(() => {
-                        minecraftCharacter.classList.remove('building');
                         letter.classList.remove('building');
-                    }, 300);
-                }, 200);
+                    }, 500);
+                }, 300);
                 
                 currentLetterIndex++;
             } else {
@@ -201,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start animation after page load
     setTimeout(() => {
-        startMinecraftAnimation();
+        startLumberjackAnimation();
     }, 1000);
     
     // Add hover effects for links
