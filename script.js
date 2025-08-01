@@ -64,7 +64,47 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!phonepeLink || !fallingBricksContainer) return;
 
-        // Create falling bricks
+        // Create impact particles at random points on PhonePe text
+        function createImpactParticles() {
+            const phonepeWidth = phonepeLink.offsetWidth;
+            const phonepeHeight = phonepeLink.offsetHeight;
+            
+            // Random impact point on PhonePe text
+            const impactX = Math.random() * phonepeWidth;
+            const impactY = Math.random() * phonepeHeight;
+            
+            // Create multiple particles from impact point
+            for (let i = 0; i < 8; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'impact-particle';
+                
+                particle.style.left = impactX + 'px';
+                particle.style.top = impactY + 'px';
+                
+                fallingBricksContainer.appendChild(particle);
+                
+                // Animate particle flying off from impact point
+                const angle = (i / 8) * 360; // Distribute particles in a circle
+                const distance = 20 + Math.random() * 30;
+                const endX = impactX + Math.cos(angle * Math.PI / 180) * distance;
+                const endY = impactY + Math.sin(angle * Math.PI / 180) * distance;
+                
+                gsap.to(particle, {
+                    x: endX - impactX,
+                    y: endY - impactY,
+                    opacity: 0,
+                    duration: 1 + Math.random() * 0.5,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        if (fallingBricksContainer.contains(particle)) {
+                            fallingBricksContainer.removeChild(particle);
+                        }
+                    }
+                });
+            }
+        }
+
+        // Create falling bricks (less frequent now)
         function createFallingBrick() {
             const brick = document.createElement('div');
             brick.className = 'falling-brick';
@@ -85,7 +125,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 duration: 2 + Math.random() * 2,
                 ease: "power2.in",
                 onComplete: () => {
-                    fallingBricksContainer.removeChild(brick);
+                    if (fallingBricksContainer.contains(brick)) {
+                        fallingBricksContainer.removeChild(brick);
+                    }
                 }
             });
         }
@@ -157,8 +199,11 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             buildingMotion();
             
-            // Create falling bricks periodically
-            setInterval(createFallingBrick, 800);
+            // Create impact particles periodically (more frequent)
+            setInterval(createImpactParticles, 600);
+            
+            // Create falling bricks periodically (less frequent)
+            setInterval(createFallingBrick, 1200);
         }, 1000);
     }
 
