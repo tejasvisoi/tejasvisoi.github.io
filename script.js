@@ -76,24 +76,24 @@ document.addEventListener('DOMContentLoaded', function() {
             // Walk from left to right across "making things"
             gsap.to(catContainer, {
                 x: textWidth - catWidth,
-                duration: 8, // Slower speed
-                ease: "power1.inOut",
+                duration: 30, // 30 seconds to reach one end
+                ease: "none", // Linear animation
                 onComplete: () => {
-                    // Flip cat to face left
+                    // Flip cat to face right (unflip)
                     gsap.to(catSprite, {
-                        scaleX: -1,
+                        scaleX: 1,
                         duration: 0.2
                     });
                     
                     // Walk back from right to left
                     gsap.to(catContainer, {
                         x: 0,
-                        duration: 8, // Slower speed
-                        ease: "power1.inOut",
+                        duration: 30, // 30 seconds to reach other end
+                        ease: "none", // Linear animation
                         onComplete: () => {
-                            // Flip cat back to face right
+                            // Flip cat back to face left
                             gsap.to(catSprite, {
-                                scaleX: 1,
+                                scaleX: -1,
                                 duration: 0.2,
                                 onComplete: walkAnimation // Loop the animation
                             });
