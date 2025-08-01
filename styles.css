@@ -33,13 +33,17 @@ body {
 
 .main-heading {
     font-family: 'Hoover', sans-serif;
-    font-size: 10rem; /* Increased from 9rem to 10rem */
+    font-size: clamp(4rem, 8vw, 10rem); /* Responsive font size: min 4rem, max 10rem, scales with viewport */
     font-weight: 700; /* Bold weight for Hoover */
     line-height: 1.1;
     margin-bottom: 1rem; /* Reduced from 4rem to 1rem */
     white-space: nowrap; /* Prevent wrapping to third line */
     letter-spacing: 0.005em; /* Reduced from 0.01em to 0.005em */
     color: #f5f5f5;
+    width: 60%; /* Occupy only 60% of screen width */
+    margin-left: auto; /* Center the title */
+    margin-right: auto; /* Center the title */
+    text-align: center; /* Center the text within the container */
 }
 
 .line-1 {
@@ -285,7 +289,7 @@ body {
     bottom: 0;
     left: 0; /* Back to left alignment */
     flex-wrap: nowrap; /* Prevent wrapping */
-    align-self: flex-end; /* Align to bottom of grid */
+    align-self: flex-start; /* Align to bottom of grid */
 }
 
 .social-link {
@@ -331,7 +335,8 @@ body {
     }
     
     .main-heading {
-        font-size: 7rem; /* 2x of 3.5rem */
+        width: 80%; /* Increase width on smaller screens for better readability */
+        font-size: clamp(3rem, 6vw, 7rem); /* Responsive font size for tablets */
         margin-bottom: 3rem;
     }
     
@@ -372,7 +377,8 @@ body {
     }
     
     .main-heading {
-        font-size: 5.6rem; /* 2x of 2.8rem */
+        width: 90%; /* Increase width on mobile for better readability */
+        font-size: clamp(2.5rem, 5vw, 5.6rem); /* Responsive font size for mobile */
         margin-bottom: 2rem;
     }
     
@@ -404,7 +410,8 @@ body {
     }
     
     .main-heading {
-        font-size: 4.8rem; /* 2x of 2.4rem */
+        width: 95%; /* Maximum width on very small screens */
+        font-size: clamp(2rem, 4vw, 4.8rem); /* Responsive font size for very small screens */
     }
     
     #last-visit-text,
