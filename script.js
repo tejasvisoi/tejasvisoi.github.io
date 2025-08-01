@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Walk from right to left across entire screen
             gsap.to(catContainer, {
                 x: -(catWidth),
-                duration: 15, // 15 seconds to cross screen
+                duration: 60, // 1 minute to cross screen
                 ease: "none", // Linear animation
                 onComplete: () => {
                     // Small pause then restart
