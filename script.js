@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Convert PhonePe text to SVG
     function convertTextToSVG() {
         const phonepeLink = document.querySelector('.phonepe-link');
-        const text = phonepeLink.textContent;
+        const text = phonepeLink.textContent || 'PhonePe'; // Fallback text
         const computedStyle = window.getComputedStyle(phonepeLink);
         
         // Create SVG container
@@ -78,7 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         svg.appendChild(textElement);
         
-        // Replace the text content with SVG
+        // Store original content and replace with SVG
+        phonepeLink.setAttribute('data-original-text', text);
         phonepeLink.innerHTML = '';
         phonepeLink.appendChild(svg);
         
@@ -438,7 +439,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             createCat();
         }, 200);
-    }, 500);
+    }, 1000); // Increased delay to ensure font loads
     
     // Add hover effects for links
     const allLinks = document.querySelectorAll('a');
