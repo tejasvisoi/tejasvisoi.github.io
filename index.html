@@ -3,180 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tejasvi Soi - Portfolio</title>
+    <title>Tejasvi Soi</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">Tejasvi Soi</a>
-            <div class="nav-links">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#work" class="nav-link">Work</a>
-                <a href="#contact" class="nav-link">Contact</a>
+    <div class="container">
+        <!-- Main Content (Upper Left) -->
+        <div class="main-content">
+            <h1 class="main-heading">
+                <span class="line-1">Tejasvi is making</span>
+                <span class="line-2">Portfolio.</span>
+            </h1>
+            
+            <!-- Information Section -->
+            <div class="info-section">
+                <div class="coordinates">33.03089803960773451763</div>
+                <div class="last-seen">LAST SEEN 12 DAYS AGO, AT SALESFORCE PARK IN SAN FRANCISCO.</div>
+                <div class="main-links">
+                    <a href="#portfolio" class="main-link">VIEW PORTFOLIO</a>
+                    <a href="#explore" class="main-link">EXPLORE PROJECTS</a>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        <span class="title-line">Hello, I'm</span>
-                        <span class="title-line highlight">Tejasvi Soi</span>
-                        <span class="title-line">Creative Developer</span>
-                    </h1>
-                    <p class="hero-subtitle">I create digital experiences that blend creativity with technology</p>
-                    <div class="hero-cta">
-                        <a href="#work" class="btn btn-primary">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="about" id="about">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">About Me</h2>
-                    <div class="section-line"></div>
-                </div>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p>I'm a passionate creative developer who loves building beautiful, functional, and user-centered digital experiences. With a background in both design and development, I bring a unique perspective to every project.</p>
-                        <p>When I'm not coding, you can find me exploring new technologies, experimenting with creative coding, or sharing knowledge with the developer community.</p>
-                        <div class="skills">
-                            <h3>Skills & Technologies</h3>
-                            <div class="skill-tags">
-                                <span class="skill-tag">JavaScript</span>
-                                <span class="skill-tag">React</span>
-                                <span class="skill-tag">Node.js</span>
-                                <span class="skill-tag">Python</span>
-                                <span class="skill-tag">CSS3</span>
-                                <span class="skill-tag">HTML5</span>
-                                <span class="skill-tag">Git</span>
-                                <span class="skill-tag">Figma</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Work Section -->
-        <section class="work" id="work">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Selected Work</h2>
-                    <div class="section-line"></div>
-                </div>
-                <div class="work-grid">
-                    <article class="work-item">
-                        <div class="work-image">
-                            <div class="work-placeholder">Project 1</div>
-                        </div>
-                        <div class="work-content">
-                            <h3 class="work-title">E-Commerce Platform</h3>
-                            <p class="work-description">A modern e-commerce solution built with React and Node.js, featuring real-time inventory management and seamless payment processing.</p>
-                            <div class="work-tags">
-                                <span class="work-tag">React</span>
-                                <span class="work-tag">Node.js</span>
-                                <span class="work-tag">MongoDB</span>
-                            </div>
-                            <div class="work-links">
-                                <a href="#" class="work-link">View Project</a>
-                                <a href="#" class="work-link">Source Code</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="work-item">
-                        <div class="work-image">
-                            <div class="work-placeholder">Project 2</div>
-                        </div>
-                        <div class="work-content">
-                            <h3 class="work-title">Creative Coding Experiments</h3>
-                            <p class="work-description">A collection of interactive web experiences exploring generative art, animations, and creative coding techniques.</p>
-                            <div class="work-tags">
-                                <span class="work-tag">Canvas API</span>
-                                <span class="work-tag">WebGL</span>
-                                <span class="work-tag">Three.js</span>
-                            </div>
-                            <div class="work-links">
-                                <a href="#" class="work-link">View Project</a>
-                                <a href="#" class="work-link">Source Code</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="work-item">
-                        <div class="work-image">
-                            <div class="work-placeholder">Project 3</div>
-                        </div>
-                        <div class="work-content">
-                            <h3 class="work-title">Task Management App</h3>
-                            <p class="work-description">A productivity app designed to help teams collaborate and manage projects efficiently with real-time updates.</p>
-                            <div class="work-tags">
-                                <span class="work-tag">Vue.js</span>
-                                <span class="work-tag">Firebase</span>
-                                <span class="work-tag">PWA</span>
-                            </div>
-                            <div class="work-links">
-                                <a href="#" class="work-link">View Project</a>
-                                <a href="#" class="work-link">Source Code</a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="contact" id="contact">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Get In Touch</h2>
-                    <div class="section-line"></div>
-                </div>
-                <div class="contact-content">
-                    <div class="contact-text">
-                        <p>I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hi, feel free to reach out!</p>
-                    </div>
-                    <div class="contact-links">
-                        <a href="mailto:hello@tejasvisoi.com" class="contact-link">
-                            <span class="contact-icon">✉️</span>
-                            <span>hello@tejasvisoi.com</span>
-                        </a>
-                        <a href="https://github.com/tejasvisoi" class="contact-link" target="_blank">
-                            <span class="contact-icon">📁</span>
-                            <span>GitHub</span>
-                        </a>
-                        <a href="https://linkedin.com/in/tejasvisoi" class="contact-link" target="_blank">
-                            <span class="contact-icon">💼</span>
-                            <span>LinkedIn</span>
-                        </a>
-                        <a href="https://twitter.com/tejasvisoi" class="contact-link" target="_blank">
-                            <span class="contact-icon">🐦</span>
-                            <span>Twitter</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Tejasvi Soi. All rights reserved.</p>
+        <!-- Footer Navigation (Bottom Left) -->
+        <div class="footer-nav">
+            <a href="#" class="social-link">
+                <span class="social-icon">📷</span>
+                <span>IG</span>
+            </a>
+            <a href="#" class="social-link">
+                <span class="social-icon">🐦</span>
+                <span>X</span>
+            </a>
+            <a href="mailto:hello@tejasvisoi.com" class="social-link">
+                <span class="social-icon">✉️</span>
+                <span>EMAIL</span>
+            </a>
         </div>
-    </footer>
 
-    <script src="script.js"></script>
+        <!-- Past Work Section (Bottom Right) -->
+        <div class="past-work">
+            <h3 class="past-work-title">PAST WORK</h3>
+            <div class="past-work-links">
+                <a href="#" class="past-work-link">NOTION</a>
+                <a href="#" class="past-work-link">STRIPE</a>
+                <a href="#" class="past-work-link">ASANA</a>
+                <a href="#" class="past-work-link">PING++</a>
+                <a href="#" class="past-work-link">MORE</a>
+            </div>
+        </div>
+
+        <!-- Language Selection (Bottom Right) -->
+        <div class="language-selector">
+            <a href="#" class="lang-link active">EN</a>
+            <a href="#" class="lang-link">中</a>
+            <a href="#" class="lang-link">日</a>
+        </div>
+    </div>
 </body>
 </html> 
