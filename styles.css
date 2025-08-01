@@ -196,6 +196,14 @@ body {
 
 .portfolio-link {
     color: #888888 !important; /* Grey color for View Portfolio */
+    text-decoration: none !important; /* Remove underline */
+}
+
+.portfolio-link:hover {
+    text-decoration: underline !important; /* Add underline on hover */
+    text-decoration-color: rgba(136, 136, 136, 0.6) !important; /* Grey underline */
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 4px !important;
 }
 
 /* Past Work Section */
