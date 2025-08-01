@@ -104,7 +104,6 @@ body {
     align-items: flex-start;
     width: 100%;
     max-width: 1200px; /* Increased from 1000px to match title width */
-    padding: 0 40px; /* Added 40px padding left and right */
 }
 
 /* Sections */
@@ -114,6 +113,8 @@ body {
     min-height: 200px;
     position: relative;
     align-items: flex-start;
+    justify-content: space-between;
+    height: -webkit-fill-available;
 }
 
 /* Visit Tracker */
@@ -181,7 +182,7 @@ body {
 /* Past Work Section */
 .past-work {
     text-align: left;
-    margin-top: 1rem; /* Add same spacing as Things I am doing section */
+ 
 }
 
 .past-work-title {
