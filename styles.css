@@ -111,11 +111,12 @@ body {
 /* Visit Tracker */
 .visit-tracker {
     margin-bottom: 1rem;
+    text-align: left;
 }
 
 #last-visit-text {
     font-family: 'Space Mono', monospace;
-    font-size: 24px;
+    font-size: 16px;
     color: #FFFFFF;
     letter-spacing: 0.3px;
     text-transform: uppercase;
@@ -143,7 +144,7 @@ body {
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    font-size: 24px;
+    font-size: 16px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.5px;
@@ -164,7 +165,7 @@ body {
 }
 
 .past-work-title {
-    font-size: 24px;
+    font-size: 16px;
     color: #FFFFFF;
     margin-bottom: 1rem;
     font-weight: 400;
@@ -192,7 +193,7 @@ body {
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    font-size: 24px;
+    font-size: 16px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
@@ -213,7 +214,7 @@ body {
 }
 
 .outside-work-title {
-    font-size: 24px;
+    font-size: 16px;
     color: #FFFFFF;
     margin-bottom: 1rem;
     font-weight: 400;
@@ -241,7 +242,7 @@ body {
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    font-size: 24px;
+    font-size: 16px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
@@ -274,7 +275,7 @@ body {
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
-    font-size: 24px;
+    font-size: 16px;
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
@@ -452,7 +453,7 @@ body {
     .outside-work-title,
     .outside-work-link,
     .social-link {
-        font-size: 20px;
+        font-size: 14px;
     }
 }
 
@@ -485,7 +486,7 @@ body {
     .outside-work-title,
     .outside-work-link,
     .social-link {
-        font-size: 18px;
+        font-size: 12px;
     }
 }
 
@@ -506,6 +507,6 @@ body {
     .outside-work-title,
     .outside-work-link,
     .social-link {
-        font-size: 16px;
+        font-size: 11px;
     }
 } 
