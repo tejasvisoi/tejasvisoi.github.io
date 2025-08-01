@@ -518,4 +518,45 @@ body {
     .social-link {
         font-size: 16px; /* Keep consistent with desktop */
     }
+}
+
+/* LoveFrom-style Bear Animation */
+.bear-container {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 60px;
+    height: 60px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.bear-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Bear animation states */
+.bear-body, .bear-head, .bear-ear, .bear-eye, .bear-nose, .bear-arm, .bear-leg {
+    transition: all 0.3s ease;
+}
+
+/* Responsive bear sizing */
+@media (max-width: 768px) {
+    .bear-container {
+        width: 50px;
+        height: 50px;
+        bottom: 1.5rem;
+        left: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bear-container {
+        width: 40px;
+        height: 40px;
+        bottom: 1rem;
+        left: 1rem;
+    }
 } 
