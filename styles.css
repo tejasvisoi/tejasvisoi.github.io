@@ -79,6 +79,7 @@ body {
     transition: all 0.3s ease;
     display: inline-block;
     transform-origin: center;
+    opacity: 0.8; /* Make it appear incomplete */
 }
 
 .phonepe-link::after {
@@ -552,7 +553,7 @@ body {
 }
 
 /* Minecraft character animation states */
-.char-head, .char-body, .char-arm, .char-leg, .char-eye, .char-mouth {
+.char-head, .char-body, .char-arm, .char-leg, .char-eye, .char-mouth, .hammer-handle, .hammer-head {
     transition: all 0.2s ease;
 }
 
@@ -571,8 +572,8 @@ body {
     position: absolute;
     width: 8px;
     height: 8px;
-    background: #8B4513;
-    border: 1px solid #654321;
+    background: #FFFFFF;
+    border: 1px solid #CCCCCC;
     border-radius: 1px;
     pointer-events: none;
 }

@@ -130,6 +130,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 yoyo: true,
                 repeat: -1
             });
+
+            // Animate hammer for hammering effect
+            gsap.to('.hammer-handle', {
+                duration: 0.3,
+                rotation: 25,
+                ease: "power2.inOut",
+                yoyo: true,
+                repeat: -1,
+                stagger: 0.15,
+                transformOrigin: "right center"
+            });
+
+            gsap.to('.hammer-head', {
+                duration: 0.3,
+                rotation: 25,
+                ease: "power2.inOut",
+                yoyo: true,
+                repeat: -1,
+                stagger: 0.15,
+                transformOrigin: "right center"
+            });
         };
 
         // Start animations after a delay
