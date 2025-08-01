@@ -52,15 +52,34 @@ body {
     color: #FFFFFF;
 }
 
-.line-2::after {
+/* PhonePe Link Styling */
+.phonepe-link {
+    color: #FFFFFF;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+    display: inline-block;
+    transform-origin: center;
+}
+
+.phonepe-link::after {
     content: '';
     position: absolute;
     bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 240px; /* Increased for larger title */
+    left: 0;
+    width: 100%;
     height: 1px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+}
+
+.phonepe-link:hover {
+    color: #FFFFFF;
+    transform: scale(1.02);
+}
+
+.phonepe-link:hover::after {
+    background: rgba(255, 255, 255, 0.8);
 }
 
 /* Content Grid */
@@ -102,6 +121,14 @@ body {
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    transform-origin: center;
+}
+
+#last-visit-text:hover {
+    transform: scale(1.02);
+    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Main Links */
@@ -123,11 +150,14 @@ body {
     transition: all 0.3s ease;
     letter-spacing: 0.5px;
     text-transform: uppercase;
+    display: inline-block;
+    transform-origin: center;
 }
 
 .main-link:hover {
     color: #FFFFFF;
     text-decoration-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
 }
 
 /* Past Work Section */
@@ -146,6 +176,14 @@ body {
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    transform-origin: center;
+}
+
+.past-work-title:hover {
+    transform: scale(1.02);
+    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 .past-work-links {
@@ -163,11 +201,14 @@ body {
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
+    display: inline-block;
+    transform-origin: center;
 }
 
 .past-work-link:hover {
     color: #FFFFFF;
     text-decoration-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
 }
 
 /* Outside Work Section */
@@ -186,6 +227,14 @@ body {
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    transform-origin: center;
+}
+
+.outside-work-title:hover {
+    transform: scale(1.02);
+    text-decoration-color: rgba(255, 255, 255, 0.8);
 }
 
 .outside-work-links {
@@ -203,11 +252,14 @@ body {
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
+    display: inline-block;
+    transform-origin: center;
 }
 
 .outside-work-link:hover {
     color: #FFFFFF;
     text-decoration-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
 }
 
 /* Social Links */
@@ -231,11 +283,14 @@ body {
     font-family: 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
+    display: inline-block;
+    transform-origin: center;
 }
 
 .social-link:hover {
     color: #FFFFFF;
     text-decoration-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.02);
 }
 
 .social-icon {
