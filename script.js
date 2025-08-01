@@ -55,24 +55,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
         document.body.appendChild(constructionWorker);
         
-        // Start the building sequence
-        startBuildingSequence();
+        // Start the movement sequence
+        startMovementSequence();
     }
     
-    // Start building sequence
-    function startBuildingSequence() {
+    // Start movement sequence
+    function startMovementSequence() {
         if (currentLetterIndex >= letters.length) {
             // Reset and start over
             currentLetterIndex = 0;
-            // Remove all building classes
-            phonepeLink.className = phonepeLink.className.replace(/building-letter-\d+/g, '');
             setTimeout(() => {
-                startBuildingSequence();
+                startMovementSequence();
             }, 2000);
             return;
         }
         
-        const letter = letters[currentLetterIndex];
         const phonepeRect = phonepeLink.getBoundingClientRect();
         
         // Calculate position for current letter
@@ -84,40 +81,14 @@ document.addEventListener('DOMContentLoaded', function() {
         constructionWorker.style.left = (letterX - 30) + 'px';
         constructionWorker.style.top = (letterY - 15) + 'px';
         
-        // Build the current letter
-        buildCurrentLetter();
-    }
-    
-    // Build the current letter
-    function buildCurrentLetter() {
-        const phonepeRect = phonepeLink.getBoundingClientRect();
-        const letterWidth = phonepeRect.width / letters.length;
-        const letterX = phonepeRect.left + (currentLetterIndex * letterWidth) + (letterWidth / 2);
-        const letterY = phonepeRect.top + (phonepeRect.height / 2);
+        // Create some brick pieces for visual effect
+        createBrickPieces(letterX, letterY);
         
-        // Remove previous building class
-        phonepeLink.className = phonepeLink.className.replace(/building-letter-\d+/g, '');
-        
-        // Add current building class
-        phonepeLink.classList.add(`building-letter-${currentLetterIndex}`);
-        
-        // Create brick pieces while building
-        let hammerCount = 0;
-        const maxHammers = 6; // Fewer hammers per letter for faster progression
-        
-        const hammerInterval = setInterval(() => {
-            createBrickPieces(letterX, letterY);
-            hammerCount++;
-            
-            if (hammerCount >= maxHammers) {
-                clearInterval(hammerInterval);
-                // Letter is now built, move to next letter
-                currentLetterIndex++;
-                setTimeout(() => {
-                    startBuildingSequence();
-                }, 300);
-            }
-        }, 200);
+        // Move to next letter after a delay
+        setTimeout(() => {
+            currentLetterIndex++;
+            startMovementSequence();
+        }, 800);
     }
     
     // Create brick pieces falling effect
