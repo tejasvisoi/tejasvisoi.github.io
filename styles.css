@@ -113,18 +113,19 @@ body {
     flex-direction: column;
     min-height: 200px;
     position: relative;
+    align-items: flex-start;
 }
 
 /* Visit Tracker */
 .visit-tracker {
-    margin-bottom: 4rem; /* Increased from 2rem to 4rem */
+    margin-bottom: 6rem; /* Increased from 4rem to 6rem */
     text-align: center;
 }
 
 #last-visit-text {
     font-family: 'Technor', 'Space Mono', monospace;
     font-size: 16px;
-    color: #f5f5f5;
+    color: #888888; /* Changed to grey */
     letter-spacing: 0.3px;
     text-transform: uppercase;
 }
@@ -140,7 +141,7 @@ body {
 
 .main-links-title {
     font-size: 16px;
-    color: #f5f5f5;
+    color: #888888; /* Changed to grey */
     margin-bottom: 1rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -173,6 +174,10 @@ body {
     transform: scale(1.02);
 }
 
+.portfolio-link {
+    color: #888888 !important; /* Grey color for View Portfolio */
+}
+
 /* Past Work Section */
 .past-work {
     text-align: left;
@@ -180,7 +185,7 @@ body {
 
 .past-work-title {
     font-size: 16px;
-    color: #f5f5f5;
+    color: #888888; /* Changed to grey */
     margin-bottom: 1rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -274,7 +279,7 @@ body {
     gap: 2rem;
     position: absolute;
     bottom: 0;
-    left: 0;
+    right: 0; /* Changed from left: 0 to right: 0 */
     flex-wrap: nowrap; /* Prevent wrapping */
     align-self: flex-end; /* Align to bottom of grid */
 }
