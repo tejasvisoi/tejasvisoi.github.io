@@ -8,7 +8,7 @@
 body {
     font-family: 'Technor', 'Space Mono', monospace;
     background-color: #000000;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.4;
     overflow-x: hidden;
     min-height: 100vh;
@@ -34,27 +34,29 @@ body {
 .main-heading {
     font-family: 'Technor', 'VT323', monospace;
     font-size: 9rem; /* 2x of 4.5rem */
-    font-weight: 700;
+    font-weight: 400; /* Reduced from 700 to 400 */
     line-height: 1.1;
     margin-bottom: 4rem;
     white-space: nowrap; /* Prevent wrapping to third line */
+    letter-spacing: 0.01em; /* 1% kerning */
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .line-1 {
     display: block;
     margin-bottom: 0.5rem;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .line-2 {
     display: block;
     position: relative;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* PhonePe Link Styling */
 .phonepe-link {
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     position: relative;
     transition: all 0.3s ease;
@@ -74,7 +76,7 @@ body {
 }
 
 .phonepe-link:hover {
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     transform: scale(1.02);
 }
 
@@ -118,7 +120,7 @@ body {
 #last-visit-text {
     font-family: 'Technor', 'Space Mono', monospace;
     font-size: 16px;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     letter-spacing: 0.3px;
     text-transform: uppercase;
     transition: all 0.3s ease;
@@ -140,7 +142,7 @@ body {
 }
 
 .main-link {
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
@@ -155,7 +157,7 @@ body {
 }
 
 .main-link:hover {
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration-color: rgba(255, 255, 255, 0.8);
     transform: scale(1.02);
 }
@@ -167,7 +169,7 @@ body {
 
 .past-work-title {
     font-size: 16px;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: 1rem;
     font-weight: 400;
     text-transform: uppercase;
@@ -189,7 +191,7 @@ body {
 }
 
 .past-work-link {
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
@@ -204,7 +206,7 @@ body {
 }
 
 .past-work-link:hover {
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration-color: rgba(255, 255, 255, 0.8);
     transform: scale(1.02);
 }
@@ -272,7 +274,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: underline;
     text-decoration-color: rgba(255, 255, 255, 0.6);
     text-decoration-thickness: 1px;
@@ -287,7 +289,7 @@ body {
 }
 
 .social-link:hover {
-    color: #FFFFFF;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration-color: rgba(255, 255, 255, 0.8);
     transform: scale(1.02);
 }
@@ -307,7 +309,7 @@ body {
     position: absolute;
     width: 20px;
     height: 30px;
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 3px;
     pointer-events: none;
     z-index: 10;
@@ -321,7 +323,7 @@ body {
     left: 5px;
     width: 10px;
     height: 10px;
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     border: 1px solid #000000;
 }
@@ -333,7 +335,7 @@ body {
     left: 3px;
     width: 14px;
     height: 6px;
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 2px;
 }
 
@@ -344,7 +346,7 @@ body {
     top: 10px;
     width: 12px;
     height: 4px;
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 1px;
     transform-origin: left center;
     animation: hammerSwing 0.3s ease-in-out infinite;
@@ -357,7 +359,7 @@ body {
     top: -2px;
     width: 4px;
     height: 8px;
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 1px;
 }
 
@@ -366,7 +368,7 @@ body {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 1px;
     pointer-events: none;
     z-index: 11;
@@ -435,8 +437,6 @@ body {
     .main-link,
     .past-work-title,
     .past-work-link,
-    .outside-work-title,
-    .outside-work-link,
     .social-link {
         font-size: 14px;
     }
@@ -468,8 +468,6 @@ body {
     .main-link,
     .past-work-title,
     .past-work-link,
-    .outside-work-title,
-    .outside-work-link,
     .social-link {
         font-size: 12px;
     }
@@ -489,8 +487,6 @@ body {
     .main-link,
     .past-work-title,
     .past-work-link,
-    .outside-work-title,
-    .outside-work-link,
     .social-link {
         font-size: 11px;
     }
