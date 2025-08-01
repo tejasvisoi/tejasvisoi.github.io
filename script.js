@@ -64,36 +64,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!catContainer) return;
 
         const catSprite = catContainer.querySelector('.cat-sprite');
-        let isFlipped = false; // Track flip state
 
         // Walking animation across the entire screen
         const walkAnimation = () => {
             const screenWidth = window.innerWidth;
             const catWidth = 60;
             
-            // Start from right edge (off-screen)
-            catContainer.style.left = screenWidth + 'px';
+            // Reset position and flip
+            gsap.set(catContainer, { x: screenWidth });
+            gsap.set(catSprite, { scaleX: -1 }); // Face left
             
             // Walk from right to left across entire screen
             gsap.to(catContainer, {
-                x: -(screenWidth + catWidth),
-                duration: 20, // 20 seconds to cross screen
+                x: -(catWidth),
+                duration: 15, // 15 seconds to cross screen
                 ease: "none", // Linear animation
-                onUpdate: function() {
-                    // Flip cat to face left when starting
-                    if (this.progress() < 0.05 && !isFlipped) {
-                        gsap.to(catSprite, {
-                            scaleX: -1,
-                            duration: 0.2
-                        });
-                        isFlipped = true;
-                    }
-                },
                 onComplete: () => {
-                    // Reset position to right edge and continue
+                    // Small pause then restart
                     setTimeout(() => {
-                        walkAnimation(); // Loop the animation
-                    }, 500); // Small pause before restarting
+                        walkAnimation();
+                    }, 1000);
                 }
             });
         };
