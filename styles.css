@@ -6,7 +6,7 @@
 }
 
 body {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Technor', 'Space Mono', monospace;
     background-color: #000000;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.4;
@@ -32,7 +32,7 @@ body {
 }
 
 .main-heading {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Rajdhani', 'Technor', 'VT323', monospace;
     font-size: 9rem; /* 2x of 4.5rem */
     font-weight: 400; /* Reduced from 700 to 400 */
     line-height: 1.1;
@@ -118,7 +118,7 @@ body {
 }
 
 #last-visit-text {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Technor', 'Space Mono', monospace;
     font-size: 16px;
     color: rgba(255, 255, 255, 0.9);
     letter-spacing: 0.3px;
@@ -148,7 +148,7 @@ body {
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
     font-size: 16px;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Technor', 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -174,7 +174,7 @@ body {
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Technor', 'Space Mono', monospace;
     transition: all 0.3s ease;
     display: inline-block;
     transform-origin: center;
@@ -187,7 +187,7 @@ body {
 .past-work-links {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem; /* Increased from 0.5rem to 1rem for more spacing */
 }
 
 .past-work-link {
@@ -197,7 +197,7 @@ body {
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
     font-size: 16px;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Technor', 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
     text-transform: uppercase;
@@ -277,7 +277,7 @@ body {
     color: rgba(255, 255, 255, 0.9);
     text-decoration: none; /* Removed underline */
     font-size: 16px;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Technor', 'Space Mono', monospace;
     transition: all 0.3s ease;
     letter-spacing: 0.3px;
     text-transform: uppercase;
