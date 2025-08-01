@@ -322,57 +322,7 @@ body {
     flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
-/* SVG Cat */
-.cat {
-    position: absolute;
-    width: 30px;
-    height: 24px;
-    pointer-events: none;
-    z-index: 10;
-    transition: all 0.3s ease;
-}
 
-.cat svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* Brick Pieces */
-.brick-piece {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #f5f5f5;
-    border-radius: 1px;
-    pointer-events: none;
-    z-index: 11;
-    animation: brickFall 1s ease-in forwards;
-}
-
-/* Construction Animation Keyframes */
-@keyframes hammerSwing {
-    0%, 100% {
-        transform: rotate(0deg);
-    }
-    50% {
-        transform: rotate(-20deg);
-    }
-}
-
-@keyframes brickFall {
-    0% {
-        opacity: 1;
-        transform: translate(0, 0) rotate(0deg);
-    }
-    50% {
-        opacity: 0.8;
-        transform: translate(10px, 30px) rotate(180deg);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(20px, 60px) rotate(360deg);
-    }
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {
