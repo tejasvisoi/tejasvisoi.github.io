@@ -20,8 +20,8 @@ body {
     min-height: 100vh;
     padding: 30vh 2rem 10vh 2rem; /* 30vh from top, 10vh from bottom */
     display: flex;
-    justify-content: flex-start; /* Start from top */
-    align-items: flex-start; /* Start from top */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     box-sizing: border-box;
 }
 
@@ -31,6 +31,10 @@ body {
     max-width: 1200px;
     width: 100%;
     height: fit-content; /* Fit content to whatever size it is */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .main-heading {
