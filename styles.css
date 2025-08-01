@@ -524,7 +524,7 @@ body {
 /* Cat Animation Container */
 .cat-container {
     position: absolute;
-    top: 0;
+    top: 8px; /* Position on the underline */
     left: 0;
     width: 60px;
     height: 60px;
@@ -536,6 +536,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    transform: scaleX(1); /* Default direction (facing right) */
 }
 
 /* Responsive cat sizing */
@@ -543,7 +544,7 @@ body {
     .cat-container {
         width: 50px;
         height: 50px;
-        top: 0;
+        top: 6px;
     }
 }
 
@@ -551,6 +552,6 @@ body {
     .cat-container {
         width: 40px;
         height: 40px;
-        top: 0;
+        top: 5px;
     }
 } 

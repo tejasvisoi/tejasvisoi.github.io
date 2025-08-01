@@ -71,19 +71,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const walkAnimation = () => {
             const textWidth = phonepeLink.offsetWidth;
             const catWidth = 60; // Cat container width
+            const catSprite = catContainer.querySelector('.cat-sprite');
             
             // Walk from left to right across "making things"
             gsap.to(catContainer, {
                 x: textWidth - catWidth,
-                duration: 4,
+                duration: 8, // Slower speed
                 ease: "power1.inOut",
                 onComplete: () => {
+                    // Flip cat to face left
+                    gsap.to(catSprite, {
+                        scaleX: -1,
+                        duration: 0.2
+                    });
+                    
                     // Walk back from right to left
                     gsap.to(catContainer, {
                         x: 0,
-                        duration: 4,
+                        duration: 8, // Slower speed
                         ease: "power1.inOut",
-                        onComplete: walkAnimation // Loop the animation
+                        onComplete: () => {
+                            // Flip cat back to face right
+                            gsap.to(catSprite, {
+                                scaleX: 1,
+                                duration: 0.2,
+                                onComplete: walkAnimation // Loop the animation
+                            });
+                        }
                     });
                 }
             });
