@@ -36,7 +36,7 @@ body {
     font-size: 10rem; /* Increased from 9rem to 10rem */
     font-weight: 500; /* Increased from 400 to 500 */
     line-height: 1.1;
-    margin-bottom: 4rem;
+    margin-bottom: 1rem; /* Reduced from 4rem to 1rem */
     white-space: nowrap; /* Prevent wrapping to third line */
     letter-spacing: 0.005em; /* Reduced from 0.01em to 0.005em */
     color: #f5f5f5;
@@ -117,7 +117,7 @@ body {
 
 /* Visit Tracker */
 .visit-tracker {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem; /* Increased from 2rem to 4rem */
     text-align: center;
 }
 
