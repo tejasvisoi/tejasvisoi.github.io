@@ -181,11 +181,11 @@ body {
 /* Grid Rows */
 .grid-row {
     display: flex;
-    gap: 4rem;
-    justify-content: center;
+    gap: 8rem; /* Increased from 4rem to 8rem for more spacing */
+    justify-content: space-between; /* Changed from center to space-between to spread sections */
     align-items: flex-start;
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px; /* Increased from 1000px to match title width */
 }
 
 /* Sections */
