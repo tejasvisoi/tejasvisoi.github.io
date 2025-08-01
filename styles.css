@@ -234,6 +234,8 @@ body {
     text-transform: uppercase;
     display: inline-block;
     transform-origin: center;
+    white-space: nowrap; /* Prevent text wrapping */
+    width: fit-content; /* Fit content width */
 }
 
 .past-work-link {
