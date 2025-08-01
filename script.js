@@ -57,15 +57,42 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Cat Animation (placeholder for when GIF is provided)
+    // Cat Animation
     function initCatAnimation() {
         const catContainer = document.querySelector('.cat-container');
+        const phonepeLink = document.querySelector('.phonepe-link');
         
-        if (!catContainer) return;
+        if (!catContainer || !phonepeLink) return;
 
-        // Placeholder for cat animation
-        // When GIF is provided, we'll create a sprite animation system
-        console.log('Cat animation ready - waiting for GIF');
+        // Position cat at the start of "making things"
+        catContainer.style.left = '0px';
+
+        // Walking animation around the text
+        const walkAnimation = () => {
+            const textWidth = phonepeLink.offsetWidth;
+            const catWidth = 60; // Cat container width
+            
+            // Walk from left to right across "making things"
+            gsap.to(catContainer, {
+                x: textWidth - catWidth,
+                duration: 4,
+                ease: "power1.inOut",
+                onComplete: () => {
+                    // Walk back from right to left
+                    gsap.to(catContainer, {
+                        x: 0,
+                        duration: 4,
+                        ease: "power1.inOut",
+                        onComplete: walkAnimation // Loop the animation
+                    });
+                }
+            });
+        };
+
+        // Start walking animation after a delay
+        setTimeout(() => {
+            walkAnimation();
+        }, 1000);
     }
 
     // Initialize cat animation when GSAP is loaded
