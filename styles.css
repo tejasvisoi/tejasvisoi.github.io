@@ -27,7 +27,7 @@ body {
 
 /* Main Content (Centered) */
 .main-content {
-    text-align: center;
+    text-align: left;
     width: 100%;
     height: fit-content; /* Fit content to whatever size it is */
 }
