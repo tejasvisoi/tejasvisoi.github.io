@@ -28,7 +28,6 @@ body {
 /* Main Content (Centered) */
 .main-content {
     text-align: center;
-    max-width: 1200px;
     width: 100%;
     height: fit-content; /* Fit content to whatever size it is */
 }
@@ -111,7 +110,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 3rem;
-    align-items: center;
+    align-items: end;
 }
 
 /* Grid Rows */
