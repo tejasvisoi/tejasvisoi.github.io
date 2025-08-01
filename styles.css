@@ -374,29 +374,144 @@ body {
     }
 }
 
-/* Responsive Design */
+/* Comprehensive Responsive Design */
+
+/* Large Desktop Screens (1920px and above) */
+@media (min-width: 1920px) {
+    .main-heading {
+        font-size: 12rem;
+    }
+    
+    .grid-row {
+        max-width: 800px;
+    }
+    
+    .section {
+        max-width: 350px;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .social-link {
+        font-size: 18px;
+    }
+}
+
+/* Standard Desktop/Laptop Screens (1440px - 1919px) */
+@media (max-width: 1919px) and (min-width: 1440px) {
+    .main-heading {
+        font-size: 11rem;
+    }
+    
+    .grid-row {
+        max-width: 700px;
+    }
+    
+    .section {
+        max-width: 320px;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .social-link {
+        font-size: 17px;
+    }
+}
+
+/* MacBook Pro 13" and similar (1280px - 1439px) */
+@media (max-width: 1439px) and (min-width: 1280px) {
+    .main-heading {
+        font-size: 10rem;
+    }
+    
+    .grid-row {
+        max-width: 650px;
+    }
+    
+    .section {
+        max-width: 300px;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .social-link {
+        font-size: 16px;
+    }
+}
+
+/* MacBook Air and smaller laptops (1024px - 1279px) */
+@media (max-width: 1279px) and (min-width: 1024px) {
+    .main-heading {
+        font-size: 9rem;
+    }
+    
+    .grid-row {
+        max-width: 580px;
+    }
+    
+    .section {
+        max-width: 270px;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .social-link {
+        font-size: 15px;
+    }
+}
+
+/* Tablet Landscape (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .main-heading {
+        font-size: 8rem;
+    }
+    
+    .grid-row {
+        max-width: 520px;
+    }
+    
+    .section {
+        max-width: 250px;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .social-link {
+        font-size: 14px;
+    }
+}
+
+/* Tablet Portrait (768px) */
 @media (max-width: 768px) {
     .container {
         padding: 1.5rem;
     }
     
     .main-heading {
-        font-size: 7rem; /* 2x of 3.5rem */
+        font-size: 7rem;
         margin-bottom: 3rem;
-    }
-    
-    .line-2::after {
-        width: 160px;
-    }
-    
-    .content-grid {
-        gap: 2rem;
     }
     
     .grid-row {
         flex-direction: column;
         gap: 2rem;
         align-items: center;
+        max-width: 100%;
+    }
+    
+    .section {
+        max-width: 100%;
+        width: 100%;
     }
     
     .social-links {
@@ -416,13 +531,37 @@ body {
     }
 }
 
+/* Mobile Large (480px - 767px) */
+@media (max-width: 767px) and (min-width: 480px) {
+    .main-heading {
+        font-size: 6rem;
+    }
+    
+    .grid-row {
+        max-width: 100%;
+    }
+    
+    .section {
+        max-width: 100%;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .social-link {
+        font-size: 13px;
+    }
+}
+
+/* Mobile Medium (480px) */
 @media (max-width: 480px) {
     .container {
         padding: 1rem;
     }
     
     .main-heading {
-        font-size: 5.6rem; /* 2x of 2.8rem */
+        font-size: 5.6rem;
         margin-bottom: 2rem;
     }
     
@@ -432,6 +571,11 @@ body {
     
     .grid-row {
         gap: 1.5rem;
+        max-width: 100%;
+    }
+    
+    .section {
+        max-width: 100%;
     }
     
     .social-links {
@@ -447,14 +591,37 @@ body {
     }
 }
 
-/* Ensure proper spacing on very small screens */
+/* Mobile Small (360px - 479px) */
+@media (max-width: 479px) and (min-width: 360px) {
+    .main-heading {
+        font-size: 5rem;
+    }
+    
+    #last-visit-text,
+    .main-link,
+    .past-work-title,
+    .past-work-link,
+    .social-link {
+        font-size: 11px;
+    }
+}
+
+/* Mobile Extra Small (360px and below) */
 @media (max-width: 360px) {
     .main-content {
         margin-top: 1rem;
     }
     
     .main-heading {
-        font-size: 4.8rem; /* 2x of 2.4rem */
+        font-size: 4.8rem;
+    }
+    
+    .grid-row {
+        max-width: 100%;
+    }
+    
+    .section {
+        max-width: 100%;
     }
     
     #last-visit-text,
