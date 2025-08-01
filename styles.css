@@ -359,8 +359,8 @@ body {
 @media (max-width: 768px) {
     .container {
         padding: 25vh 1.5rem 8vh 1.5rem; /* Adjust padding for tablets */
-        justify-content: center; /* Center align on tablets */
-        align-items: center; /* Center align on tablets */
+        justify-content: flex-start; /* Left align on tablets */
+        align-items: flex-start; /* Left align on tablets */
     }
     
     .main-heading {
@@ -368,17 +368,17 @@ body {
         font-size: clamp(3.5rem, 5vw, 6rem); /* Better responsive font size for tablets */
         margin-bottom: 2.5rem;
         white-space: normal; /* Allow text to wrap on smaller screens */
-        text-align: center; /* Center align text on tablets */
-        margin-left: auto; /* Center the title */
-        margin-right: auto; /* Center the title */
+        text-align: left; /* Left align text on tablets */
+        margin-left: 0; /* Left align the title */
+        margin-right: auto; /* Keep right margin auto */
     }
     
     .visit-tracker {
-        text-align: center; /* Center align visit tracker on tablets */
+        text-align: left; /* Left align visit tracker on tablets */
     }
     
     .line-1, .line-2 {
-        text-align: center; /* Center align lines on tablets */
+        text-align: left; /* Left align lines on tablets */
     }
     
     .line-2::after {
@@ -397,8 +397,8 @@ body {
     }
     
     .section {
-        align-items: center; /* Center align section content on mobile */
-        text-align: center; /* Center align text on mobile */
+        align-items: flex-start; /* Left align section content on mobile */
+        text-align: left; /* Left align text on mobile */
         max-width: 100%; /* Full width on mobile */
     }
     
@@ -422,8 +422,8 @@ body {
 @media (max-width: 480px) {
     .container {
         padding: 20vh 1rem 6vh 1rem; /* Adjust padding for mobile */
-        justify-content: center; /* Center align on mobile */
-        align-items: center; /* Center align on mobile */
+        justify-content: flex-start; /* Left align on mobile */
+        align-items: flex-start; /* Left align on mobile */
     }
     
     .main-heading {
@@ -431,17 +431,17 @@ body {
         font-size: clamp(3rem, 4.5vw, 4.5rem); /* Better responsive font size for mobile */
         margin-bottom: 2rem;
         white-space: normal; /* Allow text to wrap on mobile */
-        text-align: center; /* Center align text on mobile */
-        margin-left: auto; /* Center the title */
-        margin-right: auto; /* Center the title */
+        text-align: left; /* Left align text on mobile */
+        margin-left: 0; /* Left align the title */
+        margin-right: auto; /* Keep right margin auto */
     }
     
     .visit-tracker {
-        text-align: center; /* Center align visit tracker on mobile */
+        text-align: left; /* Left align visit tracker on mobile */
     }
     
     .line-1, .line-2 {
-        text-align: center; /* Center align lines on mobile */
+        text-align: left; /* Left align lines on mobile */
     }
     
     .content-grid {
@@ -469,8 +469,8 @@ body {
 @media (max-width: 360px) {
     .container {
         padding: 18vh 0.5rem 5vh 0.5rem; /* Minimal padding for very small screens */
-        justify-content: center; /* Center align on very small screens */
-        align-items: center; /* Center align on very small screens */
+        justify-content: flex-start; /* Left align on very small screens */
+        align-items: flex-start; /* Left align on very small screens */
     }
     
     .main-content {
@@ -481,17 +481,17 @@ body {
         width: 100%; /* Full width on very small screens */
         font-size: clamp(2rem, 4vw, 3.5rem); /* Smaller font for very small screens */
         margin-bottom: 1.5rem;
-        text-align: center; /* Center align text on very small screens */
-        margin-left: auto; /* Center the title */
-        margin-right: auto; /* Center the title */
+        text-align: left; /* Left align text on very small screens */
+        margin-left: 0; /* Left align the title */
+        margin-right: auto; /* Keep right margin auto */
     }
     
     .visit-tracker {
-        text-align: center; /* Center align visit tracker on very small screens */
+        text-align: left; /* Left align visit tracker on very small screens */
     }
     
     .line-1, .line-2 {
-        text-align: center; /* Center align lines on very small screens */
+        text-align: left; /* Left align lines on very small screens */
     }
     
     #last-visit-text,
