@@ -1,12 +1,5 @@
 // Minimal retro effects for the portfolio
 document.addEventListener('DOMContentLoaded', function() {
-    // Add glitch effect data attribute to main heading
-    const mainHeading = document.querySelector('.main-heading');
-    if (mainHeading) {
-        const text = mainHeading.textContent;
-        mainHeading.setAttribute('data-text', text);
-    }
-
     // Simple hover effects for links
     const links = document.querySelectorAll('a');
     
@@ -19,18 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.textShadow = 'none';
         });
     });
-
-    // Subtle CRT flicker effect
-    let flickerInterval = setInterval(() => {
-        const flicker = Math.random() * 0.1;
-        document.body.style.opacity = 1 - flicker;
-    }, 100);
-
-    // Stop flicker after 5 seconds
-    setTimeout(() => {
-        clearInterval(flickerInterval);
-        document.body.style.opacity = 1;
-    }, 5000);
 
     // Add retro cursor effect
     const cursor = document.createElement('div');
