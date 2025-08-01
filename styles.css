@@ -115,9 +115,6 @@ body {
     width: 100%;
     max-width: 600px; /* Match PhonePe text width (approximately 7 chars * 85px) */
     margin: 0 auto; /* Center the container */
-    position: relative;
-    left: 50%; /* Move to center */
-    transform: translateX(-50%); /* Center the grid */
 }
 
 /* Sections */
