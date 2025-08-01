@@ -115,6 +115,7 @@ body {
     align-items: flex-start;
     justify-content: space-between;
     height: -webkit-fill-available;
+    width: 300px; /* Fixed width for both sections */
 }
 
 /* Visit Tracker */
