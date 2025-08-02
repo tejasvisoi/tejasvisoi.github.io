@@ -2,15 +2,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Custom cursor functionality
     const cursor = document.querySelector('.custom-cursor');
-    const cursorRipple = document.querySelector('.cursor-ripple');
     
     // Update cursor position
     document.addEventListener('mousemove', (e) => {
-        if (cursor && cursorRipple) {
+        if (cursor) {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-            cursorRipple.style.left = e.clientX + 'px';
-            cursorRipple.style.top = e.clientY + 'px';
         }
     });
     
@@ -20,12 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', () => {
             if (cursor) cursor.style.transform = 'scale(1.5)';
-            if (cursorRipple) {
-                cursorRipple.classList.add('active');
-                setTimeout(() => {
-                    cursorRipple.classList.remove('active');
-                }, 300);
-            }
         });
         
         element.addEventListener('mouseleave', () => {
