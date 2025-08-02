@@ -55,8 +55,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add hover interactions for the time tracker
     function addHoverInteractions() {
         let originalText = '';
+        let isHovering = false;
         
         lastVisitText.addEventListener('mouseenter', function() {
+            isHovering = true;
             const currentTime = Date.now();
             const sessionTime = currentTime - startTime;
             const totalTime = totalTimeSpent + sessionTime;
@@ -69,9 +71,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         lastVisitText.addEventListener('mouseleave', function() {
+            isHovering = false;
             // Restore original text
             this.textContent = originalText;
         });
+        
+        // Override the updateTimeTracker function to respect hover state
+        const originalUpdateTimeTracker = updateTimeTracker;
+        updateTimeTracker = function() {
+            if (!isHovering) {
+                originalUpdateTimeTracker();
+            }
+        };
     }
     
     // Update timer every second
