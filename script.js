@@ -28,15 +28,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function getQuirkyMessage(totalSeconds) {
         if (totalSeconds <= 10) {
-            return "Just getting started? 👀";
+            return "JUST GETTING STARTED? 👀";
         } else if (totalSeconds <= 30) {
-            return "30 seconds already? That's commitment! ⏰";
+            return "30 SECONDS ALREADY? THAT'S COMMITMENT! ⏰";
         } else if (totalSeconds <= 60) {
-            return "You've officially spent more time here than on some Hinge dates 💔";
+            return "YOU'VE OFFICIALLY SPENT MORE TIME HERE THAN ON SOME HINGE DATES 💔";
         } else if (totalSeconds <= 300) {
-            return "Okay, now we're basically friends 🤝";
+            return "OKAY, NOW WE'RE BASICALLY FRIENDS 🤝";
         } else {
-            return "Rent's due next week if you stay longer 🏠";
+            return "RENT'S DUE NEXT WEEK IF YOU STAY LONGER 🏠";
         }
     }
 
@@ -69,17 +69,28 @@ document.addEventListener('DOMContentLoaded', function() {
             #last-visit-text.hovered {
                 transform: translateY(-100%);
             }
-            #last-visit-text.quirky {
+            #quirky-text {
                 position: absolute;
                 top: 100%;
                 left: 0;
                 transform: translateY(0);
                 transition: transform 0.3s ease;
+                font-family: 'Technor', 'Space Mono', monospace;
+                font-size: 16px;
+                color: #888888;
+                letter-spacing: 0.3px;
+                text-transform: uppercase;
             }
         `;
         document.head.appendChild(style);
         
+        let isHovering = false;
+        let quirkyText = null;
+        
         lastVisitText.addEventListener('mouseenter', function() {
+            if (isHovering) return; // Prevent multiple triggers
+            isHovering = true;
+            
             const currentTime = Date.now();
             const sessionTime = currentTime - startTime;
             const totalTime = totalTimeSpent + sessionTime;
@@ -87,36 +98,36 @@ document.addEventListener('DOMContentLoaded', function() {
             const quirkyMessage = getQuirkyMessage(totalSeconds);
             
             // Create quirky text element
-            const quirkyText = document.createElement('span');
+            quirkyText = document.createElement('span');
             quirkyText.id = 'quirky-text';
             quirkyText.textContent = quirkyMessage;
-            quirkyText.className = 'quirky';
-            quirkyText.style.position = 'absolute';
-            quirkyText.style.top = '100%';
-            quirkyText.style.left = '0';
-            quirkyText.style.transform = 'translateY(0)';
-            quirkyText.style.transition = 'transform 0.3s ease';
             
             // Add quirky text to container
             const container = lastVisitText.parentElement;
             container.appendChild(quirkyText);
             
             // Trigger animations
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 lastVisitText.classList.add('hovered');
                 quirkyText.style.transform = 'translateY(-100%)';
-            }, 50);
+            });
         });
         
         lastVisitText.addEventListener('mouseleave', function() {
-            // Remove quirky text
-            const quirkyText = document.getElementById('quirky-text');
-            if (quirkyText) {
-                quirkyText.remove();
-            }
+            isHovering = false;
             
             // Reset original text
             lastVisitText.classList.remove('hovered');
+            
+            // Remove quirky text after animation
+            if (quirkyText) {
+                quirkyText.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    if (quirkyText && quirkyText.parentElement) {
+                        quirkyText.remove();
+                    }
+                }, 300);
+            }
         });
     }
     
