@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+
+{% block title %}Homepage Management - Admin Console{% endblock %}
+{% block page_title %}Homepage Management{% endblock %}
+
+{% block content %}
+<div class="homepage-editor">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Hero Section</h3>
+        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label for="heroLine1" class="form-label">Line 1</label>
+                <input type="text" id="heroLine1" class="form-input" value="{{ content.hero.line1 }}" placeholder="Building, breaking,">
+            </div>
+            <div class="form-group">
+                <label for="heroLine2" class="form-label">Line 2</label>
+                <input type="text" id="heroLine2" class="form-input" value="{{ content.hero.line2 }}" placeholder="making things">
+            </div>
+            <div class="form-group">
+                <label for="heroSubtitle" class="form-label">Subtitle</label>
+                <input type="text" id="heroSubtitle" class="form-input" value="{{ content.hero.subtitle }}" placeholder="Portfolio subtitle">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Present Work</h3>
+        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label for="presentTitle" class="form-label">Section Title</label>
+                <input type="text" id="presentTitle" class="form-input" value="{{ content.present.title }}" placeholder="Present">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Work Items</label>
+                <div id="presentItems" class="items-list">
+                    {% for item in content.present.items %}
+                    <div class="item-row">
+                        <input type="text" class="form-input item-text" value="{{ item.text }}" placeholder="Work item text">
+                        <input type="text" class="form-input item-url" value="{{ item.url }}" placeholder="URL (optional)">
+                        <button type="button" class="btn btn-danger remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-secondary" id="addPresentItem">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Past Work</h3>
+        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label for="pastTitle" class="form-label">Section Title</label>
+                <input type="text" id="pastTitle" class="form-input" value="{{ content.past.title }}" placeholder="Past">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Work Items</label>
+                <div id="pastItems" class="items-list">
+                    {% for item in content.past.items %}
+                    <div class="item-row">
+                        <input type="text" class="form-input item-text" value="{{ item.text }}" placeholder="Work item text">
+                        <input type="text" class="form-input item-url" value="{{ item.url }}" placeholder="URL (optional)">
+                        <button type="button" class="btn btn-danger remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-secondary" id="addPastItem">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Social Links</h3>
+        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label class="form-label">Social Media Links</label>
+                <div id="socialItems" class="items-list">
+                    {% for item in content.social.items %}
+                    <div class="item-row">
+                        <input type="text" class="form-input item-icon" value="{{ item.icon }}" placeholder="Icon (📷, 🐦, ✉️)">
+                        <input type="text" class="form-input item-text" value="{{ item.text }}" placeholder="Platform name">
+                        <input type="text" class="form-input item-url" value="{{ item.url }}" placeholder="URL">
+                        <button type="button" class="btn btn-danger remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-secondary" id="addSocialItem">
+                    <i class="fas fa-plus"></i> Add Social Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button type="button" class="btn btn-primary" id="saveHomepage">
+            <i class="fas fa-save"></i> Save Changes
+        </button>
+        <button type="button" class="btn btn-secondary" id="previewHomepage">
+            <i class="fas fa-eye"></i> Preview
+        </button>
+    </div>
+</div>
+
+<style>
+    .homepage-editor {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .form-section {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .items-list {
+        display: grid;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .item-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .item-row .item-icon {
+        grid-column: 1;
+        max-width: 100px;
+    }
+
+    .item-row .item-text {
+        grid-column: 2;
+    }
+
+    .item-row .item-url {
+        grid-column: 3;
+    }
+
+    .remove-item {
+        padding: 0.5rem;
+        min-width: auto;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        padding: 1rem 0;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .item-row {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .item-row .item-icon,
+        .item-row .item-text,
+        .item-row .item-url {
+            grid-column: 1;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<script>
+    // Add item functionality
+    function addItem(containerId, isSocial = false) {
+        const container = document.getElementById(containerId);
+        const itemRow = document.createElement('div');
+        itemRow.className = 'item-row';
+        
+        if (isSocial) {
+            itemRow.innerHTML = `
+                <input type="text" class="form-input item-icon" placeholder="Icon (📷, 🐦, ✉️)">
+                <input type="text" class="form-input item-text" placeholder="Platform name">
+                <input type="text" class="form-input item-url" placeholder="URL">
+                <button type="button" class="btn btn-danger remove-item">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+        } else {
+            itemRow.innerHTML = `
+                <input type="text" class="form-input item-text" placeholder="Work item text">
+                <input type="text" class="form-input item-url" placeholder="URL (optional)">
+                <button type="button" class="btn btn-danger remove-item">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+        }
+        
+        container.appendChild(itemRow);
+    }
+
+    // Remove item functionality
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
+            const itemRow = e.target.closest('.item-row');
+            itemRow.remove();
+        }
+    });
+
+    // Add event listeners
+    document.getElementById('addPresentItem').addEventListener('click', () => addItem('presentItems'));
+    document.getElementById('addPastItem').addEventListener('click', () => addItem('pastItems'));
+    document.getElementById('addSocialItem').addEventListener('click', () => addItem('socialItems', true));
+
+    // Save homepage
+    document.getElementById('saveHomepage').addEventListener('click', async function() {
+        const button = this;
+        const originalText = showLoading(button);
+
+        try {
+            // Collect data
+            const homepageData = {
+                hero: {
+                    line1: document.getElementById('heroLine1').value,
+                    line2: document.getElementById('heroLine2').value,
+                    subtitle: document.getElementById('heroSubtitle').value
+                },
+                present: {
+                    title: document.getElementById('presentTitle').value,
+                    items: collectItems('presentItems')
+                },
+                past: {
+                    title: document.getElementById('pastTitle').value,
+                    items: collectItems('pastItems')
+                },
+                social: {
+                    items: collectSocialItems('socialItems')
+                }
+            };
+
+            const response = await apiCall('/api/homepage', {
+                method: 'POST',
+                body: JSON.stringify(homepageData)
+            });
+
+            showAlert('Homepage saved successfully!', 'success');
+        } catch (error) {
+            console.error('Error saving homepage:', error);
+        } finally {
+            hideLoading(button, originalText);
+        }
+    });
+
+    // Preview homepage
+    document.getElementById('previewHomepage').addEventListener('click', function() {
+        window.open('https://tejasvisoi.github.io', '_blank');
+    });
+
+    // Helper functions
+    function collectItems(containerId) {
+        const container = document.getElementById(containerId);
+        const items = [];
+        
+        container.querySelectorAll('.item-row').forEach(row => {
+            const text = row.querySelector('.item-text').value.trim();
+            const url = row.querySelector('.item-url').value.trim();
+            
+            if (text) {
+                items.push({ text, url });
+            }
+        });
+        
+        return items;
+    }
+
+    function collectSocialItems(containerId) {
+        const container = document.getElementById(containerId);
+        const items = [];
+        
+        container.querySelectorAll('.item-row').forEach(row => {
+            const icon = row.querySelector('.item-icon').value.trim();
+            const text = row.querySelector('.item-text').value.trim();
+            const url = row.querySelector('.item-url').value.trim();
+            
+            if (text && url) {
+                items.push({ icon, text, url });
+            }
+        });
+        
+        return items;
+    }
+</script>
+{% endblock %}
