@@ -76,6 +76,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const screenWidth = window.innerWidth;
             const catWidth = 60;
             
+            // Determine animation duration based on screen size
+            let animationDuration;
+            if (screenWidth >= 1440) {
+                // Large desktop screens (1440px and above) - longer animation
+                animationDuration = 120; // 2 minutes
+            } else {
+                // Tablet and below devices - 1 minute
+                animationDuration = 60; // 1 minute
+            }
+            
             // Show cat and reset position
             gsap.set(catContainer, { 
                 x: screenWidth,
@@ -86,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Walk from right to left across entire screen
             gsap.to(catContainer, {
                 x: -(catWidth),
-                duration: 60, // 1 minute to cross screen
+                duration: animationDuration, // Responsive duration
                 ease: "none", // Linear animation
                 onComplete: () => {
                     // Small pause then restart
