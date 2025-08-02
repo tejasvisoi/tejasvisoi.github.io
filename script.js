@@ -46,7 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalTime = totalTimeSpent + sessionTime;
         const totalSeconds = Math.floor(totalTime / 1000);
         
-        lastVisitText.textContent = `You have spent ${formatTime(totalTime)} here.`;
+        // Only update the displayed text if not hovering
+        if (!window.isHovering) {
+            lastVisitText.textContent = `You have spent ${formatTime(totalTime)} here.`;
+        }
         
         // Save total time to localStorage
         localStorage.setItem('totalTimeSpent', totalTime.toString());
@@ -55,10 +58,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add hover interactions for the time tracker
     function addHoverInteractions() {
         let originalText = '';
-        let isHovering = false;
+        
+        // Initialize global hover state
+        window.isHovering = false;
         
         lastVisitText.addEventListener('mouseenter', function() {
-            isHovering = true;
+            window.isHovering = true;
             const currentTime = Date.now();
             const sessionTime = currentTime - startTime;
             const totalTime = totalTimeSpent + sessionTime;
@@ -71,18 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         lastVisitText.addEventListener('mouseleave', function() {
-            isHovering = false;
+            window.isHovering = false;
             // Restore original text
             this.textContent = originalText;
         });
-        
-        // Override the updateTimeTracker function to respect hover state
-        const originalUpdateTimeTracker = updateTimeTracker;
-        updateTimeTracker = function() {
-            if (!isHovering) {
-                originalUpdateTimeTracker();
-            }
-        };
     }
     
     // Update timer every second
