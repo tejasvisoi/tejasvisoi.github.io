@@ -1,40 +1,39 @@
-// Minimal retro effects for the portfolio
+// Portfolio functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Custom cursor functionality
+    // Cache DOM elements
     const cursor = document.querySelector('.custom-cursor');
+    const lastVisitText = document.getElementById('last-visit-text');
+    const catContainer = document.querySelector('.cat-container');
+    const visitTracker = document.querySelector('.visit-tracker');
     
-    // Update cursor position
-    document.addEventListener('mousemove', (e) => {
-        if (cursor) {
+    // State variables
+    let startTime = Date.now();
+    let totalTimeSpent = parseInt(localStorage.getItem('totalTimeSpent')) || 0;
+    let originalText = '';
+    window.isHovering = false;
+    
+    // Custom cursor functionality
+    if (cursor) {
+        document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
-        }
-    });
-    
-    // Add hover effects to all interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .main-link, .past-work-link, .outside-work-link, .social-link, #last-visit-text');
-    
-    interactiveElements.forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            if (cursor) cursor.style.transform = 'scale(1.5)';
         });
         
-        element.addEventListener('mouseleave', () => {
-            if (cursor) cursor.style.transform = 'scale(1)';
+        // Add hover effects to interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .main-link, .past-work-link, .social-link, #last-visit-text');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+            });
         });
-    });
-    
-    // Time spent tracking functionality
-    const lastVisitText = document.getElementById('last-visit-text');
-    let startTime = Date.now();
-    let totalTimeSpent = 0;
-    
-    // Load total time spent from localStorage
-    const savedTime = localStorage.getItem('totalTimeSpent');
-    if (savedTime) {
-        totalTimeSpent = parseInt(savedTime);
     }
     
+    // Time formatting utility
     function formatTime(milliseconds) {
         const totalSeconds = Math.floor(milliseconds / 1000);
         const hours = Math.floor(totalSeconds / 3600);
@@ -50,150 +49,95 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // Quirky message generator
     function getQuirkyMessage(totalSeconds) {
-        if (totalSeconds <= 10) {
-            return "JUST GETTING STARTED? 👀";
-        } else if (totalSeconds <= 30) {
-            return "30 SECONDS ALREADY? THAT'S COMMITMENT! ⏰";
-        } else if (totalSeconds <= 60) {
-            return "YOU'VE OFFICIALLY SPENT MORE TIME HERE THAN ON SOME HINGE DATES 💔";
-        } else if (totalSeconds <= 300) {
-            return "OKAY, NOW WE'RE BASICALLY FRIENDS 🤝";
-        } else {
-            return "RENT'S DUE NEXT WEEK IF YOU STAY LONGER 🏠";
-        }
+        if (totalSeconds <= 10) return "JUST GETTING STARTED? 👀";
+        if (totalSeconds <= 30) return "30 SECONDS ALREADY? THAT'S COMMITMENT! ⏰";
+        if (totalSeconds <= 60) return "YOU'VE OFFICIALLY SPENT MORE TIME HERE THAN ON SOME HINGE DATES 💔";
+        if (totalSeconds <= 300) return "OKAY, NOW WE'RE BASICALLY FRIENDS 🤝";
+        return "RENT'S DUE NEXT WEEK IF YOU STAY LONGER 🏠";
     }
-
+    
+    // Time tracker update
     function updateTimeTracker() {
         const currentTime = Date.now();
         const sessionTime = currentTime - startTime;
         const totalTime = totalTimeSpent + sessionTime;
-        const totalSeconds = Math.floor(totalTime / 1000);
         
-        // Only update the displayed text if not hovering
         if (!window.isHovering) {
             lastVisitText.textContent = `You have spent ${formatTime(totalTime)} here.`;
         }
         
-        // Save total time to localStorage
         localStorage.setItem('totalTimeSpent', totalTime.toString());
     }
-
-    // Add hover interactions for the time tracker
-    function addHoverInteractions() {
-        let originalText = '';
-        
-        // Initialize global hover state
-        window.isHovering = false;
-        
+    
+    // Hover interactions for time tracker
+    if (lastVisitText) {
         lastVisitText.addEventListener('mouseenter', function() {
             window.isHovering = true;
             const currentTime = Date.now();
             const sessionTime = currentTime - startTime;
             const totalTime = totalTimeSpent + sessionTime;
             const totalSeconds = Math.floor(totalTime / 1000);
-            const quirkyMessage = getQuirkyMessage(totalSeconds);
             
-            // Store original text and replace with quirky message
             originalText = this.textContent;
-            this.textContent = quirkyMessage;
+            this.textContent = getQuirkyMessage(totalSeconds);
         });
         
         lastVisitText.addEventListener('mouseleave', function() {
             window.isHovering = false;
-            // Restore original text
             this.textContent = originalText;
         });
     }
     
-    // Update timer every second
+    // Cat animation
+    function initCatAnimation() {
+        if (!catContainer || !visitTracker || typeof gsap === 'undefined') return;
+        
+        const catSprite = catContainer.querySelector('.cat-sprite');
+        if (!catSprite) return;
+        
+        // Position cat below visit tracker
+        const visitTrackerRect = visitTracker.getBoundingClientRect();
+        catContainer.style.top = (visitTrackerRect.bottom + 10) + 'px';
+        
+        function walkAnimation() {
+            const screenWidth = window.innerWidth;
+            const catWidth = 60;
+            const animationDuration = screenWidth >= 1440 ? 180 : 60; // 3 min on large screens, 1 min on others
+            
+            gsap.set(catContainer, { x: screenWidth, opacity: 1 });
+            gsap.set(catSprite, { scaleX: -1 });
+            
+            gsap.to(catContainer, {
+                x: -(catWidth),
+                duration: animationDuration,
+                ease: "none",
+                onComplete: () => {
+                    setTimeout(walkAnimation, 1000);
+                }
+            });
+        }
+        
+        setTimeout(walkAnimation, 1000);
+    }
+    
+    // Initialize functionality
+    updateTimeTracker();
     setInterval(updateTimeTracker, 1000);
-    updateTimeTracker(); // Initial update
     
-    // Add hover interactions
-    addHoverInteractions();
+    // Initialize cat animation
+    if (typeof gsap !== 'undefined') {
+        initCatAnimation();
+    } else {
+        window.addEventListener('load', initCatAnimation);
+    }
     
-    // Update total time when page is about to unload
+    // Save time on page unload
     window.addEventListener('beforeunload', function() {
         const currentTime = Date.now();
         const sessionTime = currentTime - startTime;
         const totalTime = totalTimeSpent + sessionTime;
         localStorage.setItem('totalTimeSpent', totalTime.toString());
     });
-    
-    // Add hover effects for links
-    const allLinks = document.querySelectorAll('a');
-    allLinks.forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            this.style.transition = 'all 0.3s ease';
-        });
-    });
-
-    // Cat Animation - End to End Screen Walking
-    function initCatAnimation() {
-        const catContainer = document.querySelector('.cat-container');
-        const visitTracker = document.querySelector('.visit-tracker');
-        
-        if (!catContainer || !visitTracker) return;
-
-        const catSprite = catContainer.querySelector('.cat-sprite');
-
-        // Position cat 10px below the visit tracker text
-        const visitTrackerRect = visitTracker.getBoundingClientRect();
-        const relativeTop = visitTrackerRect.bottom + 10;
-        catContainer.style.top = relativeTop + 'px';
-
-        // Walking animation across the entire screen
-        const walkAnimation = () => {
-            const screenWidth = window.innerWidth;
-            const catWidth = 60;
-            
-            // Determine animation duration based on screen size
-            let animationDuration;
-            if (screenWidth >= 1440) {
-                // Large desktop screens (1440px and above) - longer animation
-                animationDuration = 180; // 3 minutes
-            } else {
-                // Tablet and below devices - 1 minute
-                animationDuration = 60; // 1 minute
-            }
-            
-            // Show cat and reset position
-            gsap.set(catContainer, { 
-                x: screenWidth,
-                opacity: 1 
-            });
-            gsap.set(catSprite, { scaleX: -1 }); // Face left
-            
-            // Walk from right to left across entire screen
-            gsap.to(catContainer, {
-                x: -(catWidth),
-                duration: animationDuration, // Responsive duration
-                ease: "none", // Linear animation
-                onComplete: () => {
-                    // Small pause then restart
-                    setTimeout(() => {
-                        walkAnimation();
-                    }, 1000);
-                }
-            });
-        };
-
-        // Start walking animation after a delay
-        setTimeout(() => {
-            walkAnimation();
-        }, 1000);
-    }
-
-    // Initialize cat animation when GSAP is loaded
-    if (typeof gsap !== 'undefined') {
-        initCatAnimation();
-    } else {
-        // Wait for GSAP to load
-        window.addEventListener('load', () => {
-            if (typeof gsap !== 'undefined') {
-                initCatAnimation();
-            }
-        });
-    }
 }); 
