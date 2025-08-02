@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (totalSeconds <= 10) {
             return "Just getting started? 👀";
         } else if (totalSeconds <= 30) {
-            return "30 seconds already? That's commitment.";
+            return "30 seconds already? That's commitment! ⏰";
         } else if (totalSeconds <= 60) {
-            return "You've officially spent more time here than on some Hinge dates.";
+            return "You've officially spent more time here than on some Hinge dates 💔";
         } else if (totalSeconds <= 300) {
-            return "Okay, now we're basically friends.";
+            return "Okay, now we're basically friends 🤝";
         } else {
-            return "Rent's due next week if you stay longer.";
+            return "Rent's due next week if you stay longer 🏠";
         }
     }
 
@@ -54,17 +54,69 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add hover interactions for the time tracker
     function addHoverInteractions() {
+        // Add CSS for smooth transitions
+        const style = document.createElement('style');
+        style.textContent = `
+            .visit-tracker {
+                position: relative;
+                overflow: hidden;
+                height: 24px;
+            }
+            #last-visit-text {
+                transition: transform 0.3s ease;
+                display: block;
+            }
+            #last-visit-text.hovered {
+                transform: translateY(-100%);
+            }
+            #last-visit-text.quirky {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                transform: translateY(0);
+                transition: transform 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
+        
         lastVisitText.addEventListener('mouseenter', function() {
             const currentTime = Date.now();
             const sessionTime = currentTime - startTime;
             const totalTime = totalTimeSpent + sessionTime;
             const totalSeconds = Math.floor(totalTime / 1000);
             const quirkyMessage = getQuirkyMessage(totalSeconds);
-            this.textContent = quirkyMessage;
+            
+            // Create quirky text element
+            const quirkyText = document.createElement('span');
+            quirkyText.id = 'quirky-text';
+            quirkyText.textContent = quirkyMessage;
+            quirkyText.className = 'quirky';
+            quirkyText.style.position = 'absolute';
+            quirkyText.style.top = '100%';
+            quirkyText.style.left = '0';
+            quirkyText.style.transform = 'translateY(0)';
+            quirkyText.style.transition = 'transform 0.3s ease';
+            
+            // Add quirky text to container
+            const container = lastVisitText.parentElement;
+            container.appendChild(quirkyText);
+            
+            // Trigger animations
+            setTimeout(() => {
+                lastVisitText.classList.add('hovered');
+                quirkyText.style.transform = 'translateY(-100%)';
+            }, 50);
         });
         
         lastVisitText.addEventListener('mouseleave', function() {
-            updateTimeTracker(); // Restore the original time text
+            // Remove quirky text
+            const quirkyText = document.getElementById('quirky-text');
+            if (quirkyText) {
+                quirkyText.remove();
+            }
+            
+            // Reset original text
+            lastVisitText.classList.remove('hovered');
         });
     }
     
