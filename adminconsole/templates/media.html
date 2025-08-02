@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+
+{% block title %}Media Library - Admin Console{% endblock %}
+{% block page_title %}Media Library{% endblock %}
+
+{% block content %}
+<div class="media-library">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Upload Files</h3>
+        </div>
+        <div class="upload-section">
+            <div class="file-upload" id="fileUpload">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #3b82f6; margin-bottom: 1rem;"></i>
+                <h4>Drag & Drop Files Here</h4>
+                <p>or click to browse</p>
+                <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.gif,.svg,.pdf,.mp4,.webm" style="display: none;">
+            </div>
+            <div class="upload-info">
+                <p><strong>Supported formats:</strong> JPG, PNG, GIF, SVG, PDF, MP4, WebM</p>
+                <p><strong>Maximum file size:</strong> 16MB per file</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Media Files</h3>
+            <span class="file-count">{{ media_files|length }} files</span>
+        </div>
+        <div class="media-grid">
+            {% for media in media_files %}
+            <div class="media-item" data-id="{{ media.id }}">
+                <div class="media-preview">
+                    {% if media.file_type in ['.jpg', '.jpeg', '.png', '.gif', '.svg'] %}
+                        <img src="{{ media.url }}" alt="{{ media.original_name }}" loading="lazy">
+                    {% elif media.file_type == '.pdf' %}
+                        <div class="file-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                    {% elif media.file_type in ['.mp4', '.webm'] %}
+                        <div class="file-icon">
+                            <i class="fas fa-file-video"></i>
+                        </div>
+                    {% else %}
+                        <div class="file-icon">
+                            <i class="fas fa-file"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="media-info">
+                    <h4 class="media-name">{{ media.original_name }}</h4>
+                    <p class="media-meta">
+                        {{ "%.1f"|format(media.file_size / 1024) }} KB • 
+                        {{ media.uploaded_at.strftime('%b %d, %Y') }}
+                    </p>
+                </div>
+                <div class="media-actions">
+                    <button class="btn btn-secondary copy-url" data-url="{{ media.url }}">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="btn btn-danger delete-media" data-id="{{ media.id }}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .media-library {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .upload-section {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .file-upload {
+        border: 2px dashed #d1d5db;
+        border-radius: 0.5rem;
+        padding: 3rem 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .file-upload:hover,
+    .file-upload.dragover {
+        border-color: #3b82f6;
+        background: #eff6ff;
+    }
+
+    .file-upload h4 {
+        margin-bottom: 0.5rem;
+        color: #1e293b;
+    }
+
+    .file-upload p {
+        color: #64748b;
+        margin: 0;
+    }
+
+    .upload-info {
+        background: #f8fafc;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #e2e8f0;
+    }
+
+    .upload-info p {
+        margin: 0.25rem 0;
+        font-size: 0.875rem;
+        color: #64748b;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .file-count {
+        background: #3b82f6;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .media-item {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .media-item:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .media-preview {
+        height: 150px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .media-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .file-icon {
+        font-size: 3rem;
+        color: #64748b;
+    }
+
+    .media-info {
+        padding: 1rem;
+    }
+
+    .media-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .media-meta {
+        font-size: 0.75rem;
+        color: #64748b;
+        margin: 0;
+    }
+
+    .media-actions {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0 1rem 1rem;
+    }
+
+    .media-actions .btn {
+        flex: 1;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+        .media-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+    }
+</style>
+
+<script>
+    // File upload functionality
+    const fileUpload = document.getElementById('fileUpload');
+    const fileInput = document.getElementById('fileInput');
+
+    // Drag and drop
+    fileUpload.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('dragover');
+    });
+
+    fileUpload.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+    });
+
+    fileUpload.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        uploadFiles(files);
+    });
+
+    // Click to browse
+    fileUpload.addEventListener('click', function() {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function() {
+        uploadFiles(this.files);
+    });
+
+    async function uploadFiles(files) {
+        for (let file of files) {
+            await uploadFile(file);
+        }
+    }
+
+    async function uploadFile(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                showAlert(`File uploaded: ${file.name}`, 'success');
+                // Reload page to show new file
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showAlert(data.error || 'Upload failed', 'error');
+            }
+        } catch (error) {
+            showAlert('Upload failed', 'error');
+        }
+    }
+
+    // Copy URL functionality
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.copy-url')) {
+            const button = e.target.closest('.copy-url');
+            const url = button.dataset.url;
+            
+            navigator.clipboard.writeText(window.location.origin + url).then(() => {
+                showAlert('URL copied to clipboard!', 'success');
+            }).catch(() => {
+                showAlert('Failed to copy URL', 'error');
+            });
+        }
+    });
+
+    // Delete media functionality
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.delete-media')) {
+            const button = e.target.closest('.delete-media');
+            const mediaId = button.dataset.id;
+            
+            if (confirm('Are you sure you want to delete this file?')) {
+                deleteMedia(mediaId);
+            }
+        }
+    });
+
+    async function deleteMedia(mediaId) {
+        try {
+            const response = await apiCall(`/api/media/${mediaId}/delete`, {
+                method: 'POST'
+            });
+
+            showAlert('File deleted successfully!', 'success');
+            // Remove the media item from DOM
+            document.querySelector(`[data-id="${mediaId}"]`).remove();
+        } catch (error) {
+            console.error('Error deleting media:', error);
+        }
+    }
+</script>
+{% endblock %}

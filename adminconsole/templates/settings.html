@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Admin Console{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="settings">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Change Password</h3>
+        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <input type="password" id="currentPassword" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input type="password" id="newPassword" class="form-input" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                <input type="password" id="confirmPassword" class="form-input" required minlength="6">
+            </div>
+            <button type="button" class="btn btn-primary" id="changePassword">
+                <i class="fas fa-key"></i> Update Password
+            </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Data Management</h3>
+        </div>
+        <div class="form-section">
+            <div class="action-grid">
+                <div class="action-item">
+                    <h4>Create Backup</h4>
+                    <p>Backup database and uploaded files</p>
+                    <button type="button" class="btn btn-secondary" id="createBackup">
+                        <i class="fas fa-download"></i> Create Backup
+                    </button>
+                </div>
+                <div class="action-item">
+                    <h4>Export Data</h4>
+                    <p>Export all content as JSON file</p>
+                    <button type="button" class="btn btn-secondary" id="exportData">
+                        <i class="fas fa-file-export"></i> Export Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">System Information</h3>
+        </div>
+        <div class="system-info">
+            <div class="info-item">
+                <span class="info-label">Application Version:</span>
+                <span class="info-value">1.0.0</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Python Version:</span>
+                <span class="info-value">3.9.6</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Database:</span>
+                <span class="info-value">SQLite (Local)</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Storage Location:</span>
+                <span class="info-value">Local File System</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .settings {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .form-section {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .action-item {
+        padding: 1.5rem;
+        background: #f8fafc;
+        border-radius: 0.5rem;
+        border: 1px solid #e2e8f0;
+    }
+
+    .action-item h4 {
+        margin-bottom: 0.5rem;
+        color: #1e293b;
+        font-weight: 600;
+    }
+
+    .action-item p {
+        margin-bottom: 1rem;
+        color: #64748b;
+        font-size: 0.875rem;
+    }
+
+    .system-info {
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #374151;
+    }
+
+    .info-value {
+        color: #64748b;
+    }
+
+    @media (max-width: 768px) {
+        .action-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .info-item {
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+    }
+</style>
+
+<script>
+    // Change password
+    document.getElementById('changePassword').addEventListener('click', async function() {
+        const button = this;
+        const originalText = showLoading(button);
+
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            showAlert('Please fill in all password fields', 'error');
+            hideLoading(button, originalText);
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            showAlert('New passwords do not match', 'error');
+            hideLoading(button, originalText);
+            return;
+        }
+
+        if (newPassword.length < 6) {
+            showAlert('Password must be at least 6 characters long', 'error');
+            hideLoading(button, originalText);
+            return;
+        }
+
+        try {
+            const response = await apiCall('/api/change-password', {
+                method: 'POST',
+                body: JSON.stringify({
+                    current_password: currentPassword,
+                    new_password: newPassword
+                })
+            });
+
+            showAlert('Password changed successfully!', 'success');
+            
+            // Clear form
+            document.getElementById('currentPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        } catch (error) {
+            console.error('Error changing password:', error);
+        } finally {
+            hideLoading(button, originalText);
+        }
+    });
+
+    // Create backup
+    document.getElementById('createBackup').addEventListener('click', async function() {
+        const button = this;
+        const originalText = showLoading(button);
+
+        try {
+            const response = await apiCall('/api/backup', {
+                method: 'POST'
+            });
+
+            showAlert(`Backup created: ${response.backup_path}`, 'success');
+        } catch (error) {
+            console.error('Error creating backup:', error);
+        } finally {
+            hideLoading(button, originalText);
+        }
+    });
+
+    // Export data
+    document.getElementById('exportData').addEventListener('click', async function() {
+        const button = this;
+        const originalText = showLoading(button);
+
+        try {
+            const response = await apiCall('/api/export', {
+                method: 'POST'
+            });
+
+            showAlert(`Data exported: ${response.export_path}`, 'success');
+        } catch (error) {
+            console.error('Error exporting data:', error);
+        } finally {
+            hideLoading(button, originalText);
+        }
+    });
+</script>
+{% endblock %}

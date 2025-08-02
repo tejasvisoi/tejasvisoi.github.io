@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Preview - Admin Console{% endblock %}
+{% block page_title %}Preview{% endblock %}
+
+{% block content %}
+<div class="preview-container">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Preview</h3>
+        </div>
+        <div class="preview-info">
+            <div class="info-item">
+                <span class="info-label">Preview URL:</span>
+                <span class="info-value">{{ url }}</span>
+            </div>
+        </div>
+        <div class="preview-actions">
+            <a href="{{ url }}" target="_blank" class="btn btn-primary">
+                <i class="fas fa-external-link-alt"></i> Open in New Tab
+            </a>
+            <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Preview Frame</h3>
+        </div>
+        <div class="preview-frame-container">
+            <iframe src="{{ url }}" class="preview-frame"></iframe>
+        </div>
+    </div>
+</div>
+
+<style>
+    .preview-container {
+        display: grid;
+        gap: 1.5rem;
+    }
+    
+    .preview-info {
+        padding: 1rem 0;
+    }
+    
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .info-label {
+        font-weight: 500;
+        color: #374151;
+    }
+    
+    .info-value {
+        color: #64748b;
+        word-break: break-all;
+    }
+    
+    .preview-actions {
+        display: flex;
+        gap: 1rem;
+        padding-top: 1rem;
+    }
+    
+    .preview-frame-container {
+        width: 100%;
+        height: 600px;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .preview-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    
+    @media (max-width: 768px) {
+        .preview-frame-container {
+            height: 400px;
+        }
+        
+        .preview-actions {
+            flex-direction: column;
+        }
+        
+        .info-item {
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+    }
+</style>
+{% endblock %}

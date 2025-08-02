@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Portfolio Management - Admin Console{% endblock %}
+{% block page_title %}Portfolio Management{% endblock %}
+
+{% block content %}
+<div class="portfolio-editor">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Portfolio Content</h3>
+        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label for="portfolioTitle" class="form-label">Portfolio Title</label>
+                <input type="text" id="portfolioTitle" class="form-input" value="{{ content.title }}" placeholder="My Portfolio">
+            </div>
+            <div class="form-group">
+                <label for="portfolioDescription" class="form-label">Portfolio Description</label>
+                <textarea id="portfolioDescription" class="form-textarea" placeholder="A brief description of your portfolio">{{ content.description }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Portfolio Items</h3>
+        </div>
+        <div class="form-section">
+            <div class="form-group">
+                <label class="form-label">Portfolio Projects</label>
+                <div id="portfolioItems" class="items-list">
+                    {% for item in content.items %}
+                    <div class="item-row">
+                        <input type="text" class="form-input item-title" value="{{ item.title }}" placeholder="Project title">
+                        <input type="text" class="form-input item-description" value="{{ item.description }}" placeholder="Project description">
+                        <input type="text" class="form-input item-url" value="{{ item.url }}" placeholder="Project URL (optional)">
+                        <button type="button" class="btn btn-danger remove-item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="btn btn-secondary" id="addPortfolioItem">
+                    <i class="fas fa-plus"></i> Add Portfolio Item
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button type="button" class="btn btn-primary" id="savePortfolio">
+            <i class="fas fa-save"></i> Save Changes
+        </button>
+        <button type="button" class="btn btn-secondary" id="previewPortfolio">
+            <i class="fas fa-eye"></i> Preview
+        </button>
+    </div>
+</div>
+
+<style>
+    .portfolio-editor {
+        display: grid;
+        gap: 1.5rem;
+    }
+
+    .form-section {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .items-list {
+        display: grid;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .item-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .remove-item {
+        padding: 0.5rem;
+        min-width: auto;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        padding: 1rem 0;
+        border-top: 1px solid #e2e8f0;
+        margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .item-row {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<script>
+    // Add portfolio item functionality
+    document.getElementById('addPortfolioItem').addEventListener('click', function() {
+        const container = document.getElementById('portfolioItems');
+        const itemRow = document.createElement('div');
+        itemRow.className = 'item-row';
+        
+        itemRow.innerHTML = `
+            <input type="text" class="form-input item-title" placeholder="Project title">
+            <input type="text" class="form-input item-description" placeholder="Project description">
+            <input type="text" class="form-input item-url" placeholder="Project URL (optional)">
+            <button type="button" class="btn btn-danger remove-item">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        
+        container.appendChild(itemRow);
+    });
+
+    // Remove item functionality
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
+            const itemRow = e.target.closest('.item-row');
+            itemRow.remove();
+        }
+    });
+
+    // Save portfolio
+    document.getElementById('savePortfolio').addEventListener('click', async function() {
+        const button = this;
+        const originalText = showLoading(button);
+
+        try {
+            // Collect data
+            const portfolioData = {
+                title: document.getElementById('portfolioTitle').value,
+                description: document.getElementById('portfolioDescription').value,
+                items: collectPortfolioItems('portfolioItems')
+            };
+
+            const response = await apiCall('/api/portfolio', {
+                method: 'POST',
+                body: JSON.stringify(portfolioData)
+            });
+
+            showAlert('Portfolio saved successfully!', 'success');
+        } catch (error) {
+            console.error('Error saving portfolio:', error);
+        } finally {
+            hideLoading(button, originalText);
+        }
+    });
+
+    // Preview portfolio
+    document.getElementById('previewPortfolio').addEventListener('click', function() {
+        window.open('https://tejasvisoi.github.io/portfolio.html', '_blank');
+    });
+
+    // Helper function
+    function collectPortfolioItems(containerId) {
+        const container = document.getElementById(containerId);
+        const items = [];
+        
+        container.querySelectorAll('.item-row').forEach(row => {
+            const title = row.querySelector('.item-title').value.trim();
+            const description = row.querySelector('.item-description').value.trim();
+            const url = row.querySelector('.item-url').value.trim();
+            
+            if (title) {
+                items.push({ title, description, url });
+            }
+        });
+        
+        return items;
+    }
+</script>
+{% endblock %}
