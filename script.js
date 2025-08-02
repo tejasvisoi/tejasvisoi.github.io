@@ -26,12 +26,30 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    function getQuirkyMessage(totalSeconds) {
+        if (totalSeconds <= 10) {
+            return "Just getting started? 👀";
+        } else if (totalSeconds <= 30) {
+            return "30 seconds already? That's commitment.";
+        } else if (totalSeconds <= 60) {
+            return "You've officially spent more time here than on some Hinge dates.";
+        } else if (totalSeconds <= 300) {
+            return "Okay, now we're basically friends.";
+        } else {
+            return "Rent's due next week if you stay longer.";
+        }
+    }
+
     function updateTimeTracker() {
         const currentTime = Date.now();
         const sessionTime = currentTime - startTime;
         const totalTime = totalTimeSpent + sessionTime;
+        const totalSeconds = Math.floor(totalTime / 1000);
         
         lastVisitText.textContent = `You have spent ${formatTime(totalTime)} here.`;
+        
+        // Add hover interaction
+        lastVisitText.title = getQuirkyMessage(totalSeconds);
         
         // Save total time to localStorage
         localStorage.setItem('totalTimeSpent', totalTime.toString());
