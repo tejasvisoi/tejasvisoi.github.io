@@ -54,80 +54,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add hover interactions for the time tracker
     function addHoverInteractions() {
-        // Add CSS for smooth transitions
-        const style = document.createElement('style');
-        style.textContent = `
-            .visit-tracker {
-                position: relative;
-                overflow: hidden;
-                height: 24px;
-            }
-            #last-visit-text {
-                transition: transform 0.3s ease;
-                display: block;
-            }
-            #last-visit-text.hovered {
-                transform: translateY(-100%);
-            }
-            #quirky-text {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                transform: translateY(0);
-                transition: transform 0.3s ease;
-                font-family: 'Technor', 'Space Mono', monospace;
-                font-size: 16px;
-                color: #888888;
-                letter-spacing: 0.3px;
-                text-transform: uppercase;
-            }
-        `;
-        document.head.appendChild(style);
-        
-        let isHovering = false;
-        let quirkyText = null;
+        let originalText = '';
         
         lastVisitText.addEventListener('mouseenter', function() {
-            if (isHovering) return; // Prevent multiple triggers
-            isHovering = true;
-            
             const currentTime = Date.now();
             const sessionTime = currentTime - startTime;
             const totalTime = totalTimeSpent + sessionTime;
             const totalSeconds = Math.floor(totalTime / 1000);
             const quirkyMessage = getQuirkyMessage(totalSeconds);
             
-            // Create quirky text element
-            quirkyText = document.createElement('span');
-            quirkyText.id = 'quirky-text';
-            quirkyText.textContent = quirkyMessage;
-            
-            // Add quirky text to container
-            const container = lastVisitText.parentElement;
-            container.appendChild(quirkyText);
-            
-            // Trigger animations
-            requestAnimationFrame(() => {
-                lastVisitText.classList.add('hovered');
-                quirkyText.style.transform = 'translateY(-100%)';
-            });
+            // Store original text and replace with quirky message
+            originalText = this.textContent;
+            this.textContent = quirkyMessage;
         });
         
         lastVisitText.addEventListener('mouseleave', function() {
-            isHovering = false;
-            
-            // Reset original text
-            lastVisitText.classList.remove('hovered');
-            
-            // Remove quirky text after animation
-            if (quirkyText) {
-                quirkyText.style.transform = 'translateY(0)';
-                setTimeout(() => {
-                    if (quirkyText && quirkyText.parentElement) {
-                        quirkyText.remove();
-                    }
-                }, 300);
-            }
+            // Restore original text
+            this.textContent = originalText;
         });
     }
     
