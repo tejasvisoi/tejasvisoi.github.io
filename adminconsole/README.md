@@ -2,6 +2,8 @@
 
 A secure, local web application for managing your portfolio content at [tejasvisoi.github.io](https://tejasvisoi.github.io).
 
+![Admin Console Screenshot](https://i.imgur.com/example.png)
+
 ## 🚀 Quick Setup Guide
 
 ### 1. Download the Admin Console
@@ -54,11 +56,39 @@ The application will:
 
 ## 📊 Features
 
-- **Homepage Management:** Edit content on your portfolio homepage
-- **Case Studies:** Create and manage case studies
-- **Portfolio:** Update your portfolio items
-- **Media Library:** Upload and manage images and files
-- **Settings:** Change password, create backups, export data
+### 🏠 Homepage Management
+Edit all aspects of your portfolio homepage:
+- Hero section with main heading and subtitle
+- Present work section with links
+- Past work case studies
+- Social media links
+
+### 📝 Case Studies
+Manage case studies with a complete editor:
+- Create new case studies with custom URLs
+- Edit content using HTML
+- Publish/unpublish case studies
+- Preview before publishing
+
+### 📁 Portfolio Management
+Organize your portfolio projects:
+- Update portfolio title and description
+- Add/remove portfolio items
+- Set links to project details
+
+### 🖼️ Media Library
+Manage all your media files:
+- Drag & drop file upload
+- Image preview
+- Copy URLs for use in content
+- Delete unused files
+
+### ⚙️ Settings
+Configure your admin console:
+- Change admin password
+- Create system backups
+- Export data as JSON
+- View system information
 
 ## 🔄 Data Management
 
