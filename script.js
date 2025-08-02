@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let animationDuration;
             if (screenWidth >= 1440) {
                 // Large desktop screens (1440px and above) - longer animation
-                animationDuration = 120; // 2 minutes
+                animationDuration = 180; // 3 minutes
             } else {
                 // Tablet and below devices - 1 minute
                 animationDuration = 60; // 1 minute
