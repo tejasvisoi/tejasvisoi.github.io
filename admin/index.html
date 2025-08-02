@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tejasvi Soi - Admin Console</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-shield-alt"></i> Admin Console</h1>
+                <p>Tejasvi Soi Portfolio Management</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Access Console
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Admin Interface -->
+    <div id="adminInterface" class="admin-interface" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <h1><i class="fas fa-cogs"></i> Admin Console</h1>
+                <span class="status-indicator">
+                    <i class="fas fa-circle"></i> Connected
+                </span>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="admin-nav">
+            <button class="nav-btn active" data-section="dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="nav-btn" data-section="homepage">
+                <i class="fas fa-home"></i> Homepage
+            </button>
+            <button class="nav-btn" data-section="case-studies">
+                <i class="fas fa-briefcase"></i> Case Studies
+            </button>
+            <button class="nav-btn" data-section="portfolio">
+                <i class="fas fa-folder-open"></i> Portfolio
+            </button>
+            <button class="nav-btn" data-section="media">
+                <i class="fas fa-images"></i> Media
+            </button>
+            <button class="nav-btn" data-section="settings">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <p>Welcome to your portfolio management console</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Pages</h3>
+                            <p class="card-number">6</p>
+                            <p class="card-desc">Total pages</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Case Studies</h3>
+                            <p class="card-number">4</p>
+                            <p class="card-desc">Published</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Media</h3>
+                            <p class="card-number">12</p>
+                            <p class="card-desc">Files uploaded</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Views</h3>
+                            <p class="card-number">1.2k</p>
+                            <p class="card-desc">This month</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="switchSection('homepage')">
+                            <i class="fas fa-edit"></i> Edit Homepage
+                        </button>
+                        <button class="action-btn" onclick="switchSection('case-studies')">
+                            <i class="fas fa-plus"></i> New Case Study
+                        </button>
+                        <button class="action-btn" onclick="switchSection('media')">
+                            <i class="fas fa-upload"></i> Upload Media
+                        </button>
+                        <button class="action-btn" onclick="previewSite()">
+                            <i class="fas fa-external-link-alt"></i> Preview Site
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Homepage Section -->
+            <section id="homepage" class="content-section">
+                <div class="section-header">
+                    <h2>Homepage Editor</h2>
+                    <p>Edit your main landing page content</p>
+                </div>
+                
+                <div class="editor-container">
+                    <div class="editor-sidebar">
+                        <h3>Content Sections</h3>
+                        <div class="section-list">
+                            <button class="section-item active" data-section="hero">
+                                <i class="fas fa-heading"></i> Hero Section
+                            </button>
+                            <button class="section-item" data-section="present">
+                                <i class="fas fa-clock"></i> Present Work
+                            </button>
+                            <button class="section-item" data-section="past">
+                                <i class="fas fa-history"></i> Past Work
+                            </button>
+                            <button class="section-item" data-section="social">
+                                <i class="fas fa-share-alt"></i> Social Links
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-main">
+                        <div id="heroEditor" class="editor-panel active">
+                            <h3>Hero Section</h3>
+                            <div class="form-group">
+                                <label>Main Heading Line 1</label>
+                                <input type="text" id="heroLine1" value="Building, breaking,">
+                            </div>
+                            <div class="form-group">
+                                <label>Main Heading Line 2</label>
+                                <input type="text" id="heroLine2" value="making things">
+                            </div>
+                            <div class="form-group">
+                                <label>Subtitle (Optional)</label>
+                                <input type="text" id="heroSubtitle" placeholder="Add a subtitle...">
+                            </div>
+                        </div>
+                        
+                        <div id="presentEditor" class="editor-panel">
+                            <h3>Present Work</h3>
+                            <div class="form-group">
+                                <label>Section Title</label>
+                                <input type="text" id="presentTitle" value="Present">
+                            </div>
+                            <div class="form-group">
+                                <label>Work Items</label>
+                                <div id="presentItems" class="items-list">
+                                    <div class="item-row">
+                                        <input type="text" value="Designing at PhonePe" class="item-text">
+                                        <input type="text" value="#" class="item-link" placeholder="Link URL">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <div class="item-row">
+                                        <input type="text" value="Building Home Cafe" class="item-text">
+                                        <input type="text" value="#" class="item-link" placeholder="Link URL">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <button class="add-item-btn" onclick="addPresentItem()">
+                                    <i class="fas fa-plus"></i> Add Item
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="pastEditor" class="editor-panel">
+                            <h3>Past Work</h3>
+                            <div class="form-group">
+                                <label>Section Title</label>
+                                <input type="text" id="pastTitle" value="Past">
+                            </div>
+                            <div class="form-group">
+                                <label>Work Items</label>
+                                <div id="pastItems" class="items-list">
+                                    <div class="item-row">
+                                        <input type="text" value="Google Pay" class="item-text">
+                                        <input type="text" value="googlepay.html" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <div class="item-row">
+                                        <input type="text" value="Dunzo" class="item-text">
+                                        <input type="text" value="dunzo.html" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <div class="item-row">
+                                        <input type="text" value="Porter" class="item-text">
+                                        <input type="text" value="#" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <div class="item-row">
+                                        <input type="text" value="Eureka Forbes" class="item-text">
+                                        <input type="text" value="eurekaforbes.html" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <div class="item-row">
+                                        <input type="text" value="Full Portfolio" class="item-text">
+                                        <input type="text" value="portfolio.html" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <button class="add-item-btn" onclick="addPastItem()">
+                                    <i class="fas fa-plus"></i> Add Item
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="socialEditor" class="editor-panel">
+                            <h3>Social Links</h3>
+                            <div class="form-group">
+                                <label>Social Media Links</label>
+                                <div id="socialItems" class="items-list">
+                                    <div class="item-row">
+                                        <input type="text" value="📷 IG" class="item-text">
+                                        <input type="text" value="https://instagram.com/tejasvisoi" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <div class="item-row">
+                                        <input type="text" value="🐦 X" class="item-text">
+                                        <input type="text" value="https://twitter.com/tejasvisoi" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <div class="item-row">
+                                        <input type="text" value="✉️ EMAIL" class="item-text">
+                                        <input type="text" value="mailto:hello@tejasvisoi.com" class="item-link">
+                                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <button class="add-item-btn" onclick="addSocialItem()">
+                                    <i class="fas fa-plus"></i> Add Social Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="editor-actions">
+                    <button class="save-btn" onclick="saveHomepage()">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <button class="preview-btn" onclick="previewHomepage()">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                </div>
+            </section>
+
+            <!-- Case Studies Section -->
+            <section id="case-studies" class="content-section">
+                <div class="section-header">
+                    <h2>Case Studies Management</h2>
+                    <p>Create and edit your case study pages</p>
+                </div>
+                
+                <div class="case-studies-grid">
+                    <div class="case-study-card">
+                        <div class="card-header">
+                            <h3>Google Pay</h3>
+                            <span class="status published">Published</span>
+                        </div>
+                        <p>Payment platform case study</p>
+                        <div class="card-actions">
+                            <button class="edit-btn" onclick="editCaseStudy('googlepay')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="view-btn" onclick="viewCaseStudy('googlepay')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card">
+                        <div class="card-header">
+                            <h3>Dunzo</h3>
+                            <span class="status published">Published</span>
+                        </div>
+                        <p>Delivery service case study</p>
+                        <div class="card-actions">
+                            <button class="edit-btn" onclick="editCaseStudy('dunzo')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="view-btn" onclick="viewCaseStudy('dunzo')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card">
+                        <div class="card-header">
+                            <h3>Porter</h3>
+                            <span class="status draft">Draft</span>
+                        </div>
+                        <p>Logistics platform case study</p>
+                        <div class="card-actions">
+                            <button class="edit-btn" onclick="editCaseStudy('porter')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="publish-btn" onclick="publishCaseStudy('porter')">
+                                <i class="fas fa-paper-plane"></i> Publish
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="case-study-card">
+                        <div class="card-header">
+                            <h3>Eureka Forbes</h3>
+                            <span class="status published">Published</span>
+                        </div>
+                        <p>Home appliances case study</p>
+                        <div class="card-actions">
+                            <button class="edit-btn" onclick="editCaseStudy('eurekaforbes')">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="view-btn" onclick="viewCaseStudy('eurekaforbes')">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="new-case-study-btn" onclick="createNewCaseStudy()">
+                    <i class="fas fa-plus"></i> Create New Case Study
+                </button>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="content-section">
+                <div class="section-header">
+                    <h2>Portfolio Management</h2>
+                    <p>Manage your full portfolio page</p>
+                </div>
+                
+                <div class="portfolio-editor">
+                    <div class="form-group">
+                        <label>Portfolio Title</label>
+                        <input type="text" id="portfolioTitle" value="Full Portfolio">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Portfolio Description</label>
+                        <textarea id="portfolioDescription" rows="4" placeholder="Describe your portfolio..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Portfolio Items</label>
+                        <div id="portfolioItems" class="items-list">
+                            <!-- Portfolio items will be loaded here -->
+                        </div>
+                        <button class="add-item-btn" onclick="addPortfolioItem()">
+                            <i class="fas fa-plus"></i> Add Portfolio Item
+                        </button>
+                    </div>
+                    
+                    <div class="editor-actions">
+                        <button class="save-btn" onclick="savePortfolio()">
+                            <i class="fas fa-save"></i> Save Portfolio
+                        </button>
+                        <button class="preview-btn" onclick="previewPortfolio()">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Media Section -->
+            <section id="media" class="content-section">
+                <div class="section-header">
+                    <h2>Media Library</h2>
+                    <p>Upload and manage images and files</p>
+                </div>
+                
+                <div class="media-upload">
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3>Drop files here or click to upload</h3>
+                        <p>Supports: JPG, PNG, GIF, SVG, PDF</p>
+                        <input type="file" id="fileInput" multiple accept="image/*,.pdf" style="display: none;">
+                    </div>
+                </div>
+                
+                <div class="media-grid" id="mediaGrid">
+                    <!-- Media items will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                    <p>Configure your admin console</p>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <h3>Security</h3>
+                        <div class="form-group">
+                            <label>Change Admin Password</label>
+                            <input type="password" id="newPassword" placeholder="New password">
+                            <button class="save-btn" onclick="changePassword()">Update Password</button>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-card">
+                        <h3>Backup</h3>
+                        <p>Create a backup of your website content</p>
+                        <button class="backup-btn" onclick="createBackup()">
+                            <i class="fas fa-download"></i> Create Backup
+                        </button>
+                    </div>
+                    
+                    <div class="setting-card">
+                        <h3>Analytics</h3>
+                        <p>View website analytics and performance</p>
+                        <button class="analytics-btn" onclick="viewAnalytics()">
+                            <i class="fas fa-chart-bar"></i> View Analytics
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html> 
