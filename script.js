@@ -48,16 +48,32 @@ document.addEventListener('DOMContentLoaded', function() {
         
         lastVisitText.textContent = `You have spent ${formatTime(totalTime)} here.`;
         
-        // Add hover interaction
-        lastVisitText.title = getQuirkyMessage(totalSeconds);
-        
         // Save total time to localStorage
         localStorage.setItem('totalTimeSpent', totalTime.toString());
+    }
+
+    // Add hover interactions for the time tracker
+    function addHoverInteractions() {
+        lastVisitText.addEventListener('mouseenter', function() {
+            const currentTime = Date.now();
+            const sessionTime = currentTime - startTime;
+            const totalTime = totalTimeSpent + sessionTime;
+            const totalSeconds = Math.floor(totalTime / 1000);
+            const quirkyMessage = getQuirkyMessage(totalSeconds);
+            this.textContent = quirkyMessage;
+        });
+        
+        lastVisitText.addEventListener('mouseleave', function() {
+            updateTimeTracker(); // Restore the original time text
+        });
     }
     
     // Update timer every second
     setInterval(updateTimeTracker, 1000);
     updateTimeTracker(); // Initial update
+    
+    // Add hover interactions
+    addHoverInteractions();
     
     // Update total time when page is about to unload
     window.addEventListener('beforeunload', function() {
