@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Content Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+            color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .app-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .app-subtitle {
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f5f5f5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-item.active {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .nav-item-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .content-area {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            min-height: 600px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #f5f5f5;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #f5f5f5;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+        }
+
+        .link-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .link-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .link-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .success-message {
+            color: #10b981;
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .preview-area {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .preview-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #a0a0a0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 500px;
+            max-width: 80vw;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #a0a0a0;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .changes-list {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .change-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .change-item:last-child {
+            border-bottom: none;
+        }
+
+        .change-status {
+            margin-right: 10px;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .change-status.modified {
+            background: #f59e0b;
+            color: #000;
+        }
+
+        .change-status.added {
+            background: #10b981;
+            color: #000;
+        }
+
+        .change-status.deleted {
+            background: #ef4444;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="app-title">🌐 Website Content Manager</h1>
+                <span class="app-subtitle">Manage content for tejasvisoi.github.io</span>
+            </div>
+            <div class="header-right">
+                <button id="previewBtn" class="btn btn-secondary">👁️ Preview</button>
+                <button id="saveBtn" class="btn btn-success">💾 Save Changes</button>
+                <button id="deployBtn" class="btn btn-primary">🚀 Deploy to GitHub</button>
+                <button id="commitBtn" class="btn btn-primary">📝 Commit & Push</button>
+            </div>
+        </header>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-indicator" id="connectionStatus"></span>
+                <span id="connectionText">Connected to GitHub</span>
+            </div>
+            <div class="status-item">
+                <span>📁</span>
+                <span id="lastSave">Never saved</span>
+            </div>
+            <div class="status-item">
+                <span>🌿</span>
+                <span id="gitStatus">Checking Git status...</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">📄 Website Pages</div>
+                    <div class="nav-item active" data-section="homepage">
+                        <span class="nav-item-icon">🏠</span>
+                        Homepage (index.html)
+                    </div>
+                    <div class="nav-item" data-section="portfolio">
+                        <span class="nav-item-icon">📋</span>
+                        Portfolio (portfolio.html)
+                    </div>
+                    <div class="nav-item" data-section="googlepay">
+                        <span class="nav-item-icon">💳</span>
+                        Google Pay Project
+                    </div>
+                    <div class="nav-item" data-section="dunzo">
+                        <span class="nav-item-icon">🛒</span>
+                        Dunzo Project
+                    </div>
+                    <div class="nav-item" data-section="eurekaforbes">
+                        <span class="nav-item-icon">🏢</span>
+                        Eureka Forbes Project
+                    </div>
+                    <div class="nav-item" data-section="explore">
+                        <span class="nav-item-icon">🔍</span>
+                        Explore Project
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-title">🛠️ Tools</div>
+                    <div class="nav-item" data-section="settings">
+                        <span class="nav-item-icon">⚙️</span>
+                        Settings
+                    </div>
+                    <div class="nav-item" data-section="backup">
+                        <span class="nav-item-icon">💾</span>
+                        Backup & Restore
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Homepage Section -->
+                <div class="content-section active" id="homepage">
+                    <div class="section-header">
+                        <h2 class="section-title">🏠 Homepage Content</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Main Heading Line 1</label>
+                        <input type="text" id="mainHeading1" class="form-input" placeholder="Building, breaking,">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Main Heading Line 2</label>
+                        <input type="text" id="mainHeading2" class="form-input" placeholder="making things">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Present Work Section</label>
+                        <div id="presentWorkContainer">
+                            <!-- Present work items will be added here -->
+                        </div>
+                        <button class="btn btn-primary btn-small" onclick="addPresentWork()" style="margin-top: 10px;">➕ Add Present Work</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Social Links</label>
+                        <div id="socialLinksContainer">
+                            <!-- Social links will be added here -->
+                        </div>
+                        <button class="btn btn-primary btn-small" onclick="addSocialLink()" style="margin-top: 10px;">➕ Add Social Link</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Past Work Links</label>
+                        <div id="pastWorkContainer">
+                            <!-- Past work links will be added here -->
+                        </div>
+                        <button class="btn btn-primary btn-small" onclick="addPastWork()" style="margin-top: 10px;">➕ Add Past Work</button>
+                    </div>
+                </div>
+
+                <!-- Portfolio Section -->
+                <div class="content-section" id="portfolio">
+                    <div class="section-header">
+                        <h2 class="section-title">📋 Portfolio Page</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Portfolio Heading Line 1</label>
+                        <input type="text" id="portfolioHeading1" class="form-input" placeholder="Portfolio">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Portfolio Heading Line 2</label>
+                        <input type="text" id="portfolioHeading2" class="form-input" placeholder="Coming Soon">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Portfolio Content</label>
+                        <textarea id="portfolioContent" class="form-textarea" placeholder="Add your portfolio content here..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Google Pay Project -->
+                <div class="content-section" id="googlepay">
+                    <div class="section-header">
+                        <h2 class="section-title">💳 Google Pay Project</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 1</label>
+                        <input type="text" id="googlepayHeading1" class="form-input" placeholder="Google Pay">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 2</label>
+                        <input type="text" id="googlepayHeading2" class="form-input" placeholder="Work">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <textarea id="googlepayDescription" class="form-textarea" placeholder="Describe your work on Google Pay..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project URL</label>
+                        <input type="url" id="googlepayUrl" class="form-input" placeholder="https://...">
+                    </div>
+                </div>
+
+                <!-- Dunzo Project -->
+                <div class="content-section" id="dunzo">
+                    <div class="section-header">
+                        <h2 class="section-title">🛒 Dunzo Project</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 1</label>
+                        <input type="text" id="dunzoHeading1" class="form-input" placeholder="Dunzo">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 2</label>
+                        <input type="text" id="dunzoHeading2" class="form-input" placeholder="Work">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <textarea id="dunzoDescription" class="form-textarea" placeholder="Describe your work on Dunzo..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project URL</label>
+                        <input type="url" id="dunzoUrl" class="form-input" placeholder="https://...">
+                    </div>
+                </div>
+
+                <!-- Eureka Forbes Project -->
+                <div class="content-section" id="eurekaforbes">
+                    <div class="section-header">
+                        <h2 class="section-title">🏢 Eureka Forbes Project</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 1</label>
+                        <input type="text" id="eurekaforbesHeading1" class="form-input" placeholder="Eureka Forbes">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 2</label>
+                        <input type="text" id="eurekaforbesHeading2" class="form-input" placeholder="Work">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <textarea id="eurekaforbesDescription" class="form-textarea" placeholder="Describe your work on Eureka Forbes..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project URL</label>
+                        <input type="url" id="eurekaforbesUrl" class="form-input" placeholder="https://...">
+                    </div>
+                </div>
+
+                <!-- Explore Project -->
+                <div class="content-section" id="explore">
+                    <div class="section-header">
+                        <h2 class="section-title">🔍 Explore Project</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 1</label>
+                        <input type="text" id="exploreHeading1" class="form-input" placeholder="Explore">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Heading Line 2</label>
+                        <input type="text" id="exploreHeading2" class="form-input" placeholder="Work">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Description</label>
+                        <textarea id="exploreDescription" class="form-textarea" placeholder="Describe your work on Explore..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project URL</label>
+                        <input type="url" id="exploreUrl" class="form-input" placeholder="https://...">
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div class="content-section" id="settings">
+                    <div class="section-header">
+                        <h2 class="section-title">⚙️ Settings</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">GitHub Personal Access Token</label>
+                        <input type="password" id="githubToken" class="form-input" placeholder="Enter your GitHub token">
+                        <small style="color: #a0a0a0; margin-top: 5px; display: block;">
+                            Get a token from <a href="https://github.com/settings/tokens" style="color: #667eea;">GitHub Settings</a>
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Auto Save Interval (minutes)</label>
+                        <input type="number" id="autoSaveInterval" class="form-input" value="5" min="1" max="60">
+                    </div>
+                </div>
+
+                <!-- Backup Section -->
+                <div class="content-section" id="backup">
+                    <div class="section-header">
+                        <h2 class="section-title">💾 Backup & Restore</h2>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button class="btn btn-primary" onclick="exportData()">📤 Export Data</button>
+                        <button class="btn btn-secondary" onclick="importData()">📥 Import Data</button>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-success" onclick="createBackup()">💾 Create Backup</button>
+                        <button class="btn btn-secondary" onclick="restoreBackup()">🔄 Restore Backup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Commit Modal -->
+    <div id="commitModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">📝 Commit & Push Changes</h3>
+                <button class="close-btn" onclick="closeCommitModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Commit Message</label>
+                    <input type="text" id="commitMessage" class="form-input" placeholder="Update website content" value="Update website content">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Changes to Commit</label>
+                    <div id="changesList" class="changes-list">
+                        <!-- Changes will be listed here -->
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn btn-success" onclick="commitChanges()">📝 Commit & Push</button>
+                    <button class="btn btn-secondary" onclick="closeCommitModal()">❌ Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cms-dashboard.js"></script>
+</body>
+</html> 

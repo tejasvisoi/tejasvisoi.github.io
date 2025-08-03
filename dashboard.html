@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tejasvi Soi - Portfolio Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="app-title">
+                    <i class="fas fa-chart-line"></i>
+                    Portfolio Dashboard
+                </h1>
+                <span class="app-subtitle">Tejasvi Soi</span>
+            </div>
+            <div class="header-right">
+                <button id="refreshBtn" class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i>
+                    Refresh Data
+                </button>
+                <button id="settingsBtn" class="btn btn-secondary">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <i class="fas fa-circle status-indicator" id="connectionStatus"></i>
+                    <span id="connectionText">Connecting...</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-clock"></i>
+                    <span id="lastUpdate">Never</span>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Portfolio Overview -->
+                <div class="card portfolio-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-globe"></i> Portfolio Website</h2>
+                        <button class="card-action" onclick="openExternal('https://tejasvisoi.github.io')">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric-grid">
+                            <div class="metric">
+                                <span class="metric-value" id="portfolioStars">-</span>
+                                <span class="metric-label">Stars</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value" id="portfolioForks">-</span>
+                                <span class="metric-label">Forks</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value" id="portfolioCommits">-</span>
+                                <span class="metric-label">Commits</span>
+                            </div>
+                        </div>
+                        <div class="recent-activity">
+                            <h4>Recent Activity</h4>
+                            <div id="portfolioActivity" class="activity-list">
+                                <div class="loading">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Console -->
+                <div class="card admin-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-tools"></i> Admin Console</h2>
+                        <button class="card-action" onclick="openExternal('https://github.com/tejasvisoi/adminconsole')">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="metric-grid">
+                            <div class="metric">
+                                <span class="metric-value" id="adminStars">-</span>
+                                <span class="metric-label">Stars</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value" id="adminForks">-</span>
+                                <span class="metric-label">Forks</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-value" id="adminFiles">-</span>
+                                <span class="metric-label">Files</span>
+                            </div>
+                        </div>
+                        <div class="file-explorer">
+                            <h4>Repository Files</h4>
+                            <div id="adminFiles" class="file-list">
+                                <div class="loading">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card actions-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="openExternal('https://github.com/tejasvisoi/tejasvisoi.github.io')">
+                                <i class="fab fa-github"></i>
+                                View Portfolio Repo
+                            </button>
+                            <button class="action-btn" onclick="openExternal('https://github.com/tejasvisoi/adminconsole')">
+                                <i class="fab fa-github"></i>
+                                View Admin Repo
+                            </button>
+                            <button class="action-btn" onclick="openExternal('https://tejasvisoi.github.io')">
+                                <i class="fas fa-external-link-alt"></i>
+                                Open Website
+                            </button>
+                            <button class="action-btn" onclick="openExternal('mailto:hello@tejasvisoi.com')">
+                                <i class="fas fa-envelope"></i>
+                                Send Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Info -->
+                <div class="card system-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-info-circle"></i> System Info</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-label">App Version:</span>
+                                <span class="info-value" id="appVersion">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Node Version:</span>
+                                <span class="info-value" id="nodeVersion">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Chrome Version:</span>
+                                <span class="info-value" id="chromeVersion">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Platform:</span>
+                                <span class="info-value" id="platform">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-cog"></i> Settings</h2>
+                <button class="modal-close" onclick="closeSettings()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="githubToken">GitHub Personal Access Token</label>
+                    <input type="password" id="githubToken" placeholder="Enter your GitHub token for enhanced access">
+                    <small>Optional: Provides higher rate limits and access to private repos</small>
+                </div>
+                <div class="setting-group">
+                    <label for="autoRefresh">Auto Refresh Interval (minutes)</label>
+                    <input type="number" id="autoRefresh" value="5" min="1" max="60">
+                    <small>How often to automatically refresh data</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSettings()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html> 

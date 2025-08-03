@@ -1,0 +1,38 @@
+{
+  "homepage": {
+    "mainHeading1": "",
+    "mainHeading2": "making things @",
+    "presentWork": [],
+    "socialLinks": [],
+    "pastWork": []
+  },
+  "portfolio": {
+    "heading1": "",
+    "heading2": "",
+    "content": ""
+  },
+  "googlepay": {
+    "heading1": "",
+    "heading2": "",
+    "description": "",
+    "url": ""
+  },
+  "dunzo": {
+    "heading1": "",
+    "heading2": "",
+    "description": "",
+    "url": ""
+  },
+  "eurekaforbes": {
+    "heading1": "",
+    "heading2": "",
+    "description": "",
+    "url": ""
+  },
+  "explore": {
+    "heading1": "",
+    "heading2": "",
+    "description": "",
+    "url": ""
+  }
+}
