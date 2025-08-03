@@ -3,24 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Tejasvi Soi</title>
+    <title>Work - Tejasvi Soi</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=hoover@400,700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="main-content">
-            <h1 class="main-heading">
-                <span class="line-1">Portfolio</span>
-                <span class="line-2">Coming Soon</span>
-            </h1>
-            
-            <div class="main-links">
-                <a href="index.html" class="main-link">← Back to Home</a>
-            </div>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Navigation -->
+    <nav class="portfolio-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">← Back to Home</a>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="portfolio-container">
+        <header class="portfolio-header">
+            <h1 class="portfolio-title">Work</h1>
+            <p class="portfolio-subtitle">Showing the latest projects</p>
+        </header>
+        
+        <div class="portfolio-grid" id="portfolio-grid">
+            <!-- Portfolio items will be loaded here -->
         </div>
     </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Portfolio page specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Custom cursor functionality
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+                
+                // Add hover effects to interactive elements
+                const interactiveElements = document.querySelectorAll('a, .portfolio-item');
+                
+                interactiveElements.forEach(element => {
+                    element.addEventListener('mouseenter', () => {
+                        cursor.style.transform = 'scale(1.5)';
+                    });
+                    
+                    element.addEventListener('mouseleave', () => {
+                        cursor.style.transform = 'scale(1)';
+                    });
+                });
+            }
+            
+            // Load portfolio data
+            loadPortfolioData();
+        });
+        
+        async function loadPortfolioData() {
+            try {
+                const response = await fetch('data.json');
+                const data = await response.json();
+                
+                const portfolioGrid = document.getElementById('portfolio-grid');
+                
+                // Create portfolio items from data
+                const projects = [
+                    {
+                        title: 'Google Pay',
+                        category: 'Finance',
+                        description: 'Working at Google Pay on payment solutions and user experience.',
+                        url: 'googlepay.html',
+                        image: null
+                    },
+                    {
+                        title: 'Dunzo',
+                        category: 'Technology',
+                        description: 'Quick commerce and delivery platform development.',
+                        url: 'dunzo.html',
+                        image: null
+                    },
+                    {
+                        title: 'Eureka Forbes',
+                        category: 'Consumer Brands',
+                        description: 'Home appliances and water purification solutions.',
+                        url: 'eurekaforbes.html',
+                        image: null
+                    },
+                    {
+                        title: 'Explore',
+                        category: 'Technology',
+                        description: 'Exploration and discovery platform.',
+                        url: 'explore.html',
+                        image: null
+                    }
+                ];
+                
+                // Generate portfolio items
+                projects.forEach(project => {
+                    const portfolioItem = createPortfolioItem(project);
+                    portfolioGrid.appendChild(portfolioItem);
+                });
+                
+                // Animate items on load
+                animatePortfolioItems();
+                
+            } catch (error) {
+                console.error('Error loading portfolio data:', error);
+                // Fallback content
+                const portfolioGrid = document.getElementById('portfolio-grid');
+                portfolioGrid.innerHTML = `
+                    <div class="portfolio-item">
+                        <h3>Google Pay</h3>
+                        <p class="category">Finance</p>
+                        <p class="description">Working at Google Pay on payment solutions and user experience.</p>
+                        <a href="googlepay.html" class="project-link">View Project</a>
+                    </div>
+                    <div class="portfolio-item">
+                        <h3>Dunzo</h3>
+                        <p class="category">Technology</p>
+                        <p class="description">Quick commerce and delivery platform development.</p>
+                        <a href="dunzo.html" class="project-link">View Project</a>
+                    </div>
+                    <div class="portfolio-item">
+                        <h3>Eureka Forbes</h3>
+                        <p class="category">Consumer Brands</p>
+                        <p class="description">Home appliances and water purification solutions.</p>
+                        <a href="eurekaforbes.html" class="project-link">View Project</a>
+                    </div>
+                    <div class="portfolio-item">
+                        <h3>Explore</h3>
+                        <p class="category">Technology</p>
+                        <p class="description">Exploration and discovery platform.</p>
+                        <a href="explore.html" class="project-link">View Project</a>
+                    </div>
+                `;
+            }
+        }
+        
+        function createPortfolioItem(project) {
+            const item = document.createElement('div');
+            item.className = 'portfolio-item';
+            item.innerHTML = `
+                <div class="portfolio-item-content">
+                    <h3 class="project-title">${project.title}</h3>
+                    <p class="category">${project.category}</p>
+                    <p class="description">${project.description}</p>
+                    <a href="${project.url}" class="project-link">View Project</a>
+                </div>
+            `;
+            return item;
+        }
+        
+        function animatePortfolioItems() {
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.portfolio-item', {
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    stagger: 0.1,
+                    ease: "power2.out"
+                });
+            }
+        }
+    </script>
 </body>
 </html> 
