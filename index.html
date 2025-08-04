@@ -62,11 +62,11 @@
                         <div class="past-work">
                             <h3 class="past-work-title">Past</h3>
                             <div class="past-work-links">
-                                <a href="googlepay.html" class="past-work-link" target="_blank">Google Pay</a>
-                                <a href="dunzo.html" class="past-work-link" target="_blank">Dunzo</a>
-                                <a href="#" class="past-work-link" target="_blank">Porter</a>
-                                <a href="eurekaforbes.html" class="past-work-link" target="_blank">Eureka Forbes</a>
-                                <a href="portfolio.html" class="past-work-link portfolio-link" target="_blank">Full Portfolio</a>
+                                <a href="#" class="past-work-link" data-sheet="googlepay">Google Pay</a>
+                                <a href="#" class="past-work-link" data-sheet="dunzo">Dunzo</a>
+                                <a href="#" class="past-work-link" data-sheet="porter">Porter</a>
+                                <a href="#" class="past-work-link" data-sheet="eurekaforbes">Eureka Forbes</a>
+                                <a href="#" class="past-work-link portfolio-link" data-sheet="portfolio">Full Portfolio</a>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,34 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- Bottom Sheet Overlays -->
+    <div class="bottom-sheet-overlay" id="bottomSheetOverlay">
+        <div class="bottom-sheet" id="bottomSheet">
+            <!-- Navigation Header -->
+            <div class="sheet-header">
+                <button class="sheet-close-btn" id="sheetCloseBtn">
+                    <span class="close-icon">×</span>
+                </button>
+                <div class="sheet-nav">
+                    <button class="nav-btn nav-back" id="navBackBtn" disabled>
+                        <span class="nav-icon">←</span>
+                        <span>Back</span>
+                    </button>
+                    <button class="nav-btn nav-forward" id="navForwardBtn" disabled>
+                        <span>Forward</span>
+                        <span class="nav-icon">→</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Sheet Content Container -->
+            <div class="sheet-content" id="sheetContent">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="script.js"></script>
