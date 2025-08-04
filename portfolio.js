@@ -104,30 +104,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
-    let currentFilter = 'all';
-    let currentSector = 'all';
     let displayedProjects = 8;
     const projectsPerLoad = 4;
 
     // Initialize the page
     function init() {
         renderProjects();
-        setupFilters();
         setupLoadMore();
         setupCustomCursor();
     }
 
-    // Render projects based on current filters
+    // Render projects
     function renderProjects() {
         const grid = document.getElementById('projectsGrid');
-        const filteredProjects = filterProjects();
-        const projectsToShow = filteredProjects.slice(0, displayedProjects);
+        const projectsToShow = projects.slice(0, displayedProjects);
         
         grid.innerHTML = projectsToShow.map(project => createProjectCard(project)).join('');
         
         // Show/hide load more button
         const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (filteredProjects.length > displayedProjects) {
+        if (projects.length > displayedProjects) {
             loadMoreBtn.style.display = 'block';
         } else {
             loadMoreBtn.style.display = 'none';
@@ -135,15 +131,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Setup project cards after rendering
         setTimeout(setupProjectCards, 100);
-    }
-
-    // Filter projects based on current selections
-    function filterProjects() {
-        return projects.filter(project => {
-            const disciplineMatch = currentFilter === 'all' || project.discipline === currentFilter;
-            const sectorMatch = currentSector === 'all' || project.sector === currentSector;
-            return disciplineMatch && sectorMatch;
-        });
     }
 
     // Create project card HTML
@@ -166,37 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // Setup filter functionality
-    function setupFilters() {
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const filterValue = this.getAttribute('data-filter');
-                const filterGroup = this.closest('.filter-column');
-                
-                // Remove active class from all buttons in this group
-                filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                // Update current filter
-                if (filterGroup.querySelector('.filter-title').textContent === 'Discipline') {
-                    currentFilter = filterValue;
-                } else {
-                    currentSector = filterValue;
-                }
-                
-                // Reset displayed projects count and re-render
-                displayedProjects = 8;
-                renderProjects();
-            });
-        });
-    }
-
     // Setup load more functionality
     function setupLoadMore() {
         const loadMoreBtn = document.getElementById('loadMoreBtn');
@@ -217,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Add hover effects for interactive elements
-        const interactiveElements = document.querySelectorAll('.project-card, .filter-btn, .load-more-btn, .nav-link, .see-all-news');
+        const interactiveElements = document.querySelectorAll('.project-card, .load-more-btn, .nav-link, .see-all-news');
         
         interactiveElements.forEach(element => {
             element.addEventListener('mouseenter', function() {

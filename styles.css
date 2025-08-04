@@ -191,10 +191,19 @@ body {
     margin-bottom: 4rem;
 }
 
+/* Asymmetrical grid - alternate card heights */
+.project-card:nth-child(odd) {
+    margin-top: 0;
+}
+
+.project-card:nth-child(even) {
+    margin-top: 4rem;
+}
+
 .project-card {
-    background: rgba(245, 245, 245, 0.02);
-    border: 1px solid rgba(245, 245, 245, 0.1);
-    padding: 2rem;
+    background: transparent;
+    border: none;
+    padding: 0;
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
@@ -202,30 +211,12 @@ body {
 }
 
 .project-card:hover {
-    background: rgba(245, 245, 245, 0.05);
-    border-color: rgba(245, 245, 245, 0.2);
-    transform: translateY(-2px);
-}
-
-.project-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #f5f5f5, transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-}
-
-.project-card:hover::before {
-    transform: translateX(100%);
+    transform: translateY(-4px);
 }
 
 .project-image {
     width: 100%;
-    height: 280px;
+    height: 400px;
     background: rgba(245, 245, 245, 0.1);
     margin-bottom: 1.5rem;
     display: flex;
@@ -951,14 +942,6 @@ body {
         font-size: clamp(2.5rem, 5vw, 4rem);
     }
     
-    .pentagram-filters {
-        padding: 0 2rem 60px 2rem;
-    }
-    
-    .filters-container {
-        gap: 3rem;
-    }
-    
     .pentagram-main {
         padding: 0 2rem 60px 2rem;
     }
@@ -999,24 +982,6 @@ body {
         font-size: 14px;
     }
     
-    .pentagram-filters {
-        padding: 0 1rem 40px 1rem;
-    }
-    
-    .filters-container {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .filter-options {
-        gap: 0.5rem;
-    }
-    
-    .filter-btn {
-        padding: 0.6rem 1rem;
-        font-size: 11px;
-    }
-    
     .pentagram-main {
         padding: 0 1rem 40px 1rem;
     }
@@ -1026,12 +991,13 @@ body {
         gap: 1.5rem;
     }
     
-    .project-card {
-        padding: 1.5rem;
+    /* Remove asymmetrical grid on mobile */
+    .project-card:nth-child(even) {
+        margin-top: 0;
     }
     
     .project-image {
-        height: 220px;
+        height: 280px;
     }
     
     .project-title {
@@ -1072,30 +1038,12 @@ body {
         font-size: 12px;
     }
     
-    .pentagram-filters {
-        padding: 0 1rem 30px 1rem;
-    }
-    
-    .filter-title {
-        font-size: 16px;
-        margin-bottom: 1rem;
-    }
-    
-    .filter-btn {
-        padding: 0.5rem 0.8rem;
-        font-size: 10px;
-    }
-    
     .pentagram-main {
         padding: 0 1rem 30px 1rem;
     }
     
-    .project-card {
-        padding: 1rem;
-    }
-    
     .project-image {
-        height: 180px;
+        height: 220px;
         font-size: 12px;
     }
     
@@ -1151,6 +1099,6 @@ body {
     }
     
     .project-image {
-        height: 320px;
+        height: 450px;
     }
 } 
