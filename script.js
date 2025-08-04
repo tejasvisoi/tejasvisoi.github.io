@@ -89,28 +89,38 @@ function initTimeTracker() {
         const catSprite = catContainer.querySelector('.cat-sprite');
         if (!catSprite) return;
         
-        // Position cat below visit tracker
+        // Set initial position once
         const visitTrackerRect = visitTracker.getBoundingClientRect();
         catContainer.style.top = (visitTrackerRect.bottom + 10) + 'px';
+        catContainer.style.left = '0px';
         
         function walkAnimation() {
             const screenWidth = window.innerWidth;
             const catWidth = 60;
             const animationDuration = screenWidth >= 1440 ? 180 : 60; // 3 min on large screens, 1 min on others
             
-            gsap.set(catContainer, { x: screenWidth, opacity: 1 });
+            // Reset position and start from right side
+            gsap.set(catContainer, { 
+                x: screenWidth, 
+                opacity: 1,
+                clearProps: "x" // Clear any previous transforms
+            });
             gsap.set(catSprite, { scaleX: -1 });
             
+            // Walk from right to left
             gsap.to(catContainer, {
                 x: -(catWidth),
                 duration: animationDuration,
                 ease: "none",
                 onComplete: () => {
+                    // Reset position and wait before next animation
+                    gsap.set(catContainer, { opacity: 0 });
                     setTimeout(walkAnimation, 1000);
                 }
             });
         }
         
+        // Start the animation after a delay
         setTimeout(walkAnimation, 1000);
     }
     
@@ -124,6 +134,14 @@ function initTimeTracker() {
     } else {
         window.addEventListener('load', initCatAnimation);
     }
+    
+    // Handle window resize to reposition cat
+    window.addEventListener('resize', function() {
+        if (catContainer && visitTracker) {
+            const visitTrackerRect = visitTracker.getBoundingClientRect();
+            catContainer.style.top = (visitTrackerRect.bottom + 10) + 'px';
+        }
+    });
     
     // Save time on page unload
     window.addEventListener('beforeunload', function() {
