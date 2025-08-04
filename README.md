@@ -1,6 +1,6 @@
 # Tejasvi Soi - Portfolio Website
 
-A modern, responsive portfolio website showcasing my work and projects.
+A modern, responsive portfolio website showcasing design work and projects.
 
 ## 🚀 Features
 
@@ -8,28 +8,25 @@ A modern, responsive portfolio website showcasing my work and projects.
 - **Responsive**: Works perfectly on desktop, tablet, and mobile
 - **Interactive Elements**: Custom cursor, time tracking, animations
 - **Fast Loading**: Optimized for performance
-- **Pentagram-Inspired Layout**: Professional portfolio grid layout
 
 ## 📁 Project Structure
 
 ```
 tejasvisoi.github.io/
 ├── index.html              # Main landing page
-├── portfolio.html          # Full portfolio showcase (Pentagram-inspired)
+├── portfolio.html          # Full portfolio showcase
 ├── googlepay.html          # Google Pay project page
 ├── dunzo.html             # Dunzo project page
 ├── eurekaforbes.html      # Eureka Forbes project page
-├── explore.html           # Explore project page
 ├── styles.css             # All styling and responsive design
 ├── script.js              # Interactive features and animations
-├── data.json              # Portfolio data
 ├── images/                # Image assets
 ├── projects/              # Project assets
 ├── templates/             # Template files
 └── README.md             # This file
 ```
 
-## 🌐 Website Usage
+## 🛠️ Setup Instructions
 
 ### 1. Clone the Repository
 ```bash
@@ -53,18 +50,16 @@ php -S localhost:8000
 
 ## 🎨 Customization
 
-### Website Content Updates
+### Content Updates
 - Edit `index.html` to update main page content
 - Modify project pages (googlepay.html, dunzo.html, etc.)
 - Update `styles.css` for design changes
 - Edit `script.js` for interactive features
-- Update `data.json` for portfolio data
 
 ### Adding New Projects
 1. Create a new HTML file for your project (e.g., `newproject.html`)
 2. Add a link to it in the "Past" section of `index.html`
-3. Add the project to the portfolio grid in `portfolio.html`
-4. Style it consistently with existing pages
+3. Style it consistently with existing pages
 
 ## 🚀 Deployment
 

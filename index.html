@@ -3,111 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Preview</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .profile-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            object-fit: cover;
-        }
-        .name {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        .title {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        .bio {
-            font-size: 1.1em;
-            color: #555;
-            margin-bottom: 30px;
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        .section-title {
-            font-size: 1.5em;
-            color: #333;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .project {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .project-title {
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .skill {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            margin: 5px;
-            font-size: 0.9em;
-        }
-        .contact-info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-        }
-    </style>
+    <title>Tejasvi Soi - Portfolio</title>
+    <link rel="stylesheet" href="styles.css?v=1.3">
+    <!-- Consolidated font loading -->
+    <link rel="preconnect" href="https://fonts.indiantypefoundry.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link rel="stylesheet" href="https://fonts.indiantypefoundry.com/technor.css">
+    <link rel="stylesheet" href="https://fonts.indiantypefoundry.com/rajdhani.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=hoover@400,700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    
     <div class="container">
-        <div class="header">
+        <div class="main-content">
+            <h1 class="main-heading">
+                <span class="line-1">Building, breaking, </span>
+                <span class="line-2">making things</span>
+            </h1>
             
-            <h1 class="name">Your Name</h1>
-            <p class="title">Your Title</p>
-            <p class="bio">Your bio goes here...</p>
-        </div>
-
-        
-
-        
-
-        
-
-        
-
-        <div class="section">
-            <h2 class="section-title">Contact</h2>
-            <div class="contact-info">
-                
-                
-                
+            <div class="visit-tracker">
+                <p id="last-visit-text">Loading...</p>
+            </div>
+            
+            <!-- Cat Animation -->
+            <div class="cat-container">
+                <img src="cat.gif" alt="Walking Cat" class="cat-sprite">
+            </div>
+            
+            <div class="content-grid">
+                <div class="grid-row">
+                    <div class="section">
+                        <div class="main-links">
+                            <h3 class="main-links-title">Present</h3>
+                            <a href="#" class="main-link" target="_blank">Designing at PhonePe</a>
+                            <a href="#" class="main-link" target="_blank">Building Home Cafe</a>
+                        </div>
+                        <div class="social-links">
+                            <a href="https://instagram.com/tejasvisoi" class="social-link" target="_blank">
+                                <span class="social-icon">📷</span>
+                                <span>IG</span>
+                            </a>
+                            <a href="https://twitter.com/tejasvisoi" class="social-link" target="_blank">
+                                <span class="social-icon">🐦</span>
+                                <span>X</span>
+                            </a>
+                            <a href="mailto:hello@tejasvisoi.com" class="social-link" target="_blank">
+                                <span class="social-icon">✉️</span>
+                                <span>EMAIL</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="past-work">
+                            <h3 class="past-work-title">Past</h3>
+                            <div class="past-work-links">
+                                <a href="googlepay.html" class="past-work-link" target="_blank">Google Pay</a>
+                                <a href="dunzo.html" class="past-work-link" target="_blank">Dunzo</a>
+                                <a href="#" class="past-work-link" target="_blank">Porter</a>
+                                <a href="eurekaforbes.html" class="past-work-link" target="_blank">Eureka Forbes</a>
+                                <a href="portfolio.html" class="past-work-link portfolio-link" target="_blank">Full Portfolio</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 
