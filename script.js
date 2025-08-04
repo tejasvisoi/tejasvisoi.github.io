@@ -143,8 +143,7 @@ function initBottomSheetNavigation() {
     const overlay = document.getElementById('bottomSheetOverlay');
     const sheet = document.getElementById('bottomSheet');
     const closeBtn = document.getElementById('sheetCloseBtn');
-    const backBtn = document.getElementById('navBackBtn');
-    const forwardBtn = document.getElementById('navForwardBtn');
+    const backBtn = document.getElementById('sheetBackBtn');
     const content = document.getElementById('sheetContent');
     
     // Sheet links
@@ -160,6 +159,15 @@ function initBottomSheetNavigation() {
     // Close button
     closeBtn.addEventListener('click', closeSheet);
     
+    // Back button
+    backBtn.addEventListener('click', function() {
+        if (navigationHistory.length > 1) {
+            navigateBack();
+        } else {
+            closeSheet();
+        }
+    });
+    
     // Overlay click to close
     overlay.addEventListener('click', function(e) {
         if (e.target === overlay) {
@@ -167,20 +175,18 @@ function initBottomSheetNavigation() {
         }
     });
     
-    // Navigation buttons
-    backBtn.addEventListener('click', navigateBack);
-    forwardBtn.addEventListener('click', navigateForward);
-    
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
         if (!isSheetOpen) return;
         
         if (e.key === 'Escape') {
             closeSheet();
-        } else if (e.key === 'ArrowLeft' && !backBtn.disabled) {
-            navigateBack();
-        } else if (e.key === 'ArrowRight' && !forwardBtn.disabled) {
-            navigateForward();
+        } else if (e.key === 'ArrowLeft') {
+            if (navigationHistory.length > 1) {
+                navigateBack();
+            } else {
+                closeSheet();
+            }
         }
     });
     
@@ -215,6 +221,8 @@ function initBottomSheetNavigation() {
 function openSheet(sheetName) {
     const overlay = document.getElementById('bottomSheetOverlay');
     const content = document.getElementById('sheetContent');
+    const container = document.querySelector('.container');
+    const cursor = document.querySelector('.custom-cursor');
     
     // Show loading state
     content.innerHTML = '<div class="loading-spinner"></div>';
@@ -228,6 +236,10 @@ function openSheet(sheetName) {
         // Show sheet with animation
         overlay.classList.add('active');
         isSheetOpen = true;
+        
+        // Blur the homepage
+        if (container) container.style.filter = 'blur(3px)';
+        if (cursor) cursor.style.filter = 'blur(3px)';
         
         // Update navigation buttons
         updateNavigationButtons();
@@ -246,9 +258,15 @@ function openSheet(sheetName) {
 
 function closeSheet() {
     const overlay = document.getElementById('bottomSheetOverlay');
+    const container = document.querySelector('.container');
+    const cursor = document.querySelector('.custom-cursor');
     
     overlay.classList.remove('active');
     isSheetOpen = false;
+    
+    // Remove blur from homepage
+    if (container) container.style.filter = 'none';
+    if (cursor) cursor.style.filter = 'none';
     
     // Reset page title
     document.title = 'Tejasvi Soi - Portfolio';
@@ -302,20 +320,15 @@ async function loadPortfolioContent() {
     const response = await fetch('portfolio.html');
     const html = await response.text();
     
-    // Extract the complete content from portfolio.html (excluding body and html tags)
+    // Extract only the hero and main content from portfolio.html (excluding navigation)
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     
-    // Get the navigation, hero, and main content
-    const nav = doc.querySelector('.pentagram-nav');
+    // Get only the hero and main content (skip navigation)
     const hero = doc.querySelector('.pentagram-hero');
     const main = doc.querySelector('.pentagram-main');
     
     let htmlContent = '';
-    
-    if (nav) {
-        htmlContent += nav.outerHTML;
-    }
     
     if (hero) {
         htmlContent += hero.outerHTML;
@@ -376,27 +389,19 @@ function navigateBack() {
         currentHistoryIndex--;
         const sheetName = navigationHistory[currentHistoryIndex];
         loadSheetContent(sheetName);
-        updateNavigationButtons();
-        document.title = `${getSheetTitle(sheetName)} - Tejasvi Soi`;
-    }
-}
-
-function navigateForward() {
-    if (currentHistoryIndex < navigationHistory.length - 1) {
-        currentHistoryIndex++;
-        const sheetName = navigationHistory[currentHistoryIndex];
-        loadSheetContent(sheetName);
-        updateNavigationButtons();
         document.title = `${getSheetTitle(sheetName)} - Tejasvi Soi`;
     }
 }
 
 function updateNavigationButtons() {
-    const backBtn = document.getElementById('navBackBtn');
-    const forwardBtn = document.getElementById('navForwardBtn');
+    const backBtn = document.getElementById('sheetBackBtn');
     
-    backBtn.disabled = currentHistoryIndex <= 0;
-    forwardBtn.disabled = currentHistoryIndex >= navigationHistory.length - 1;
+    // Show/hide back button based on history
+    if (navigationHistory.length > 1) {
+        backBtn.style.display = 'flex';
+    } else {
+        backBtn.style.display = 'none';
+    }
 }
 
 function initializeSheetContent() {
