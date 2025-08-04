@@ -1543,3 +1543,68 @@ body {
         font-size: 2rem;
     }
 }
+
+/* Placeholder Content Styles */
+.project-hero-img,
+.project-image {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.project-hero-img::before,
+.project-image::before {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    font-size: 1.2rem;
+    font-weight: 700;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+.project-hero-img::after,
+.project-image::after {
+    content: attr(data-description);
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    max-width: 80%;
+}
+
+.project-hero-img {
+    min-height: 400px;
+}
+
+.project-hero-img::before {
+    font-size: 1.5rem;
+}
+
+.image-item.large .project-image {
+    min-height: 400px;
+}
+
+.image-item.large .project-image::before {
+    font-size: 1.4rem;
+}
+
+/* Hide actual img tags since we're using CSS placeholders */
+.project-hero-img img,
+.project-image img {
+    display: none;
+}
