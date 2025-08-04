@@ -112,59 +112,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Filters Section */
-.pentagram-filters {
-    padding: 0 2rem 80px 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-.filters-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-}
-
-.filter-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.filter-title {
-    font-family: 'Hoover', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #f5f5f5;
-}
-
-.filter-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-}
-
-.filter-btn {
-    background: none;
-    border: 1px solid rgba(245, 245, 245, 0.3);
-    color: rgba(245, 245, 245, 0.7);
-    padding: 0.75rem 1.25rem;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 2px;
-}
-
-.filter-btn:hover,
-.filter-btn.active {
-    background: #f5f5f5;
-    color: #000000;
-    border-color: #f5f5f5;
-}
-
 /* Main Content */
 .pentagram-main {
     padding: 0 2rem 80px 2rem;
@@ -173,10 +120,7 @@ body {
 }
 
 .main-container {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 4rem;
-    align-items: start;
+    width: 100%;
 }
 
 /* Projects Section */
@@ -191,15 +135,7 @@ body {
     margin-bottom: 4rem;
 }
 
-/* Asymmetrical grid - alternate card heights */
-.project-card:nth-child(odd) {
-    margin-top: 0;
-}
-
-.project-card:nth-child(even) {
-    margin-top: 4rem;
-}
-
+/* Irregular masonry grid - different card sizes */
 .project-card {
     background: transparent;
     border: none;
@@ -214,9 +150,49 @@ body {
     transform: translateY(-4px);
 }
 
+/* Different image heights for irregular grid */
+.project-card:nth-child(1) .project-image {
+    height: 500px;
+}
+
+.project-card:nth-child(2) .project-image {
+    height: 350px;
+}
+
+.project-card:nth-child(3) .project-image {
+    height: 400px;
+}
+
+.project-card:nth-child(4) .project-image {
+    height: 450px;
+}
+
+.project-card:nth-child(5) .project-image {
+    height: 380px;
+}
+
+.project-card:nth-child(6) .project-image {
+    height: 520px;
+}
+
+.project-card:nth-child(7) .project-image {
+    height: 360px;
+}
+
+.project-card:nth-child(8) .project-image {
+    height: 420px;
+}
+
+.project-card:nth-child(9) .project-image {
+    height: 480px;
+}
+
+.project-card:nth-child(10) .project-image {
+    height: 340px;
+}
+
 .project-image {
     width: 100%;
-    height: 400px;
     background: rgba(245, 245, 245, 0.1);
     margin-bottom: 1.5rem;
     display: flex;
@@ -298,92 +274,6 @@ body {
     background: #f5f5f5;
     color: #000000;
     border-color: #f5f5f5;
-}
-
-/* News Sidebar */
-.news-sidebar {
-    position: sticky;
-    top: 120px;
-    width: 100%;
-}
-
-.news-title {
-    font-family: 'Hoover', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    color: #f5f5f5;
-}
-
-.news-items {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.news-item {
-    border-bottom: 1px solid rgba(245, 245, 245, 0.1);
-    padding-bottom: 2rem;
-}
-
-.news-meta {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-}
-
-.news-category {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: rgba(245, 245, 245, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.news-date {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: rgba(245, 245, 245, 0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.news-headline {
-    font-family: 'Hoover', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: #f5f5f5;
-    line-height: 1.3;
-}
-
-.news-excerpt {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    color: rgba(245, 245, 245, 0.7);
-    line-height: 1.4;
-}
-
-.news-link {
-    margin-top: 2rem;
-}
-
-.see-all-news {
-    color: rgba(245, 245, 245, 0.7);
-    text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
-
-.see-all-news:hover {
-    color: #f5f5f5;
-    text-decoration: underline;
-    text-decoration-color: rgba(245, 245, 245, 0.8);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
 }
 
 /* Layout */
@@ -924,16 +814,6 @@ body {
 
 /* Responsive Pentagram Styles */
 @media (max-width: 1024px) {
-    .main-container {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-    
-    .news-sidebar {
-        position: static;
-        order: -1;
-    }
-    
     .pentagram-hero {
         padding: 120px 2rem 60px 2rem;
     }
@@ -991,13 +871,9 @@ body {
         gap: 1.5rem;
     }
     
-    /* Remove asymmetrical grid on mobile */
-    .project-card:nth-child(even) {
-        margin-top: 0;
-    }
-    
-    .project-image {
-        height: 280px;
+    /* Uniform image heights on mobile for better UX */
+    .project-card .project-image {
+        height: 280px !important;
     }
     
     .project-title {
@@ -1006,22 +882,6 @@ body {
     
     .project-description {
         font-size: 13px;
-    }
-    
-    .news-items {
-        gap: 1.5rem;
-    }
-    
-    .news-item {
-        padding-bottom: 1.5rem;
-    }
-    
-    .news-headline {
-        font-size: 15px;
-    }
-    
-    .news-excerpt {
-        font-size: 12px;
     }
 }
 
@@ -1043,7 +903,7 @@ body {
     }
     
     .project-image {
-        height: 220px;
+        height: 220px !important;
         font-size: 12px;
     }
     
@@ -1068,37 +928,11 @@ body {
         padding: 0.8rem 1.5rem;
         font-size: 12px;
     }
-    
-    .news-title {
-        font-size: 16px;
-        margin-bottom: 1.5rem;
-    }
-    
-    .news-meta {
-        gap: 0.5rem;
-    }
-    
-    .news-category,
-    .news-date {
-        font-size: 11px;
-    }
-    
-    .news-headline {
-        font-size: 14px;
-    }
-    
-    .news-excerpt {
-        font-size: 11px;
-    }
 }
 
 @media (min-width: 1025px) {
     .projects-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 2.5rem;
-    }
-    
-    .project-image {
-        height: 450px;
     }
 } 
