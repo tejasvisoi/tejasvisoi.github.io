@@ -1,49 +1,9 @@
 // Portfolio Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    // Project data with specified titles
+    // Project data with specified titles and order
     const projects = [
         {
             id: 1,
-            title: "Dunzo",
-            description: "Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.",
-            image: "dunzo",
-            discipline: "digital-experiences",
-            sector: "technology",
-            tags: ["UI Design", "Logistics", "Mobile"],
-            year: "2024"
-        },
-        {
-            id: 2,
-            title: "Eureka Forbes",
-            description: "Modernizing a legacy brand with contemporary visual identity and digital presence.",
-            image: "eurekaforbes",
-            discipline: "brand-identity",
-            sector: "consumer-brands",
-            tags: ["Brand Identity", "Digital", "Consumer"],
-            year: "2023"
-        },
-        {
-            id: 3,
-            title: "Google Pay",
-            description: "Redesigning the future of digital payments with a focus on accessibility and user experience.",
-            image: "googlepay",
-            discipline: "digital-experiences",
-            sector: "finance",
-            tags: ["UX Design", "Mobile App", "Fintech"],
-            year: "2024"
-        },
-        {
-            id: 4,
-            title: "Porter",
-            description: "Creating seamless logistics solutions with innovative design and user-centric experiences.",
-            image: "porter",
-            discipline: "digital-experiences",
-            sector: "technology",
-            tags: ["Logistics", "Platform Design", "B2B"],
-            year: "2023"
-        },
-        {
-            id: 5,
             title: "PhonePe",
             description: "Designing India's leading digital payment platform with intuitive user interfaces.",
             image: "phonepe",
@@ -53,7 +13,60 @@ document.addEventListener('DOMContentLoaded', function() {
             year: "2024"
         },
         {
+            id: 2,
+            title: "Google Pay",
+            description: "Redesigning the future of digital payments with a focus on accessibility and user experience.",
+            image: "googlepay",
+            discipline: "digital-experiences",
+            sector: "finance",
+            tags: ["UX Design", "Mobile App", "Fintech"],
+            year: "2024"
+        },
+        {
+            id: 3,
+            title: "Dunzo",
+            description: "Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.",
+            image: "dunzo",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["UI Design", "Logistics", "Mobile"],
+            year: "2024"
+        },
+        {
+            id: 4,
+            title: "Eureka Forbes",
+            description: "Modernizing a legacy brand with contemporary visual identity and digital presence.",
+            image: "eurekaforbes",
+            discipline: "brand-identity",
+            sector: "consumer-brands",
+            tags: ["Brand Identity", "Digital", "Consumer"],
+            year: "2023"
+        },
+        {
+            id: 5,
+            title: "Porter",
+            description: "Creating seamless logistics solutions with innovative design and user-centric experiences.",
+            image: "porter",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["Logistics", "Platform Design", "B2B"],
+            year: "2023"
+        }
+    ];
+
+    const visualProjects = [
+        {
             id: 6,
+            title: "Obvious New Website",
+            description: "Redesigning the digital presence with modern aesthetics and improved user experience.",
+            image: "obvious",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["Web Design", "Brand Identity", "Digital"],
+            year: "2024"
+        },
+        {
+            id: 7,
             title: "Ekana Club",
             description: "Building a premium lifestyle platform with sophisticated design and curated experiences.",
             image: "ekanaclub",
@@ -61,73 +74,34 @@ document.addEventListener('DOMContentLoaded', function() {
             sector: "fashion-beauty",
             tags: ["Luxury", "Brand Identity", "Lifestyle"],
             year: "2023"
-        },
-        {
-            id: 7,
-            title: "Financial Dashboard",
-            description: "Designing intuitive data visualization for complex financial information.",
-            image: "finance",
-            discipline: "digital-experiences",
-            sector: "finance",
-            tags: ["Data Viz", "Dashboard", "Fintech"],
-            year: "2024"
-        },
-        {
-            id: 8,
-            title: "Food Delivery App",
-            description: "Streamlining the food ordering experience with elegant interface design.",
-            image: "food",
-            discipline: "digital-experiences",
-            sector: "food-drink",
-            tags: ["Mobile App", "UX Design", "Food Tech"],
-            year: "2023"
-        },
-        {
-            id: 9,
-            title: "Luxury Brand Identity",
-            description: "Crafting sophisticated visual identity for premium lifestyle brands.",
-            image: "luxury",
-            discipline: "brand-identity",
-            sector: "fashion-beauty",
-            tags: ["Brand Identity", "Luxury", "Typography"],
-            year: "2024"
-        },
-        {
-            id: 10,
-            title: "Tech Conference",
-            description: "Designing immersive event experiences for technology conferences.",
-            image: "conference",
-            discipline: "campaigns",
-            sector: "entertainment",
-            tags: ["Event Design", "Digital", "Experience"],
-            year: "2023"
         }
     ];
-
-    let displayedProjects = 8;
-    const projectsPerLoad = 4;
 
     // Initialize the page
     function init() {
         renderProjects();
-        setupLoadMore();
         setupCustomCursor();
     }
 
     // Render projects
     function renderProjects() {
         const grid = document.getElementById('projectsGrid');
-        const projectsToShow = projects.slice(0, displayedProjects);
         
-        grid.innerHTML = projectsToShow.map(project => createProjectCard(project)).join('');
+        // Render main projects
+        const mainProjectsHTML = projects.map(project => createProjectCard(project)).join('');
         
-        // Show/hide load more button
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (projects.length > displayedProjects) {
-            loadMoreBtn.style.display = 'block';
-        } else {
-            loadMoreBtn.style.display = 'none';
-        }
+        // Create divider section
+        const dividerHTML = `
+            <div class="projects-divider">
+                <h2 class="divider-title">Some Visual Projects</h2>
+            </div>
+        `;
+        
+        // Render visual projects
+        const visualProjectsHTML = visualProjects.map(project => createProjectCard(project)).join('');
+        
+        // Combine all HTML
+        grid.innerHTML = mainProjectsHTML + dividerHTML + visualProjectsHTML;
         
         // Setup project cards after rendering
         setTimeout(setupProjectCards, 100);
@@ -153,16 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     }
 
-    // Setup load more functionality
-    function setupLoadMore() {
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        
-        loadMoreBtn.addEventListener('click', function() {
-            displayedProjects += projectsPerLoad;
-            renderProjects();
-        });
-    }
-
     // Setup custom cursor
     function setupCustomCursor() {
         const cursor = document.querySelector('.custom-cursor');
@@ -173,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Add hover effects for interactive elements
-        const interactiveElements = document.querySelectorAll('.project-card, .load-more-btn, .nav-link, .see-all-news');
+        const interactiveElements = document.querySelectorAll('.project-card, .nav-link');
         
         interactiveElements.forEach(element => {
             element.addEventListener('mouseenter', function() {
@@ -195,7 +159,8 @@ document.addEventListener('DOMContentLoaded', function() {
         projectCards.forEach(card => {
             card.addEventListener('click', function() {
                 const projectId = this.getAttribute('data-project-id');
-                const project = projects.find(p => p.id == projectId);
+                const allProjects = [...projects, ...visualProjects];
+                const project = allProjects.find(p => p.id == projectId);
                 
                 if (project) {
                     // Navigate to project detail page or show modal

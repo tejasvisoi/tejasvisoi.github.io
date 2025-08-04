@@ -135,6 +135,25 @@ body {
     margin-bottom: 4rem;
 }
 
+/* Projects Divider */
+.projects-divider {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin: 6rem 0 4rem 0;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(245, 245, 245, 0.1);
+    border-bottom: 1px solid rgba(245, 245, 245, 0.1);
+}
+
+.divider-title {
+    font-family: 'Hoover', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #f5f5f5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 /* Irregular masonry grid - different card sizes */
 .project-card {
     background: transparent;
@@ -150,45 +169,34 @@ body {
     transform: translateY(-4px);
 }
 
-/* Different image heights for irregular grid */
+/* Different image heights for irregular grid - updated for new order */
 .project-card:nth-child(1) .project-image {
-    height: 500px;
-}
-
-.project-card:nth-child(2) .project-image {
-    height: 350px;
-}
-
-.project-card:nth-child(3) .project-image {
-    height: 400px;
-}
-
-.project-card:nth-child(4) .project-image {
-    height: 450px;
-}
-
-.project-card:nth-child(5) .project-image {
-    height: 380px;
-}
-
-.project-card:nth-child(6) .project-image {
-    height: 520px;
-}
-
-.project-card:nth-child(7) .project-image {
-    height: 360px;
-}
-
-.project-card:nth-child(8) .project-image {
-    height: 420px;
-}
-
-.project-card:nth-child(9) .project-image {
     height: 480px;
 }
 
-.project-card:nth-child(10) .project-image {
-    height: 340px;
+.project-card:nth-child(2) .project-image {
+    height: 420px;
+}
+
+.project-card:nth-child(3) .project-image {
+    height: 500px;
+}
+
+.project-card:nth-child(4) .project-image {
+    height: 380px;
+}
+
+.project-card:nth-child(5) .project-image {
+    height: 450px;
+}
+
+/* Visual projects after divider */
+.project-card:nth-child(7) .project-image {
+    height: 520px;
+}
+
+.project-card:nth-child(8) .project-image {
+    height: 360px;
 }
 
 .project-image {
@@ -825,6 +833,15 @@ body {
     .pentagram-main {
         padding: 0 2rem 60px 2rem;
     }
+    
+    .projects-divider {
+        margin: 4rem 0 3rem 0;
+        padding: 1.5rem 0;
+    }
+    
+    .divider-title {
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -871,6 +888,15 @@ body {
         gap: 1.5rem;
     }
     
+    .projects-divider {
+        margin: 3rem 0 2rem 0;
+        padding: 1rem 0;
+    }
+    
+    .divider-title {
+        font-size: 18px;
+    }
+    
     /* Uniform image heights on mobile for better UX */
     .project-card .project-image {
         height: 280px !important;
@@ -902,6 +928,15 @@ body {
         padding: 0 1rem 30px 1rem;
     }
     
+    .projects-divider {
+        margin: 2rem 0 1.5rem 0;
+        padding: 0.75rem 0;
+    }
+    
+    .divider-title {
+        font-size: 16px;
+    }
+    
     .project-image {
         height: 220px !important;
         font-size: 12px;
@@ -922,11 +957,6 @@ body {
     
     .project-meta {
         font-size: 11px;
-    }
-    
-    .load-more-btn {
-        padding: 0.8rem 1.5rem;
-        font-size: 12px;
     }
 }
 
