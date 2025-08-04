@@ -98,7 +98,12 @@ function initTimeTracker() {
             const catWidth = 60;
             const animationDuration = screenWidth >= 1440 ? 180 : 60; // 3 min on large screens, 1 min on others
             
-            gsap.set(catContainer, { x: screenWidth, opacity: 1 });
+            // Always start from the right side
+            gsap.set(catContainer, { 
+                x: screenWidth, 
+                opacity: 1,
+                clearProps: "x" // Clear any previous transforms
+            });
             gsap.set(catSprite, { scaleX: -1 });
             
             gsap.to(catContainer, {
@@ -106,11 +111,14 @@ function initTimeTracker() {
                 duration: animationDuration,
                 ease: "none",
                 onComplete: () => {
+                    // Hide cat and wait before next animation
+                    gsap.set(catContainer, { opacity: 0 });
                     setTimeout(walkAnimation, 1000);
                 }
             });
         }
         
+        // Start the animation after a delay
         setTimeout(walkAnimation, 1000);
     }
     
@@ -222,7 +230,6 @@ function openSheet(sheetName) {
     const overlay = document.getElementById('bottomSheetOverlay');
     const content = document.getElementById('sheetContent');
     const container = document.querySelector('.container');
-    const cursor = document.querySelector('.custom-cursor');
     
     // Show loading state
     content.innerHTML = '<div class="loading-spinner"></div>';
@@ -237,9 +244,8 @@ function openSheet(sheetName) {
         overlay.classList.add('active');
         isSheetOpen = true;
         
-        // Blur the homepage
+        // Blur the homepage (but not the cursor)
         if (container) container.style.filter = 'blur(3px)';
-        if (cursor) cursor.style.filter = 'blur(3px)';
         
         // Update navigation buttons
         updateNavigationButtons();
@@ -259,14 +265,12 @@ function openSheet(sheetName) {
 function closeSheet() {
     const overlay = document.getElementById('bottomSheetOverlay');
     const container = document.querySelector('.container');
-    const cursor = document.querySelector('.custom-cursor');
     
     overlay.classList.remove('active');
     isSheetOpen = false;
     
     // Remove blur from homepage
     if (container) container.style.filter = 'none';
-    if (cursor) cursor.style.filter = 'none';
     
     // Reset page title
     document.title = 'Tejasvi Soi - Portfolio';
