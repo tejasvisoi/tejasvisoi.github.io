@@ -206,13 +206,31 @@ async function loadPortfolioContent() {
     const response = await fetch('portfolio.html');
     const html = await response.text();
     
-    // Extract the main content from portfolio.html
+    // Extract the complete content from portfolio.html (excluding body and html tags)
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
-    const mainContent = doc.querySelector('.pentagram-main');
     
-    if (mainContent) {
-        return mainContent.innerHTML;
+    // Get the navigation, hero, and main content
+    const nav = doc.querySelector('.pentagram-nav');
+    const hero = doc.querySelector('.pentagram-hero');
+    const main = doc.querySelector('.pentagram-main');
+    
+    let htmlContent = '';
+    
+    if (nav) {
+        htmlContent += nav.outerHTML;
+    }
+    
+    if (hero) {
+        htmlContent += hero.outerHTML;
+    }
+    
+    if (main) {
+        htmlContent += main.outerHTML;
+    }
+    
+    if (htmlContent) {
+        return htmlContent;
     } else {
         return '<h1>Portfolio</h1><p>Portfolio content could not be loaded.</p>';
     }
@@ -303,7 +321,159 @@ function initializeSheetContent() {
             }
         });
     });
+    
+    // If portfolio content is loaded, populate the projects grid
+    const projectsGrid = document.getElementById('projectsGrid');
+    if (projectsGrid) {
+        renderPortfolioProjects();
+    }
 }
+
+// Portfolio functionality for bottom sheet
+function renderPortfolioProjects() {
+    // Project data with specified titles and order
+    const projects = [
+        {
+            id: 1,
+            title: "PhonePe",
+            description: "Designing India's leading digital payment platform with intuitive user interfaces.",
+            image: "phonepe",
+            discipline: "digital-experiences",
+            sector: "finance",
+            tags: ["Payment", "Mobile App", "Fintech"],
+            year: "2024"
+        },
+        {
+            id: 2,
+            title: "Google Pay",
+            description: "Redesigning the future of digital payments with a focus on accessibility and user experience.",
+            image: "googlepay",
+            discipline: "digital-experiences",
+            sector: "finance",
+            tags: ["UX Design", "Mobile App", "Fintech"],
+            year: "2024"
+        },
+        {
+            id: 3,
+            title: "Dunzo",
+            description: "Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.",
+            image: "dunzo",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["UI Design", "Logistics", "Mobile"],
+            year: "2024"
+        },
+        {
+            id: 4,
+            title: "Eureka Forbes",
+            description: "Modernizing a legacy brand with contemporary visual identity and digital presence.",
+            image: "eurekaforbes",
+            discipline: "brand-identity",
+            sector: "consumer-brands",
+            tags: ["Brand Identity", "Digital", "Consumer"],
+            year: "2023"
+        },
+        {
+            id: 5,
+            title: "Porter",
+            description: "Creating seamless logistics solutions with innovative design and user-centric experiences.",
+            image: "porter",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["Logistics", "Platform Design", "B2B"],
+            year: "2023"
+        }
+    ];
+
+    const visualProjects = [
+        {
+            id: 6,
+            title: "Obvious New Website",
+            description: "Redesigning the digital presence with modern aesthetics and improved user experience.",
+            image: "obvious",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["Web Design", "Brand Identity", "Digital"],
+            year: "2024"
+        },
+        {
+            id: 7,
+            title: "Ekana Club",
+            description: "Building a premium lifestyle platform with sophisticated design and curated experiences.",
+            image: "ekanaclub",
+            discipline: "brand-identity",
+            sector: "fashion-beauty",
+            tags: ["Luxury", "Brand Identity", "Lifestyle"],
+            year: "2023"
+        }
+    ];
+
+    const grid = document.getElementById('projectsGrid');
+    
+    // Render main projects
+    const mainProjectsHTML = projects.map(project => createProjectCard(project)).join('');
+    
+    // Create divider section
+    const dividerHTML = `
+        <div class="projects-divider">
+            <h2 class="divider-title">Some Visual Projects</h2>
+        </div>
+    `;
+    
+    // Render visual projects
+    const visualProjectsHTML = visualProjects.map(project => createProjectCard(project)).join('');
+    
+    // Combine all HTML
+    grid.innerHTML = mainProjectsHTML + dividerHTML + visualProjectsHTML;
+    
+    // Setup project cards after rendering
+    setTimeout(() => {
+        setupPortfolioProjectCards(projects, visualProjects);
+    }, 100);
+}
+
+function createProjectCard(project) {
+    return `
+        <div class="project-card" data-project-id="${project.id}">
+            <div class="project-image">
+                ${project.image ? `<img src="images/projects/${project.image}.jpg" alt="${project.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='${project.title.toUpperCase()}';">` : project.title.toUpperCase()}
+            </div>
+            <h3 class="project-title">${project.title}</h3>
+            <p class="project-description">${project.description}</p>
+            <div class="project-tags">
+                ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+            </div>
+            <div class="project-meta">
+                <span>${project.discipline.replace('-', ' ')}</span>
+                <span>${project.year}</span>
+            </div>
+        </div>
+    `;
+}
+
+function setupPortfolioProjectCards(projects, visualProjects) {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const projectId = this.getAttribute('data-project-id');
+            const allProjects = [...projects, ...visualProjects];
+            const project = allProjects.find(p => p.id == projectId);
+            
+            if (project) {
+                // Navigate to specific project within the sheet
+                const projectName = getProjectNameById(projectId);
+                if (projectName) {
+                    addToHistory(projectName);
+                    loadSheetContent(projectName);
+                    updateNavigationButtons();
+                }
+            }
+        });
+    });
+}
+
+
 
 function getProjectNameById(projectId) {
     const projectMap = {
