@@ -148,48 +148,39 @@ function initTimeTracker() {
     });
 }
 
-// Simple Bottom Sheet Navigation
+// Bottom Sheet Navigation System
 let isSheetOpen = false;
+let navigationHistory = [];
+let currentHistoryIndex = -1;
 
 function initBottomSheetNavigation() {
     const overlay = document.getElementById('bottomSheetOverlay');
+    const sheet = document.getElementById('bottomSheet');
     const closeBtn = document.getElementById('sheetCloseBtn');
     const backBtn = document.getElementById('sheetBackBtn');
+    const content = document.getElementById('sheetContent');
     
     // Sheet links
-    const sheetLinks = document.querySelectorAll('[data-sheet]');
-    sheetLinks.forEach(link => {
+    document.querySelectorAll('[data-sheet]').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            const sheetName = this.getAttribute('data-sheet');
-            openSheet(sheetName);
+            openSheet(this.getAttribute('data-sheet'));
         });
     });
     
-    // Close button
     closeBtn.addEventListener('click', closeSheet);
-    
-    // Back button (always closes sheet for simplicity)
-    backBtn.addEventListener('click', closeSheet);
-    
-    // Overlay click to close
+    backBtn.addEventListener('click', navigateBack);
     overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) {
-            closeSheet();
-        }
+        if (e.target === overlay) closeSheet();
     });
     
-    // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
         if (!isSheetOpen) return;
-        
-        if (e.key === 'Escape' || e.key === 'ArrowLeft') {
-            closeSheet();
-        }
+        if (e.key === 'Escape') closeSheet();
+        if (e.key === 'ArrowLeft') navigateBack();
     });
     
     // Touch gestures for mobile
-    const sheet = document.getElementById('bottomSheet');
     let startY = 0;
     let currentY = 0;
     
@@ -221,6 +212,9 @@ function openSheet(sheetName) {
     const overlay = document.getElementById('bottomSheetOverlay');
     const content = document.getElementById('sheetContent');
     const container = document.querySelector('.container');
+    
+    // Add to navigation history
+    addToHistory(sheetName);
     
     // Show loading state
     content.innerHTML = '<div class="loading-spinner"></div>';
@@ -254,11 +248,50 @@ function closeSheet() {
     overlay.classList.remove('active');
     isSheetOpen = false;
     
+    // Clear navigation history
+    navigationHistory = [];
+    currentHistoryIndex = -1;
+    
     // Remove blur from homepage
     if (container) container.style.filter = 'none';
     
     // Reset page title
     document.title = 'Tejasvi Soi - Portfolio';
+}
+
+function addToHistory(sheetName) {
+    // If we're navigating to a new sheet, clear any forward history
+    if (currentHistoryIndex < navigationHistory.length - 1) {
+        navigationHistory = navigationHistory.slice(0, currentHistoryIndex + 1);
+    }
+    
+    // Add new sheet to history
+    navigationHistory.push(sheetName);
+    currentHistoryIndex = navigationHistory.length - 1;
+}
+
+function navigateBack() {
+    if (currentHistoryIndex > 0) {
+        // Go back to previous sheet in history
+        currentHistoryIndex--;
+        const previousSheet = navigationHistory[currentHistoryIndex];
+        
+        const content = document.getElementById('sheetContent');
+        content.innerHTML = '<div class="loading-spinner"></div>';
+        content.classList.add('loading');
+        
+        loadSheetContent(previousSheet).then(() => {
+            content.classList.remove('loading');
+            document.title = `${getSheetTitle(previousSheet)} - Tejasvi Soi`;
+        }).catch(error => {
+            console.error('Error loading previous sheet:', error);
+            content.innerHTML = '<p>Error loading content. Please try again.</p>';
+            content.classList.remove('loading');
+        });
+    } else {
+        // If no more history, close the sheet
+        closeSheet();
+    }
 }
 
 async function loadSheetContent(sheetName) {
