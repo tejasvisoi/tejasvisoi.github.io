@@ -177,32 +177,32 @@ body {
 
 /* Different image heights for irregular grid - updated for new order */
 .project-card:nth-child(1) .project-image {
-    height: 480px;
+    height: 336px; /* 70% of 480px */
 }
 
 .project-card:nth-child(2) .project-image {
-    height: 420px;
+    height: 560px; /* Increased for more contrast */
 }
 
 .project-card:nth-child(3) .project-image {
-    height: 500px;
+    height: 420px; /* Reduced for variety */
 }
 
 .project-card:nth-child(4) .project-image {
-    height: 380px;
+    height: 600px; /* Increased for more contrast */
 }
 
 .project-card:nth-child(5) .project-image {
-    height: 450px;
+    height: 380px; /* Reduced for variety */
 }
 
 /* Visual projects after divider */
 .project-card:nth-child(7) .project-image {
-    height: 520px;
+    height: 520px; /* Large for impact */
 }
 
 .project-card:nth-child(8) .project-image {
-    height: 360px;
+    height: 320px; /* Small for contrast */
 }
 
 .project-image {
