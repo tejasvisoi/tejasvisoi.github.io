@@ -89,20 +89,26 @@ function initTimeTracker() {
         const catSprite = catContainer.querySelector('.cat-sprite');
         if (!catSprite) return;
         
-        // Position cat below visit tracker
+        // Position cat below visit tracker and start off-screen
         const visitTrackerRect = visitTracker.getBoundingClientRect();
         catContainer.style.top = (visitTrackerRect.bottom + 10) + 'px';
+        catContainer.style.left = '0px';
+        
+        // Start cat completely off-screen and invisible
+        gsap.set(catContainer, { 
+            x: window.innerWidth, 
+            opacity: 0 
+        });
         
         function walkAnimation() {
             const screenWidth = window.innerWidth;
             const catWidth = 60;
             const animationDuration = screenWidth >= 1440 ? 180 : 60; // 3 min on large screens, 1 min on others
             
-            // Always start from the right side
+            // Start from right side and make visible
             gsap.set(catContainer, { 
                 x: screenWidth, 
-                opacity: 1,
-                clearProps: "x" // Clear any previous transforms
+                opacity: 1 
             });
             gsap.set(catSprite, { scaleX: -1 });
             

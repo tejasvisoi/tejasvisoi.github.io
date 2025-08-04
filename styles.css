@@ -529,6 +529,7 @@ body {
     top: 10px;
     left: 0;
     opacity: 0;
+    transform: translateX(100vw);
 }
 
 .cat-sprite {
