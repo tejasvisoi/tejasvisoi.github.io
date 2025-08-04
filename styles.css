@@ -136,7 +136,7 @@ body {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     margin-bottom: 4rem;
 }
@@ -184,16 +184,26 @@ body {
     height: 560px; /* Increased for more contrast */
 }
 
-.project-card:nth-child(3) .project-image {
-    height: 420px; /* Reduced for variety */
+/* 1x3 grid for Dunzo, Eureka Forbes, Porter */
+.project-card:nth-child(3) {
+    grid-column: 1;
+    grid-row: 3;
 }
 
-.project-card:nth-child(4) .project-image {
-    height: 600px; /* Increased for more contrast */
+.project-card:nth-child(4) {
+    grid-column: 2;
+    grid-row: 3;
 }
 
+.project-card:nth-child(5) {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.project-card:nth-child(3) .project-image,
+.project-card:nth-child(4) .project-image,
 .project-card:nth-child(5) .project-image {
-    height: 380px; /* Reduced for variety */
+    height: 400px; /* Same size for all three */
 }
 
 /* Visual projects after divider */
@@ -677,7 +687,7 @@ body {
 
 @media (min-width: 1025px) {
     .projects-grid {
-        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 2.5rem;
     }
 }
@@ -892,6 +902,14 @@ body {
     .projects-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+    
+    /* Reset grid positioning on mobile */
+    .project-card:nth-child(3),
+    .project-card:nth-child(4),
+    .project-card:nth-child(5) {
+        grid-column: 1;
+        grid-row: auto;
     }
     
     .projects-divider {
