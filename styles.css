@@ -541,6 +541,66 @@ body {
 
 /* Responsive Portfolio Styles */
 @media (max-width: 768px) {
+    /* Homepage mobile styles */
+    .container {
+        padding: 20vh 1.5rem 10vh 1.5rem;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    
+    .main-heading {
+        width: 90%;
+        font-size: clamp(3.5rem, 5vw, 6rem);
+        margin-bottom: 2.5rem;
+        white-space: normal;
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+    }
+    
+    .visit-tracker, .line-1, .line-2 {
+        text-align: left;
+    }
+    
+    .content-grid {
+        gap: 2rem;
+    }
+    
+    .grid-row {
+        flex-direction: column;
+        gap: 3rem;
+        align-items: left;
+        max-width: 100%;
+    }
+    
+    .section {
+        align-items: flex-start;
+        text-align: left;
+        max-width: 100%;
+    }
+    
+    .section:first-child {
+        order: 2;
+    }
+    
+    .section:last-child {
+        order: 1;
+    }
+    
+    .social-links {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    .cat-container {
+        width: 50px;
+        height: 50px;
+    }
+    
+    /* Portfolio mobile styles */
     .portfolio-nav {
         padding: 0.75rem 0;
     }
@@ -627,6 +687,45 @@ body {
 }
 
 @media (max-width: 480px) {
+    /* Homepage mobile styles */
+    .container {
+        padding: 20vh 1.5rem 6vh 1.5rem;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    
+    .main-heading {
+        width: 100%;
+        font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+        margin-bottom: 2rem;
+        white-space: normal;
+        text-align: left;
+        margin-left: 0;
+        margin-right: auto;
+    }
+    
+    .visit-tracker, .line-1, .line-2 {
+        text-align: left;
+    }
+    
+    .content-grid {
+        gap: 1.5rem;
+    }
+    
+    .grid-row {
+        gap: 5rem;
+    }
+    
+    .social-links {
+        gap: 1rem;
+    }
+    
+    .cat-container {
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Portfolio mobile styles */
     .portfolio-header {
         padding: 80px 1rem 30px 1rem;
     }
@@ -662,7 +761,6 @@ body {
     
     .project-image {
         height: 180px;
-        font-size: 12px;
     }
     
     .project-title {
