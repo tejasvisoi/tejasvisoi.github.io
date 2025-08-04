@@ -1,6 +1,6 @@
-# Tejasvi Soi - Portfolio Website & Dashboard
+# Tejasvi Soi - Portfolio Website
 
-A modern, responsive portfolio website with a desktop dashboard for easy management.
+A modern, responsive portfolio website showcasing my work and projects.
 
 ## 🚀 Features
 
@@ -8,30 +8,24 @@ A modern, responsive portfolio website with a desktop dashboard for easy managem
 - **Responsive**: Works perfectly on desktop, tablet, and mobile
 - **Interactive Elements**: Custom cursor, time tracking, animations
 - **Fast Loading**: Optimized for performance
-- **Desktop Dashboard**: Native macOS app for portfolio management
+- **Pentagram-Inspired Layout**: Professional portfolio grid layout
 
 ## 📁 Project Structure
 
 ```
 tejasvisoi.github.io/
 ├── index.html              # Main landing page
-├── portfolio.html          # Full portfolio showcase
+├── portfolio.html          # Full portfolio showcase (Pentagram-inspired)
 ├── googlepay.html          # Google Pay project page
 ├── dunzo.html             # Dunzo project page
 ├── eurekaforbes.html      # Eureka Forbes project page
+├── explore.html           # Explore project page
 ├── styles.css             # All styling and responsive design
 ├── script.js              # Interactive features and animations
+├── data.json              # Portfolio data
 ├── images/                # Image assets
 ├── projects/              # Project assets
 ├── templates/             # Template files
-├── package.json           # Desktop app dependencies
-├── main.js               # Electron main process
-├── preload.js            # Electron preload script
-├── dashboard.html        # Dashboard UI
-├── dashboard.css         # Dashboard styling
-├── dashboard.js          # Dashboard functionality
-├── assets/               # App assets
-├── BUILD-INSTRUCTIONS.md # Build guide for desktop app
 └── README.md             # This file
 ```
 
@@ -57,39 +51,6 @@ npx serve .
 php -S localhost:8000
 ```
 
-## 💻 Desktop Dashboard
-
-The project includes a native macOS desktop application that provides:
-
-### **Dashboard Features:**
-- **Real-time GitHub Data**: Fetches data from your repositories
-- **Portfolio Overview**: Shows stars, forks, commits from your portfolio repo
-- **Admin Console**: Displays data from your adminconsole repository
-- **Quick Actions**: Direct links to GitHub repos, website, and email
-- **System Info**: Shows app version, Node.js version, platform info
-- **Auto-refresh**: Automatically updates data every 5 minutes
-- **Settings**: Configure GitHub token and refresh intervals
-
-### **Build the Desktop App:**
-```bash
-# Install dependencies
-npm install
-
-# Run in development mode
-npm start
-
-# Build for macOS
-npm run build:mac
-
-# Create DMG installer
-npm run build:dmg
-
-# Build everything at once
-npm run dist
-```
-
-For detailed build instructions, see [BUILD-INSTRUCTIONS.md](BUILD-INSTRUCTIONS.md).
-
 ## 🎨 Customization
 
 ### Website Content Updates
@@ -97,16 +58,13 @@ For detailed build instructions, see [BUILD-INSTRUCTIONS.md](BUILD-INSTRUCTIONS.
 - Modify project pages (googlepay.html, dunzo.html, etc.)
 - Update `styles.css` for design changes
 - Edit `script.js` for interactive features
+- Update `data.json` for portfolio data
 
 ### Adding New Projects
 1. Create a new HTML file for your project (e.g., `newproject.html`)
 2. Add a link to it in the "Past" section of `index.html`
-3. Style it consistently with existing pages
-
-### Dashboard Customization
-- Edit `main.js` to change GitHub repository URLs
-- Modify `dashboard.css` for visual design changes
-- Update `package.json` for app information
+3. Add the project to the portfolio grid in `portfolio.html`
+4. Style it consistently with existing pages
 
 ## 🚀 Deployment
 
@@ -121,11 +79,6 @@ To use a custom domain:
 2. Configure DNS settings
 3. Update GitHub Pages settings
 
-### Desktop App Distribution
-- Build the .dmg installer using `npm run build:dmg`
-- Share the .dmg file for easy installation
-- Upload to your website for download
-
 ## 📱 Responsive Design
 
 The website is fully responsive with breakpoints:
@@ -139,7 +92,6 @@ The website is fully responsive with breakpoints:
 - **HTML**: Static pages with semantic markup
 - **CSS**: Modular styling with CSS Grid and Flexbox
 - **JavaScript**: Vanilla JS with modern ES6+ features
-- **Electron**: Desktop app framework for cross-platform development
 
 ### Browser Support
 - Chrome 60+
@@ -153,7 +105,6 @@ The website is fully responsive with breakpoints:
 - **Minified CSS**: Optimized stylesheets
 - **CDN**: Fonts and libraries served via CDN
 - **Fast Loading**: Minimal dependencies
-- **Caching**: Desktop app caches data for performance
 
 ## 🤝 Contributing
 
