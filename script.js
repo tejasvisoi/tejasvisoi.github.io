@@ -283,6 +283,15 @@ async function loadSheetContent(sheetName) {
             case 'eurekaforbes':
                 htmlContent = await loadProjectContent('eurekaforbes');
                 break;
+            case 'phonepe':
+                htmlContent = await loadProjectContent('phonepe');
+                break;
+            case 'obvious':
+                htmlContent = await loadProjectContent('obvious');
+                break;
+            case 'ekanaclub':
+                htmlContent = await loadProjectContent('ekanaclub');
+                break;
             default:
                 htmlContent = '<h1>Page Not Found</h1><p>The requested page could not be found.</p>';
         }
@@ -353,7 +362,10 @@ function getSheetTitle(sheetName) {
         'googlepay': 'Google Pay',
         'dunzo': 'Dunzo',
         'porter': 'Porter',
-        'eurekaforbes': 'Eureka Forbes'
+        'eurekaforbes': 'Eureka Forbes',
+        'phonepe': 'PhonePe',
+        'obvious': 'Obvious New Website',
+        'ekanaclub': 'Ekana Club'
     };
     
     return titles[sheetName] || 'Project';
@@ -371,7 +383,8 @@ function renderPortfolioProjects() {
             discipline: "digital-experiences",
             sector: "finance",
             tags: ["Payment", "Mobile App", "Fintech"],
-            year: "2024"
+            year: "2024",
+            sheetName: "phonepe"
         },
         {
             id: 2,
@@ -381,7 +394,8 @@ function renderPortfolioProjects() {
             discipline: "digital-experiences",
             sector: "finance",
             tags: ["UX Design", "Mobile App", "Fintech"],
-            year: "2024"
+            year: "2024",
+            sheetName: "googlepay"
         },
         {
             id: 3,
@@ -391,7 +405,8 @@ function renderPortfolioProjects() {
             discipline: "digital-experiences",
             sector: "technology",
             tags: ["UI Design", "Logistics", "Mobile"],
-            year: "2024"
+            year: "2024",
+            sheetName: "dunzo"
         },
         {
             id: 4,
@@ -401,7 +416,8 @@ function renderPortfolioProjects() {
             discipline: "brand-identity",
             sector: "consumer-brands",
             tags: ["Brand Identity", "Digital", "Consumer"],
-            year: "2023"
+            year: "2023",
+            sheetName: "eurekaforbes"
         },
         {
             id: 5,
@@ -411,7 +427,8 @@ function renderPortfolioProjects() {
             discipline: "digital-experiences",
             sector: "technology",
             tags: ["Logistics", "Platform Design", "B2B"],
-            year: "2023"
+            year: "2023",
+            sheetName: "porter"
         }
     ];
 
@@ -424,7 +441,8 @@ function renderPortfolioProjects() {
             discipline: "digital-experiences",
             sector: "technology",
             tags: ["Web Design", "Brand Identity", "Digital"],
-            year: "2024"
+            year: "2024",
+            sheetName: "obvious"
         },
         {
             id: 7,
@@ -434,7 +452,8 @@ function renderPortfolioProjects() {
             discipline: "brand-identity",
             sector: "fashion-beauty",
             tags: ["Luxury", "Brand Identity", "Lifestyle"],
-            year: "2023"
+            year: "2023",
+            sheetName: "ekanaclub"
         }
     ];
 
@@ -455,6 +474,23 @@ function renderPortfolioProjects() {
     
     // Combine all HTML
     grid.innerHTML = mainProjectsHTML + dividerHTML + visualProjectsHTML;
+    
+    // Add click handlers to project cards
+    setTimeout(() => {
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const projectId = this.getAttribute('data-project-id');
+                const allProjects = [...projects, ...visualProjects];
+                const project = allProjects.find(p => p.id == projectId);
+                
+                if (project && project.sheetName) {
+                    // Open the same project sheet as homepage links
+                    openSheet(project.sheetName);
+                }
+            });
+        });
+    }, 100);
 }
 
 function createProjectCard(project) {
