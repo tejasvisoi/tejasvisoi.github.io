@@ -325,7 +325,7 @@ body {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    padding: 30vh 2rem 10vh 2rem;
+    padding: 20vh 2rem 10vh 2rem;
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
