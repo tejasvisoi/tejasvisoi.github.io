@@ -148,17 +148,13 @@ function initTimeTracker() {
     });
 }
 
-// Bottom Sheet Navigation System
-let navigationHistory = [];
-let currentHistoryIndex = -1;
+// Simple Bottom Sheet Navigation
 let isSheetOpen = false;
 
 function initBottomSheetNavigation() {
     const overlay = document.getElementById('bottomSheetOverlay');
-    const sheet = document.getElementById('bottomSheet');
     const closeBtn = document.getElementById('sheetCloseBtn');
     const backBtn = document.getElementById('sheetBackBtn');
-    const content = document.getElementById('sheetContent');
     
     // Sheet links
     const sheetLinks = document.querySelectorAll('[data-sheet]');
@@ -173,14 +169,8 @@ function initBottomSheetNavigation() {
     // Close button
     closeBtn.addEventListener('click', closeSheet);
     
-    // Back button
-    backBtn.addEventListener('click', function() {
-        if (navigationHistory.length > 1) {
-            navigateBack();
-        } else {
-            closeSheet();
-        }
-    });
+    // Back button (always closes sheet for simplicity)
+    backBtn.addEventListener('click', closeSheet);
     
     // Overlay click to close
     overlay.addEventListener('click', function(e) {
@@ -193,18 +183,13 @@ function initBottomSheetNavigation() {
     document.addEventListener('keydown', function(e) {
         if (!isSheetOpen) return;
         
-        if (e.key === 'Escape') {
+        if (e.key === 'Escape' || e.key === 'ArrowLeft') {
             closeSheet();
-        } else if (e.key === 'ArrowLeft') {
-            if (navigationHistory.length > 1) {
-                navigateBack();
-            } else {
-                closeSheet();
-            }
         }
     });
     
     // Touch gestures for mobile
+    const sheet = document.getElementById('bottomSheet');
     let startY = 0;
     let currentY = 0;
     
@@ -241,20 +226,14 @@ function openSheet(sheetName) {
     content.innerHTML = '<div class="loading-spinner"></div>';
     content.classList.add('loading');
     
-    // Add to navigation history
-    addToHistory(sheetName);
-    
     // Load content
     loadSheetContent(sheetName).then(() => {
         // Show sheet with animation
         overlay.classList.add('active');
         isSheetOpen = true;
         
-        // Blur the homepage (but not the cursor)
+        // Blur the homepage
         if (container) container.style.filter = 'blur(3px)';
-        
-        // Update navigation buttons
-        updateNavigationButtons();
         
         // Remove loading state
         content.classList.remove('loading');
@@ -280,13 +259,6 @@ function closeSheet() {
     
     // Reset page title
     document.title = 'Tejasvi Soi - Portfolio';
-    
-    // Clear navigation history when closing
-    setTimeout(() => {
-        navigationHistory = [];
-        currentHistoryIndex = -1;
-        updateNavigationButtons();
-    }, 400);
 }
 
 async function loadSheetContent(sheetName) {
@@ -317,8 +289,11 @@ async function loadSheetContent(sheetName) {
         
         content.innerHTML = htmlContent;
         
-        // Initialize any interactive elements in the loaded content
-        initializeSheetContent();
+        // Initialize portfolio content if needed
+        const projectsGrid = document.getElementById('projectsGrid');
+        if (projectsGrid) {
+            renderPortfolioProjects();
+        }
         
     } catch (error) {
         throw error;
@@ -382,62 +357,6 @@ function getSheetTitle(sheetName) {
     };
     
     return titles[sheetName] || 'Project';
-}
-
-function addToHistory(sheetName) {
-    // Remove any future history if navigating back and then to a new page
-    if (currentHistoryIndex < navigationHistory.length - 1) {
-        navigationHistory = navigationHistory.slice(0, currentHistoryIndex + 1);
-    }
-    
-    navigationHistory.push(sheetName);
-    currentHistoryIndex = navigationHistory.length - 1;
-}
-
-function navigateBack() {
-    if (currentHistoryIndex > 0) {
-        currentHistoryIndex--;
-        const sheetName = navigationHistory[currentHistoryIndex];
-        loadSheetContent(sheetName);
-        document.title = `${getSheetTitle(sheetName)} - Tejasvi Soi`;
-    }
-}
-
-function updateNavigationButtons() {
-    const backBtn = document.getElementById('sheetBackBtn');
-    
-    // Show/hide back button based on history
-    if (navigationHistory.length > 1) {
-        backBtn.style.display = 'flex';
-    } else {
-        backBtn.style.display = 'none';
-    }
-}
-
-function initializeSheetContent() {
-    // Initialize any interactive elements in the loaded content
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const projectId = this.getAttribute('data-project-id');
-            if (projectId) {
-                // Navigate to specific project within the sheet
-                const projectName = getProjectNameById(projectId);
-                if (projectName) {
-                    addToHistory(projectName);
-                    loadSheetContent(projectName);
-                    updateNavigationButtons();
-                }
-            }
-        });
-    });
-    
-    // If portfolio content is loaded, populate the projects grid
-    const projectsGrid = document.getElementById('projectsGrid');
-    if (projectsGrid) {
-        renderPortfolioProjects();
-    }
 }
 
 // Portfolio functionality for bottom sheet
@@ -536,11 +455,6 @@ function renderPortfolioProjects() {
     
     // Combine all HTML
     grid.innerHTML = mainProjectsHTML + dividerHTML + visualProjectsHTML;
-    
-    // Setup project cards after rendering
-    setTimeout(() => {
-        setupPortfolioProjectCards(projects, visualProjects);
-    }, 100);
 }
 
 function createProjectCard(project) {
@@ -562,44 +476,6 @@ function createProjectCard(project) {
     `;
 }
 
-function setupPortfolioProjectCards(projects, visualProjects) {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const projectId = this.getAttribute('data-project-id');
-            const allProjects = [...projects, ...visualProjects];
-            const project = allProjects.find(p => p.id == projectId);
-            
-            if (project) {
-                // Navigate to specific project within the sheet
-                const projectName = getProjectNameById(projectId);
-                if (projectName) {
-                    addToHistory(projectName);
-                    loadSheetContent(projectName);
-                    updateNavigationButtons();
-                }
-            }
-        });
-    });
-}
-
-
-
-function getProjectNameById(projectId) {
-    const projectMap = {
-        '1': 'phonepe',
-        '2': 'googlepay',
-        '3': 'dunzo',
-        '4': 'eurekaforbes',
-        '5': 'porter',
-        '6': 'obvious',
-        '7': 'ekanaclub'
-    };
-    
-    return projectMap[projectId];
-}
-
 // Custom Cursor
 function setupCustomCursor() {
     const cursor = document.querySelector('.custom-cursor');
@@ -612,7 +488,7 @@ function setupCustomCursor() {
     });
     
     // Add hover effects for interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, .project-card, .nav-link');
+    const interactiveElements = document.querySelectorAll('a, button, .nav-link');
     
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', function() {
