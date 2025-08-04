@@ -1,71 +1,113 @@
 // Portfolio Page JavaScript
 document.addEventListener('DOMContentLoaded', function() {
-    let projects = [];
+    // Project data with specified titles
+    const projects = [
+        {
+            id: 1,
+            title: "Dunzo",
+            description: "Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.",
+            image: "dunzo",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["UI Design", "Logistics", "Mobile"],
+            year: "2024"
+        },
+        {
+            id: 2,
+            title: "Eureka Forbes",
+            description: "Modernizing a legacy brand with contemporary visual identity and digital presence.",
+            image: "eurekaforbes",
+            discipline: "brand-identity",
+            sector: "consumer-brands",
+            tags: ["Brand Identity", "Digital", "Consumer"],
+            year: "2023"
+        },
+        {
+            id: 3,
+            title: "Google Pay",
+            description: "Redesigning the future of digital payments with a focus on accessibility and user experience.",
+            image: "googlepay",
+            discipline: "digital-experiences",
+            sector: "finance",
+            tags: ["UX Design", "Mobile App", "Fintech"],
+            year: "2024"
+        },
+        {
+            id: 4,
+            title: "Porter",
+            description: "Creating seamless logistics solutions with innovative design and user-centric experiences.",
+            image: "porter",
+            discipline: "digital-experiences",
+            sector: "technology",
+            tags: ["Logistics", "Platform Design", "B2B"],
+            year: "2023"
+        },
+        {
+            id: 5,
+            title: "PhonePe",
+            description: "Designing India's leading digital payment platform with intuitive user interfaces.",
+            image: "phonepe",
+            discipline: "digital-experiences",
+            sector: "finance",
+            tags: ["Payment", "Mobile App", "Fintech"],
+            year: "2024"
+        },
+        {
+            id: 6,
+            title: "Ekana Club",
+            description: "Building a premium lifestyle platform with sophisticated design and curated experiences.",
+            image: "ekanaclub",
+            discipline: "brand-identity",
+            sector: "fashion-beauty",
+            tags: ["Luxury", "Brand Identity", "Lifestyle"],
+            year: "2023"
+        },
+        {
+            id: 7,
+            title: "Financial Dashboard",
+            description: "Designing intuitive data visualization for complex financial information.",
+            image: "finance",
+            discipline: "digital-experiences",
+            sector: "finance",
+            tags: ["Data Viz", "Dashboard", "Fintech"],
+            year: "2024"
+        },
+        {
+            id: 8,
+            title: "Food Delivery App",
+            description: "Streamlining the food ordering experience with elegant interface design.",
+            image: "food",
+            discipline: "digital-experiences",
+            sector: "food-drink",
+            tags: ["Mobile App", "UX Design", "Food Tech"],
+            year: "2023"
+        },
+        {
+            id: 9,
+            title: "Luxury Brand Identity",
+            description: "Crafting sophisticated visual identity for premium lifestyle brands.",
+            image: "luxury",
+            discipline: "brand-identity",
+            sector: "fashion-beauty",
+            tags: ["Brand Identity", "Luxury", "Typography"],
+            year: "2024"
+        },
+        {
+            id: 10,
+            title: "Tech Conference",
+            description: "Designing immersive event experiences for technology conferences.",
+            image: "conference",
+            discipline: "campaigns",
+            sector: "entertainment",
+            tags: ["Event Design", "Digital", "Experience"],
+            year: "2023"
+        }
+    ];
+
     let currentFilter = 'all';
     let currentSector = 'all';
     let displayedProjects = 8;
     const projectsPerLoad = 4;
-
-    // Load project data from data.json
-    async function loadProjectData() {
-        try {
-            const response = await fetch('data.json');
-            const data = await response.json();
-            projects = data.portfolio.projects || [];
-            init();
-        } catch (error) {
-            console.error('Error loading project data:', error);
-            // Fallback to sample data if loading fails
-            projects = getSampleProjects();
-            init();
-        }
-    }
-
-    // Sample project data as fallback
-    function getSampleProjects() {
-        return [
-            {
-                id: 1,
-                title: "Google Pay",
-                description: "Redesigning the future of digital payments with a focus on accessibility and user experience.",
-                image: "googlepay",
-                discipline: "digital",
-                sector: "technology",
-                tags: ["UX Design", "Mobile App", "Fintech"],
-                year: "2024"
-            },
-            {
-                id: 2,
-                title: "Dunzo",
-                description: "Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.",
-                image: "dunzo",
-                discipline: "digital",
-                sector: "technology",
-                tags: ["UI Design", "Logistics", "Mobile"],
-                year: "2023"
-            },
-            {
-                id: 3,
-                title: "Eureka Forbes",
-                description: "Modernizing a legacy brand with contemporary visual identity and digital presence.",
-                image: "eurekaforbes",
-                discipline: "branding",
-                sector: "fashion",
-                tags: ["Brand Identity", "Digital", "Consumer"],
-                year: "2023"
-            },
-            {
-                id: 4,
-                title: "Explore",
-                description: "Creating immersive digital experiences that connect people with new possibilities.",
-                image: "explore",
-                discipline: "digital",
-                sector: "technology",
-                tags: ["Digital Experience", "Innovation", "Platform"],
-                year: "2024"
-            }
-        ];
-    }
 
     // Initialize the page
     function init() {
@@ -117,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
                 </div>
                 <div class="project-meta">
-                    <span>${project.discipline}</span>
+                    <span>${project.discipline.replace('-', ' ')}</span>
                     <span>${project.year}</span>
                 </div>
             </div>
@@ -131,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const filterValue = this.getAttribute('data-filter');
-                const filterGroup = this.closest('.filter-group');
+                const filterGroup = this.closest('.filter-column');
                 
                 // Remove active class from all buttons in this group
                 filterGroup.querySelectorAll('.filter-btn').forEach(btn => {
@@ -175,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Add hover effects for interactive elements
-        const interactiveElements = document.querySelectorAll('.project-card, .filter-btn, .load-more-btn, .nav-back');
+        const interactiveElements = document.querySelectorAll('.project-card, .filter-btn, .load-more-btn, .nav-link, .see-all-news');
         
         interactiveElements.forEach(element => {
             element.addEventListener('mouseenter', function() {
@@ -199,14 +241,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 const projectId = this.getAttribute('data-project-id');
                 const project = projects.find(p => p.id == projectId);
                 
-                if (project && project.url && project.url !== '#') {
-                    // Navigate to project detail page
-                    window.location.href = project.url;
+                if (project) {
+                    // Navigate to project detail page or show modal
+                    const projectUrl = `${project.title.toLowerCase().replace(/\s+/g, '')}.html`;
+                    window.location.href = projectUrl;
                 }
             });
         });
     }
 
-    // Load project data and initialize
-    loadProjectData();
+    // Initialize the page
+    init();
 }); 

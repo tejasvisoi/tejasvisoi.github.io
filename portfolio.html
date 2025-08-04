@@ -15,60 +15,114 @@
     <div class="custom-cursor"></div>
     
     <!-- Navigation -->
-    <nav class="portfolio-nav">
+    <nav class="pentagram-nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-back">← Back to Home</a>
-            <div class="nav-title">Work</div>
+            <div class="nav-left">
+                <a href="index.html" class="nav-logo">Tejasvi Soi</a>
+            </div>
+            <div class="nav-center">
+                <a href="portfolio.html" class="nav-link active">Work</a>
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link">News</a>
+                <a href="#" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="nav-link">Archive</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Header -->
-    <header class="portfolio-header">
-        <div class="header-container">
-            <h1 class="portfolio-title">We design everything for everyone</h1>
-            <div class="portfolio-subtitle">Showing the latest projects</div>
+    <!-- Hero Section -->
+    <header class="pentagram-hero">
+        <div class="hero-container">
+            <h1 class="hero-title">We design everything for everyone</h1>
+            <div class="hero-subtitle">Showing the latest projects</div>
         </div>
     </header>
 
-    <!-- Filters -->
-    <section class="portfolio-filters">
+    <!-- Filters Section -->
+    <section class="pentagram-filters">
         <div class="filters-container">
-            <div class="filter-group">
+            <div class="filter-column">
                 <h3 class="filter-title">Discipline</h3>
                 <div class="filter-options">
                     <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="branding">Brand Identity</button>
-                    <button class="filter-btn" data-filter="digital">Digital Experiences</button>
+                    <button class="filter-btn" data-filter="brand-identity">Brand Identity</button>
+                    <button class="filter-btn" data-filter="digital-experiences">Digital Experiences</button>
                     <button class="filter-btn" data-filter="packaging">Packaging</button>
                     <button class="filter-btn" data-filter="typography">Typography</button>
+                    <button class="filter-btn" data-filter="campaigns">Campaigns</button>
+                    <button class="filter-btn" data-filter="publications">Publications</button>
                 </div>
             </div>
-            <div class="filter-group">
+            <div class="filter-column">
                 <h3 class="filter-title">Sector</h3>
                 <div class="filter-options">
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="technology">Technology</button>
                     <button class="filter-btn" data-filter="finance">Finance</button>
-                    <button class="filter-btn" data-filter="fashion">Fashion & Beauty</button>
-                    <button class="filter-btn" data-filter="food">Food & Drink</button>
+                    <button class="filter-btn" data-filter="fashion-beauty">Fashion & Beauty</button>
+                    <button class="filter-btn" data-filter="food-drink">Food & Drink</button>
+                    <button class="filter-btn" data-filter="consumer-brands">Consumer Brands</button>
+                    <button class="filter-btn" data-filter="entertainment">Entertainment</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Grid -->
-    <main class="portfolio-main">
-        <div class="projects-container">
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Project cards will be populated by JavaScript -->
+    <!-- Main Content -->
+    <main class="pentagram-main">
+        <div class="main-container">
+            <!-- Projects Grid -->
+            <div class="projects-section">
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Project cards will be populated by JavaScript -->
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="load-more-container">
+                    <button class="load-more-btn" id="loadMoreBtn">Load more</button>
+                </div>
             </div>
+
+            <!-- News Sidebar -->
+            <aside class="news-sidebar">
+                <h3 class="news-title">News</h3>
+                <div class="news-items">
+                    <article class="news-item">
+                        <div class="news-meta">
+                            <span class="news-category">Work</span>
+                            <span class="news-date">Aug 04, 2025</span>
+                        </div>
+                        <h4 class="news-headline">Google Pay</h4>
+                        <p class="news-excerpt">Redesigning the future of digital payments with a focus on accessibility and user experience.</p>
+                    </article>
+                    
+                    <article class="news-item">
+                        <div class="news-meta">
+                            <span class="news-category">Work</span>
+                            <span class="news-date">Aug 01, 2025</span>
+                        </div>
+                        <h4 class="news-headline">Dunzo</h4>
+                        <p class="news-excerpt">Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.</p>
+                    </article>
+                    
+                    <article class="news-item">
+                        <div class="news-meta">
+                            <span class="news-category">Event</span>
+                            <span class="news-date">Aug 28, 2025</span>
+                        </div>
+                        <h4 class="news-headline">Design Conference</h4>
+                        <p class="news-excerpt">Speaking at the annual design conference about the future of digital experiences.</p>
+                    </article>
+                </div>
+                
+                <div class="news-link">
+                    <a href="#" class="see-all-news">See all news</a>
+                </div>
+            </aside>
         </div>
     </main>
-
-    <!-- Load More Button -->
-    <div class="load-more-container">
-        <button class="load-more-btn" id="loadMoreBtn">Load more</button>
-    </div>
 
     <script src="portfolio.js"></script>
 </body>
