@@ -17,160 +17,59 @@
     <!-- Navigation -->
     <nav class="portfolio-nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-link">← Back to Home</a>
+            <a href="index.html" class="nav-back">← Back to Home</a>
+            <div class="nav-title">Work</div>
         </div>
     </nav>
-    
-    <!-- Main Content -->
-    <div class="portfolio-container">
-        <header class="portfolio-header">
-            <h1 class="portfolio-title">Work</h1>
-            <p class="portfolio-subtitle">Showing the latest projects</p>
-        </header>
-        
-        <div class="portfolio-grid" id="portfolio-grid">
-            <!-- Portfolio items will be loaded here -->
+
+    <!-- Header -->
+    <header class="portfolio-header">
+        <div class="header-container">
+            <h1 class="portfolio-title">We design everything for everyone</h1>
+            <div class="portfolio-subtitle">Showing the latest projects</div>
         </div>
-    </div>
-    
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="script.js"></script>
-    <script>
-        // Portfolio page specific functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Custom cursor functionality
-            const cursor = document.querySelector('.custom-cursor');
-            if (cursor) {
-                document.addEventListener('mousemove', (e) => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                });
-                
-                // Add hover effects to interactive elements
-                const interactiveElements = document.querySelectorAll('a, .portfolio-item');
-                
-                interactiveElements.forEach(element => {
-                    element.addEventListener('mouseenter', () => {
-                        cursor.style.transform = 'scale(1.5)';
-                    });
-                    
-                    element.addEventListener('mouseleave', () => {
-                        cursor.style.transform = 'scale(1)';
-                    });
-                });
-            }
-            
-            // Load portfolio data
-            loadPortfolioData();
-        });
-        
-        async function loadPortfolioData() {
-            try {
-                const response = await fetch('data.json');
-                const data = await response.json();
-                
-                const portfolioGrid = document.getElementById('portfolio-grid');
-                
-                // Create portfolio items from data
-                const projects = [
-                    {
-                        title: 'Google Pay',
-                        category: 'Finance',
-                        description: 'Working at Google Pay on payment solutions and user experience.',
-                        url: 'googlepay.html',
-                        image: null
-                    },
-                    {
-                        title: 'Dunzo',
-                        category: 'Technology',
-                        description: 'Quick commerce and delivery platform development.',
-                        url: 'dunzo.html',
-                        image: null
-                    },
-                    {
-                        title: 'Eureka Forbes',
-                        category: 'Consumer Brands',
-                        description: 'Home appliances and water purification solutions.',
-                        url: 'eurekaforbes.html',
-                        image: null
-                    },
-                    {
-                        title: 'Explore',
-                        category: 'Technology',
-                        description: 'Exploration and discovery platform.',
-                        url: 'explore.html',
-                        image: null
-                    }
-                ];
-                
-                // Generate portfolio items
-                projects.forEach(project => {
-                    const portfolioItem = createPortfolioItem(project);
-                    portfolioGrid.appendChild(portfolioItem);
-                });
-                
-                // Animate items on load
-                animatePortfolioItems();
-                
-            } catch (error) {
-                console.error('Error loading portfolio data:', error);
-                // Fallback content
-                const portfolioGrid = document.getElementById('portfolio-grid');
-                portfolioGrid.innerHTML = `
-                    <div class="portfolio-item">
-                        <h3>Google Pay</h3>
-                        <p class="category">Finance</p>
-                        <p class="description">Working at Google Pay on payment solutions and user experience.</p>
-                        <a href="googlepay.html" class="project-link">View Project</a>
-                    </div>
-                    <div class="portfolio-item">
-                        <h3>Dunzo</h3>
-                        <p class="category">Technology</p>
-                        <p class="description">Quick commerce and delivery platform development.</p>
-                        <a href="dunzo.html" class="project-link">View Project</a>
-                    </div>
-                    <div class="portfolio-item">
-                        <h3>Eureka Forbes</h3>
-                        <p class="category">Consumer Brands</p>
-                        <p class="description">Home appliances and water purification solutions.</p>
-                        <a href="eurekaforbes.html" class="project-link">View Project</a>
-                    </div>
-                    <div class="portfolio-item">
-                        <h3>Explore</h3>
-                        <p class="category">Technology</p>
-                        <p class="description">Exploration and discovery platform.</p>
-                        <a href="explore.html" class="project-link">View Project</a>
-                    </div>
-                `;
-            }
-        }
-        
-        function createPortfolioItem(project) {
-            const item = document.createElement('div');
-            item.className = 'portfolio-item';
-            item.innerHTML = `
-                <div class="portfolio-item-content">
-                    <h3 class="project-title">${project.title}</h3>
-                    <p class="category">${project.category}</p>
-                    <p class="description">${project.description}</p>
-                    <a href="${project.url}" class="project-link">View Project</a>
+    </header>
+
+    <!-- Filters -->
+    <section class="portfolio-filters">
+        <div class="filters-container">
+            <div class="filter-group">
+                <h3 class="filter-title">Discipline</h3>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="branding">Brand Identity</button>
+                    <button class="filter-btn" data-filter="digital">Digital Experiences</button>
+                    <button class="filter-btn" data-filter="packaging">Packaging</button>
+                    <button class="filter-btn" data-filter="typography">Typography</button>
                 </div>
-            `;
-            return item;
-        }
-        
-        function animatePortfolioItems() {
-            if (typeof gsap !== 'undefined') {
-                gsap.from('.portfolio-item', {
-                    duration: 0.8,
-                    y: 50,
-                    opacity: 0,
-                    stagger: 0.1,
-                    ease: "power2.out"
-                });
-            }
-        }
-    </script>
+            </div>
+            <div class="filter-group">
+                <h3 class="filter-title">Sector</h3>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="technology">Technology</button>
+                    <button class="filter-btn" data-filter="finance">Finance</button>
+                    <button class="filter-btn" data-filter="fashion">Fashion & Beauty</button>
+                    <button class="filter-btn" data-filter="food">Food & Drink</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <main class="portfolio-main">
+        <div class="projects-container">
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Project cards will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Load More Button -->
+    <div class="load-more-container">
+        <button class="load-more-btn" id="loadMoreBtn">Load more</button>
+    </div>
+
+    <script src="portfolio.js"></script>
 </body>
 </html> 

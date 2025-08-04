@@ -1,38 +1,163 @@
 {
   "homepage": {
-    "mainHeading1": "",
-    "mainHeading2": "",
-    "presentWork": [],
-    "socialLinks": [],
-    "pastWork": []
+    "mainHeading1": "Building, breaking,",
+    "mainHeading2": "making things",
+    "presentWork": [
+      {
+        "title": "Product Designer",
+        "company": "Google Pay",
+        "url": "googlepay.html"
+      }
+    ],
+    "socialLinks": [
+      {
+        "platform": "instagram",
+        "url": "https://instagram.com/tejasvisoi",
+        "icon": "📷"
+      },
+      {
+        "platform": "linkedin",
+        "url": "https://linkedin.com/in/tejasvisoi",
+        "icon": "💼"
+      },
+      {
+        "platform": "email",
+        "url": "mailto:hello@tejasvisoi.com",
+        "icon": "✉️"
+      }
+    ],
+    "pastWork": [
+      {
+        "title": "Dunzo",
+        "url": "dunzo.html"
+      },
+      {
+        "title": "Eureka Forbes",
+        "url": "eurekaforbes.html"
+      },
+      {
+        "title": "Explore",
+        "url": "explore.html"
+      }
+    ]
   },
   "portfolio": {
-    "heading1": "",
-    "heading2": "",
-    "content": ""
+    "heading1": "We design everything",
+    "heading2": "for everyone",
+    "content": "A collection of projects showcasing design work across various disciplines and sectors.",
+    "projects": [
+      {
+        "id": 1,
+        "title": "Google Pay",
+        "description": "Redesigning the future of digital payments with a focus on accessibility and user experience.",
+        "image": "googlepay",
+        "discipline": "digital",
+        "sector": "technology",
+        "tags": ["UX Design", "Mobile App", "Fintech"],
+        "year": "2024",
+        "url": "googlepay.html"
+      },
+      {
+        "id": 2,
+        "title": "Dunzo",
+        "description": "Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.",
+        "image": "dunzo",
+        "discipline": "digital",
+        "sector": "technology",
+        "tags": ["UI Design", "Logistics", "Mobile"],
+        "year": "2023",
+        "url": "dunzo.html"
+      },
+      {
+        "id": 3,
+        "title": "Eureka Forbes",
+        "description": "Modernizing a legacy brand with contemporary visual identity and digital presence.",
+        "image": "eurekaforbes",
+        "discipline": "branding",
+        "sector": "fashion",
+        "tags": ["Brand Identity", "Digital", "Consumer"],
+        "year": "2023",
+        "url": "eurekaforbes.html"
+      },
+      {
+        "id": 4,
+        "title": "Explore",
+        "description": "Creating immersive digital experiences that connect people with new possibilities.",
+        "image": "explore",
+        "discipline": "digital",
+        "sector": "technology",
+        "tags": ["Digital Experience", "Innovation", "Platform"],
+        "year": "2024",
+        "url": "explore.html"
+      },
+      {
+        "id": 5,
+        "title": "Financial Dashboard",
+        "description": "Designing intuitive data visualization for complex financial information.",
+        "image": "finance",
+        "discipline": "digital",
+        "sector": "finance",
+        "tags": ["Data Viz", "Dashboard", "Fintech"],
+        "year": "2024",
+        "url": "#"
+      },
+      {
+        "id": 6,
+        "title": "Food Delivery App",
+        "description": "Streamlining the food ordering experience with elegant interface design.",
+        "image": "food",
+        "discipline": "digital",
+        "sector": "food",
+        "tags": ["Mobile App", "UX Design", "Food Tech"],
+        "year": "2023",
+        "url": "#"
+      },
+      {
+        "id": 7,
+        "title": "Luxury Brand Identity",
+        "description": "Crafting sophisticated visual identity for premium lifestyle brands.",
+        "image": "luxury",
+        "discipline": "branding",
+        "sector": "fashion",
+        "tags": ["Brand Identity", "Luxury", "Typography"],
+        "year": "2024",
+        "url": "#"
+      },
+      {
+        "id": 8,
+        "title": "Tech Conference",
+        "description": "Designing immersive event experiences for technology conferences.",
+        "image": "conference",
+        "discipline": "digital",
+        "sector": "technology",
+        "tags": ["Event Design", "Digital", "Experience"],
+        "year": "2023",
+        "url": "#"
+      }
+    ]
   },
   "googlepay": {
-    "heading1": "Working at gpay",
-    "heading2": "",
-    "description": "",
-    "url": ""
+    "heading1": "Google Pay",
+    "heading2": "Digital Payment Experience",
+    "description": "Redesigning the future of digital payments with a focus on accessibility and user experience.",
+    "url": "https://pay.google.com"
   },
   "dunzo": {
-    "heading1": "",
-    "heading2": "",
-    "description": "",
-    "url": ""
+    "heading1": "Dunzo",
+    "heading2": "Last-Mile Delivery",
+    "description": "Revolutionizing last-mile delivery with intuitive interface design and seamless user journeys.",
+    "url": "https://dunzo.in"
   },
   "eurekaforbes": {
-    "heading1": "",
-    "heading2": "",
-    "description": "",
-    "url": ""
+    "heading1": "Eureka Forbes",
+    "heading2": "Brand Modernization",
+    "description": "Modernizing a legacy brand with contemporary visual identity and digital presence.",
+    "url": "https://eurekaforbes.com"
   },
   "explore": {
-    "heading1": "",
-    "heading2": "",
-    "description": "",
-    "url": ""
+    "heading1": "Explore",
+    "heading2": "Digital Experiences",
+    "description": "Creating immersive digital experiences that connect people with new possibilities.",
+    "url": "#"
   }
 }
