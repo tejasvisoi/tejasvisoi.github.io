@@ -520,14 +520,15 @@ body {
 
 /* Cat Animation */
 .cat-container {
-    position: absolute;
+    position: fixed;
     width: 60px;
     height: 60px;
     z-index: 1000;
     pointer-events: none;
-    top: 10px;
+    top: 50%;
     left: 0;
     opacity: 0;
+    transform: translateY(-50%);
 }
 
 .cat-sprite {

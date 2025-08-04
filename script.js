@@ -84,14 +84,14 @@ function initTimeTracker() {
     
     // Cat animation
     function initCatAnimation() {
-        if (!catContainer || !visitTracker || typeof gsap === 'undefined') return;
+        if (!catContainer || typeof gsap === 'undefined') return;
         
         const catSprite = catContainer.querySelector('.cat-sprite');
         if (!catSprite) return;
         
-        // Position cat below visit tracker
-        const visitTrackerRect = visitTracker.getBoundingClientRect();
-        catContainer.style.top = (visitTrackerRect.bottom + 10) + 'px';
+        // Position cat in the middle of the screen
+        catContainer.style.top = '50%';
+        catContainer.style.transform = 'translateY(-50%)';
         
         function walkAnimation() {
             const screenWidth = window.innerWidth;
