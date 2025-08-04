@@ -1,7 +1,7 @@
 // Main JavaScript for Homepage
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize visit tracker
-    updateVisitTracker();
+    // Initialize visit tracker with fun time tracking
+    initTimeTracker();
     
     // Initialize bottom sheet navigation
     initBottomSheetNavigation();
@@ -13,29 +13,125 @@ document.addEventListener('DOMContentLoaded', function() {
     initAnimations();
 });
 
-// Visit Tracker
-function updateVisitTracker() {
-    const lastVisit = localStorage.getItem('lastVisit');
-    const currentTime = new Date();
+// Fun Time Tracker
+function initTimeTracker() {
     const lastVisitText = document.getElementById('last-visit-text');
+    const catContainer = document.querySelector('.cat-container');
+    const visitTracker = document.querySelector('.visit-tracker');
     
-    if (lastVisit) {
-        const lastVisitDate = new Date(lastVisit);
-        const timeDiff = currentTime - lastVisitDate;
-        const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    // State variables
+    let startTime = Date.now();
+    let totalTimeSpent = parseInt(localStorage.getItem('totalTimeSpent')) || 0;
+    let originalText = '';
+    window.isHovering = false;
+    
+    // Time formatting utility
+    function formatTime(milliseconds) {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
         
-        if (daysDiff === 0) {
-            lastVisitText.textContent = "Welcome back! You visited today.";
-        } else if (daysDiff === 1) {
-            lastVisitText.textContent = "Welcome back! You visited yesterday.";
+        if (hours > 0) {
+            return `${hours}h ${minutes}m ${seconds}s`;
+        } else if (minutes > 0) {
+            return `${minutes}m ${seconds}s`;
         } else {
-            lastVisitText.textContent = `Welcome back! You visited ${daysDiff} days ago.`;
+            return `${seconds}s`;
         }
-    } else {
-        lastVisitText.textContent = "Welcome! This is your first visit.";
     }
     
-    localStorage.setItem('lastVisit', currentTime.toISOString());
+    // Quirky message generator
+    function getQuirkyMessage(totalSeconds) {
+        if (totalSeconds <= 10) return "JUST GETTING STARTED? 👀";
+        if (totalSeconds <= 30) return "30 SECONDS ALREADY? THAT'S COMMITMENT! ⏰";
+        if (totalSeconds <= 60) return "YOU'VE OFFICIALLY SPENT MORE TIME HERE THAN ON SOME HINGE DATES 💔";
+        if (totalSeconds <= 300) return "OKAY, NOW WE'RE BASICALLY FRIENDS 🤝";
+        return "RENT'S DUE NEXT WEEK IF YOU STAY LONGER 🏠";
+    }
+    
+    // Time tracker update
+    function updateTimeTracker() {
+        const currentTime = Date.now();
+        const sessionTime = currentTime - startTime;
+        const totalTime = totalTimeSpent + sessionTime;
+        
+        if (!window.isHovering) {
+            lastVisitText.textContent = `You have spent ${formatTime(totalTime)} here.`;
+        }
+        
+        localStorage.setItem('totalTimeSpent', totalTime.toString());
+    }
+    
+    // Hover interactions for time tracker
+    if (lastVisitText) {
+        lastVisitText.addEventListener('mouseenter', function() {
+            window.isHovering = true;
+            const currentTime = Date.now();
+            const sessionTime = currentTime - startTime;
+            const totalTime = totalTimeSpent + sessionTime;
+            const totalSeconds = Math.floor(totalTime / 1000);
+            
+            originalText = this.textContent;
+            this.textContent = getQuirkyMessage(totalSeconds);
+        });
+        
+        lastVisitText.addEventListener('mouseleave', function() {
+            window.isHovering = false;
+            this.textContent = originalText;
+        });
+    }
+    
+    // Cat animation
+    function initCatAnimation() {
+        if (!catContainer || !visitTracker || typeof gsap === 'undefined') return;
+        
+        const catSprite = catContainer.querySelector('.cat-sprite');
+        if (!catSprite) return;
+        
+        // Position cat below visit tracker
+        const visitTrackerRect = visitTracker.getBoundingClientRect();
+        catContainer.style.top = (visitTrackerRect.bottom + 10) + 'px';
+        
+        function walkAnimation() {
+            const screenWidth = window.innerWidth;
+            const catWidth = 60;
+            const animationDuration = screenWidth >= 1440 ? 180 : 60; // 3 min on large screens, 1 min on others
+            
+            gsap.set(catContainer, { x: screenWidth, opacity: 1 });
+            gsap.set(catSprite, { scaleX: -1 });
+            
+            gsap.to(catContainer, {
+                x: -(catWidth),
+                duration: animationDuration,
+                ease: "none",
+                onComplete: () => {
+                    setTimeout(walkAnimation, 1000);
+                }
+            });
+        }
+        
+        setTimeout(walkAnimation, 1000);
+    }
+    
+    // Initialize functionality
+    updateTimeTracker();
+    setInterval(updateTimeTracker, 1000);
+    
+    // Initialize cat animation
+    if (typeof gsap !== 'undefined') {
+        initCatAnimation();
+    } else {
+        window.addEventListener('load', initCatAnimation);
+    }
+    
+    // Save time on page unload
+    window.addEventListener('beforeunload', function() {
+        const currentTime = Date.now();
+        const sessionTime = currentTime - startTime;
+        const totalTime = totalTimeSpent + sessionTime;
+        localStorage.setItem('totalTimeSpent', totalTime.toString());
+    });
 }
 
 // Bottom Sheet Navigation System
