@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Space Mono', monospace;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .placeholder {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+        p {
+            font-size: 1rem;
+            margin: 0;
+            opacity: 0.9;
+        }
+        .size {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="placeholder">
+        <h1 id="title">Project Image</h1>
+        <p id="description">Beautiful placeholder for case study</p>
+        <div class="size" id="size">800x600</div>
+    </div>
+    <script>
+        // Get URL parameters to customize the placeholder
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title') || 'Project Image';
+        const description = urlParams.get('desc') || 'Beautiful placeholder for case study';
+        const size = urlParams.get('size') || '800x600';
+        
+        document.getElementById('title').textContent = title;
+        document.getElementById('description').textContent = description;
+        document.getElementById('size').textContent = size;
+    </script>
+</body>
+</html> 
