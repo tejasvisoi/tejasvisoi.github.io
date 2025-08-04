@@ -580,11 +580,11 @@ body {
     }
     
     .section:first-child {
-        order: 2;
+        order: 1;
     }
     
     .section:last-child {
-        order: 1;
+        order: 2;
     }
     
     .social-links {
