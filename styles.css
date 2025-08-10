@@ -131,6 +131,23 @@ body {
 }
 
 /* Projects Section */
+/* Portfolio Header */
+.portfolio-header {
+    text-align: center;
+    padding: 2rem 0 3rem 0;
+    margin-bottom: 2rem;
+}
+
+.portfolio-title {
+    font-family: 'Hoover', sans-serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 700;
+    color: #f5f5f5;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
 .projects-section {
     width: 100%;
 }
@@ -837,6 +854,29 @@ body {
     .projects-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 2.5rem;
+    }
+    
+    /* Preserve original desktop aspect ratios */
+    .project-card:nth-child(1) .project-image {
+        height: 336px;
+    }
+    
+    .project-card:nth-child(2) .project-image {
+        height: 560px;
+    }
+    
+    .project-card:nth-child(3) .project-image,
+    .project-card:nth-child(4) .project-image,
+    .project-card:nth-child(5) .project-image {
+        height: 400px;
+    }
+    
+    .project-card:nth-child(7) .project-image {
+        height: 520px;
+    }
+    
+    .project-card:nth-child(8) .project-image {
+        height: 320px;
     }
 }
 
