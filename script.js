@@ -610,14 +610,16 @@ function createProjectCard(project) {
             <div class="project-image">
                 ${project.image ? `<img src="images/projects/${project.image}.jpg" alt="${project.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='${project.title.toUpperCase()}';">` : project.title.toUpperCase()}
             </div>
-            <h3 class="project-title">${project.title}</h3>
-            <p class="project-description">${project.description}</p>
-            <div class="project-tags">
-                ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
-            </div>
-            <div class="project-meta">
-                <span>${project.discipline.replace('-', ' ')}</span>
-                <span>${project.year}</span>
+            <div class="project-content">
+                <h3 class="project-title">${project.title}</h3>
+                <p class="project-description">${project.description}</p>
+                <div class="project-tags">
+                    ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                </div>
+                <div class="project-meta">
+                    <span>${project.discipline.replace('-', ' ')}</span>
+                    <span>${project.year}</span>
+                </div>
             </div>
         </div>
     `;

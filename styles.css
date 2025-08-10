@@ -190,6 +190,10 @@ body {
     cursor: default;
     position: relative;
     overflow: hidden;
+    /* Add horizontal layout for 60-40 split */
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
 }
 
 .project-card:hover {
@@ -203,6 +207,7 @@ body {
 
 .project-card:nth-child(1) .project-image {
     height: 336px; /* 70% of 480px */
+    flex: 0 0 60%; /* Take 60% of the card width */
 }
 
 .project-card:nth-child(2) {
@@ -211,6 +216,7 @@ body {
 
 .project-card:nth-child(2) .project-image {
     height: 560px; /* Increased for more contrast */
+    flex: 0 0 60%; /* Take 60% of the card width */
 }
 
 /* 3-column row for Dunzo, Eureka Forbes, Porter */
@@ -233,6 +239,7 @@ body {
 .project-card:nth-child(4) .project-image,
 .project-card:nth-child(5) .project-image {
     height: 400px; /* Same size for all three */
+    flex: 0 0 60%; /* Take 60% of the card width */
 }
 
 /* Visual projects after divider */
@@ -242,6 +249,7 @@ body {
 
 .project-card:nth-child(7) .project-image {
     height: 520px; /* Large for impact */
+    flex: 0 0 60%; /* Take 60% of the card width */
 }
 
 .project-card:nth-child(8) {
@@ -250,12 +258,13 @@ body {
 
 .project-card:nth-child(8) .project-image {
     height: 320px; /* Small for contrast */
+    flex: 0 0 60%; /* Take 60% of the card width */
 }
 
 .project-image {
     width: 100%;
     background: rgba(245, 245, 245, 0.1);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0; /* Remove bottom margin since we're using flexbox */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -264,6 +273,16 @@ body {
     color: rgba(245, 245, 245, 0.5);
     text-transform: uppercase;
     letter-spacing: 1px;
+    flex: 0 0 60%; /* Default 60% width for all project images */
+}
+
+/* Project content wrapper for the 40% text area */
+.project-content {
+    flex: 1; /* Take remaining 40% space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 0.5rem; /* Small top padding to align with image */
 }
 
 .project-title {
@@ -680,6 +699,9 @@ body {
         width: 100%;
         padding: 0;
         margin: 0;
+        /* Reset to vertical layout on mobile */
+        display: block;
+        gap: 0;
     }
     
     .project-card:nth-child(1),
@@ -699,6 +721,13 @@ body {
         aspect-ratio: 1 / 1;
         height: auto;
         object-fit: cover;
+        flex: none; /* Reset flex properties on mobile */
+        margin-bottom: 1rem; /* Restore margin for mobile */
+    }
+    
+    .project-content {
+        flex: none; /* Reset flex properties on mobile */
+        padding-top: 0; /* Reset padding on mobile */
     }
     
     .project-title {
@@ -796,6 +825,9 @@ body {
     
     .project-card {
         padding: 0;
+        /* Reset to vertical layout on mobile */
+        display: block;
+        gap: 0;
     }
     
     .project-image {
@@ -803,6 +835,13 @@ body {
         aspect-ratio: 1 / 1;
         height: auto;
         object-fit: cover;
+        flex: none; /* Reset flex properties on mobile */
+        margin-bottom: 1rem; /* Restore margin for mobile */
+    }
+    
+    .project-content {
+        flex: none; /* Reset flex properties on mobile */
+        padding-top: 0; /* Reset padding on mobile */
     }
     
     .project-title {
