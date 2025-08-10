@@ -615,11 +615,15 @@ function setupCustomCursor() {
         element.addEventListener('mouseenter', function() {
             cursor.style.transform = 'scale(1.5)';
             cursor.style.background = 'rgba(245, 245, 245, 1)';
+            cursor.style.borderColor = 'rgba(245, 245, 245, 1)';
+            cursor.style.boxShadow = '0 0 15px rgba(245, 245, 245, 0.5)';
         });
         
         element.addEventListener('mouseleave', function() {
             cursor.style.transform = 'scale(1)';
-            cursor.style.background = 'rgba(245, 245, 245, 0.8)';
+            cursor.style.background = 'rgba(245, 245, 245, 0.9)';
+            cursor.style.borderColor = 'rgba(245, 245, 245, 0.6)';
+            cursor.style.boxShadow = '0 0 10px rgba(245, 245, 245, 0.3)';
         });
     });
 }
