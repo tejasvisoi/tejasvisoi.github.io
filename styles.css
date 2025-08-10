@@ -1388,8 +1388,8 @@ body {
 }
 
 .image-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
 }
 
@@ -1400,15 +1400,22 @@ body {
 }
 
 .image-item.large {
-    grid-column: span 2;
+    /* Remove the grid span since we're using flexbox column */
 }
 
 .project-image {
     width: 100%;
-    height: auto;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+}
+
+.project-hero-img {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
 }
 
 .project-image:hover {
@@ -1511,11 +1518,11 @@ body {
     }
     
     .image-grid {
-        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
     
     .image-item.large {
-        grid-column: span 1;
+        /* No special handling needed for large items in flexbox column */
     }
     
     .nav-container {
@@ -1556,7 +1563,7 @@ body {
     color: white;
     font-family: 'Space Mono', monospace;
     text-align: center;
-    min-height: 300px;
+    /* min-height removed - using aspect-ratio instead */
     overflow: hidden;
 }
 
@@ -1588,7 +1595,9 @@ body {
 }
 
 .project-hero-img {
-    min-height: 400px;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
 }
 
 .project-hero-img::before {
@@ -1596,7 +1605,9 @@ body {
 }
 
 .image-item.large .project-image {
-    min-height: 400px;
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
 }
 
 .image-item.large .project-image::before {
@@ -1874,4 +1885,4 @@ body {
     .case-study-wrapper .case-study-navigation {
         padding: 30px 15px;
     }
-}
+}   
