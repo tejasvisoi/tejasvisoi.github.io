@@ -20,13 +20,16 @@ body {
     position: fixed;
     width: 20px;
     height: 20px;
-    background: rgba(245, 245, 245, 0.9);
-    border: 2px solid rgba(245, 245, 245, 0.6);
+    background: rgba(245, 245, 245, 1);
+    border: 2px solid rgba(245, 245, 245, 1);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 99999;
     transition: transform 0.1s ease;
-    box-shadow: 0 0 10px rgba(245, 245, 245, 0.3);
+    box-shadow: 0 0 15px rgba(245, 245, 245, 0.8);
+    /* Ensure cursor is always visible */
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 /* Pentagram Navigation */

@@ -161,6 +161,19 @@ function initBottomSheetNavigation() {
     const backBtn = document.getElementById('sheetBackBtn');
     const content = document.getElementById('sheetContent');
     
+    // Debug logging
+    console.log('Initializing bottom sheet navigation');
+    console.log('Overlay:', overlay);
+    console.log('Sheet:', sheet);
+    console.log('Close button:', closeBtn);
+    console.log('Back button:', backBtn);
+    console.log('Content:', content);
+    
+    if (!overlay || !sheet || !closeBtn || !backBtn || !content) {
+        console.error('Some bottom sheet elements are missing');
+        return;
+    }
+    
     document.querySelectorAll('[data-sheet]').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -289,8 +302,14 @@ function openSheet(sheetName) {
 }
 
 function closeSheet() {
+    console.log('closeSheet called');
     const overlay = document.getElementById('bottomSheetOverlay');
     const container = document.querySelector('.container');
+    
+    if (!overlay) {
+        console.error('Overlay not found in closeSheet');
+        return;
+    }
     
     overlay.classList.remove('active');
     isSheetOpen = false;
@@ -305,6 +324,8 @@ function closeSheet() {
     
     // Reset page title
     document.title = 'Tejasvi Soi - Portfolio';
+    
+    console.log('Sheet closed successfully');
 }
 
 function addToHistory(sheetName) {
@@ -319,10 +340,14 @@ function addToHistory(sheetName) {
 }
 
 function navigateBack() {
+    console.log('navigateBack called, currentHistoryIndex:', currentHistoryIndex);
+    
     if (currentHistoryIndex > 0) {
         // Go back to previous sheet in history
         currentHistoryIndex--;
         const previousSheet = navigationHistory[currentHistoryIndex];
+        
+        console.log('Navigating back to:', previousSheet);
         
         // Set current sheet name
         currentSheetName = previousSheet;
@@ -345,6 +370,7 @@ function navigateBack() {
         });
     } else {
         // If no more history, close the sheet
+        console.log('No more history, closing sheet');
         closeSheet();
     }
 }
@@ -601,7 +627,16 @@ function createProjectCard(project) {
 function setupCustomCursor() {
     const cursor = document.querySelector('.custom-cursor');
     
-    if (!cursor) return;
+    if (!cursor) {
+        console.error('Custom cursor element not found');
+        return;
+    }
+    
+    console.log('Custom cursor initialized');
+    
+    // Set initial position
+    cursor.style.left = '0px';
+    cursor.style.top = '0px';
     
     document.addEventListener('mousemove', function(e) {
         cursor.style.left = e.clientX + 'px';
@@ -616,14 +651,14 @@ function setupCustomCursor() {
             cursor.style.transform = 'scale(1.5)';
             cursor.style.background = 'rgba(245, 245, 245, 1)';
             cursor.style.borderColor = 'rgba(245, 245, 245, 1)';
-            cursor.style.boxShadow = '0 0 15px rgba(245, 245, 245, 0.5)';
+            cursor.style.boxShadow = '0 0 15px rgba(245, 245, 245, 0.8)';
         });
         
         element.addEventListener('mouseleave', function() {
             cursor.style.transform = 'scale(1)';
-            cursor.style.background = 'rgba(245, 245, 245, 0.9)';
-            cursor.style.borderColor = 'rgba(245, 245, 245, 0.6)';
-            cursor.style.boxShadow = '0 0 10px rgba(245, 245, 245, 0.3)';
+            cursor.style.background = 'rgba(245, 245, 245, 1)';
+            cursor.style.borderColor = 'rgba(245, 245, 245, 1)';
+            cursor.style.boxShadow = '0 0 15px rgba(245, 245, 245, 0.8)';
         });
     });
 }
