@@ -152,6 +152,7 @@ function initTimeTracker() {
 let isSheetOpen = false;
 let navigationHistory = [];
 let currentHistoryIndex = -1;
+let currentSheetName = null;
 
 function initBottomSheetNavigation() {
     const overlay = document.getElementById('bottomSheetOverlay');
@@ -160,7 +161,6 @@ function initBottomSheetNavigation() {
     const backBtn = document.getElementById('sheetBackBtn');
     const content = document.getElementById('sheetContent');
     
-    // Sheet links
     document.querySelectorAll('[data-sheet]').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -170,9 +170,7 @@ function initBottomSheetNavigation() {
     
     closeBtn.addEventListener('click', closeSheet);
     backBtn.addEventListener('click', navigateBack);
-    overlay.addEventListener('click', function(e) {
-        if (e.target === overlay) closeSheet();
-    });
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) closeSheet(); });
     
     document.addEventListener('keydown', function(e) {
         if (!isSheetOpen) return;
@@ -182,28 +180,70 @@ function initBottomSheetNavigation() {
     
     // Touch gestures for mobile
     let startY = 0;
-    let currentY = 0;
+    let startScrollTop = 0;
     
     sheet.addEventListener('touchstart', function(e) {
         startY = e.touches[0].clientY;
+        startScrollTop = content.scrollTop;
     });
     
     sheet.addEventListener('touchmove', function(e) {
-        currentY = e.touches[0].clientY;
-        const deltaY = currentY - startY;
+        if (!isSheetOpen) return;
         
+        const currentY = e.touches[0].clientY;
+        const deltaY = startY - currentY;
+        
+        // If scrolling up (expanding), allow normal scroll
         if (deltaY > 0) {
-            sheet.style.transform = `translateY(${deltaY * 0.5}px)`;
+            return;
+        }
+        
+        // If scrolling down (collapsing) and at top of content
+        if (deltaY < 0 && content.scrollTop <= 0) {
+            e.preventDefault();
+            
+            // Calculate collapse progress
+            const collapseProgress = Math.min(Math.abs(deltaY) / 100, 1);
+            const scale = 1 - (collapseProgress * 0.1);
+            const translateY = collapseProgress * 50;
+            
+            sheet.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+            overlay.style.opacity = 1 - collapseProgress;
         }
     });
     
     sheet.addEventListener('touchend', function(e) {
-        const deltaY = currentY - startY;
+        if (!isSheetOpen) return;
         
-        if (deltaY > 100) {
+        const currentY = e.changedTouches[0].clientY;
+        const deltaY = startY - currentY;
+        
+        // If significant downward swipe, close the sheet
+        if (deltaY < -100) {
             closeSheet();
         } else {
-            sheet.style.transform = 'translateY(0)';
+            // Reset transform
+            sheet.style.transform = '';
+            overlay.style.opacity = '';
+        }
+    });
+    
+    // Scroll-based expansion for case studies
+    content.addEventListener('scroll', function() {
+        if (!isSheetOpen) return;
+        
+        const scrollTop = content.scrollTop;
+        const isCaseStudy = currentSheetName && currentSheetName !== 'portfolio';
+        
+        if (isCaseStudy) {
+            // Start expanding after 50px scroll
+            if (scrollTop > 50) {
+                sheet.classList.add('expanded');
+                overlay.classList.add('expanded');
+            } else {
+                sheet.classList.remove('expanded');
+                overlay.classList.remove('expanded');
+            }
         }
     });
 }
@@ -212,6 +252,13 @@ function openSheet(sheetName) {
     const overlay = document.getElementById('bottomSheetOverlay');
     const content = document.getElementById('sheetContent');
     const container = document.querySelector('.container');
+    const sheetTitle = document.getElementById('sheetTitle');
+    
+    // Set current sheet name
+    currentSheetName = sheetName;
+    
+    // Set sheet title
+    sheetTitle.textContent = getSheetTitle(sheetName);
     
     // Add to navigation history
     addToHistory(sheetName);
@@ -248,9 +295,10 @@ function closeSheet() {
     overlay.classList.remove('active');
     isSheetOpen = false;
     
-    // Clear navigation history
+    // Clear navigation history and current sheet
     navigationHistory = [];
     currentHistoryIndex = -1;
+    currentSheetName = null;
     
     // Remove blur from homepage
     if (container) container.style.filter = 'none';
@@ -275,6 +323,13 @@ function navigateBack() {
         // Go back to previous sheet in history
         currentHistoryIndex--;
         const previousSheet = navigationHistory[currentHistoryIndex];
+        
+        // Set current sheet name
+        currentSheetName = previousSheet;
+        
+        // Set sheet title
+        const sheetTitle = document.getElementById('sheetTitle');
+        sheetTitle.textContent = getSheetTitle(previousSheet);
         
         const content = document.getElementById('sheetContent');
         content.innerHTML = '<div class="loading-spinner"></div>';
@@ -305,25 +360,15 @@ async function loadSheetContent(sheetName) {
                 htmlContent = await loadPortfolioContent();
                 break;
             case 'googlepay':
-                htmlContent = await loadProjectContent('googlepay');
-                break;
             case 'dunzo':
-                htmlContent = await loadProjectContent('dunzo');
-                break;
             case 'porter':
-                htmlContent = await loadProjectContent('porter');
-                break;
             case 'eurekaforbes':
-                htmlContent = await loadProjectContent('eurekaforbes');
-                break;
             case 'phonepe':
-                htmlContent = await loadProjectContent('phonepe');
-                break;
             case 'obvious':
-                htmlContent = await loadProjectContent('obvious');
-                break;
             case 'ekanaclub':
-                htmlContent = await loadProjectContent('ekanaclub');
+                htmlContent = await loadProjectContent(sheetName);
+                // Add case study wrapper for proper styling
+                htmlContent = `<div class="case-study-wrapper">${htmlContent}</div>`;
                 break;
             default:
                 htmlContent = '<h1>Page Not Found</h1><p>The requested page could not be found.</p>';
@@ -336,6 +381,9 @@ async function loadSheetContent(sheetName) {
         if (projectsGrid) {
             renderPortfolioProjects();
         }
+        
+        // Reset scroll position for new content
+        content.scrollTop = 0;
         
     } catch (error) {
         throw error;
@@ -380,10 +428,14 @@ async function loadProjectContent(projectName) {
     // Extract the main content from project page
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
-    const mainContent = doc.querySelector('main') || doc.querySelector('.container');
     
-    if (mainContent) {
-        return mainContent.innerHTML;
+    // Get the body content without head/script tags
+    const bodyContent = doc.querySelector('body');
+    if (bodyContent) {
+        // Remove any script tags and return clean HTML
+        const scripts = bodyContent.querySelectorAll('script');
+        scripts.forEach(script => script.remove());
+        return bodyContent.innerHTML;
     } else {
         return `<h1>${getSheetTitle(projectName)}</h1><p>Project content could not be loaded.</p>`;
     }
