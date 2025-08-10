@@ -141,7 +141,7 @@ body {
     margin-bottom: 4rem;
 }
 
-/* Projects Divider */
+/* Projects Divider - Hidden on mobile for simple vertical flow */
 .projects-divider {
     grid-column: 1 / -1;
     text-align: center;
@@ -543,15 +543,15 @@ body {
 @media (max-width: 768px) {
     /* Homepage mobile styles */
     .container {
-        padding: 20vh 1.5rem 10vh 1.5rem;
+        padding: 20vh 1.5rem 6vh 1.5rem;
         justify-content: flex-start;
         align-items: flex-start;
     }
     
     .main-heading {
-        width: 90%;
-        font-size: clamp(3.5rem, 5vw, 6rem);
-        margin-bottom: 2.5rem;
+        width: 100%;
+        font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+        margin-bottom: 2rem;
         white-space: normal;
         text-align: left;
         margin-left: 0;
@@ -563,20 +563,15 @@ body {
     }
     
     .content-grid {
-        gap: 2rem;
+        gap: 1.5rem;
     }
     
     .grid-row {
-        flex-direction: column;
-        gap: 3rem;
-        align-items: left;
-        max-width: 100%;
+        gap: 5rem;
     }
     
     .section {
-        align-items: flex-start;
-        text-align: left;
-        max-width: 100%;
+        order: 1;
     }
     
     .section:first-child {
@@ -588,62 +583,61 @@ body {
     }
     
     .social-links {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        justify-content: center;
-        margin-top: 1rem;
+        gap: 1rem;
     }
     
     .cat-container {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
     }
     
     /* Portfolio mobile styles */
     .portfolio-nav {
-        padding: 0.75rem 0;
-    }
-    
-    .nav-container {
         padding: 0 1rem;
     }
     
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
     .nav-back {
-        font-size: 12px;
+        align-self: flex-start;
     }
     
     .nav-title {
-        font-size: 16px;
+        font-size: 18px;
     }
     
     .portfolio-header {
-        padding: 100px 1rem 40px 1rem;
+        padding: 80px 1rem 30px 1rem;
     }
     
     .portfolio-title {
-        font-size: clamp(1.5rem, 6vw, 2.5rem);
+        font-size: clamp(1.25rem, 8vw, 2rem);
     }
     
     .portfolio-subtitle {
-        font-size: 14px;
+        font-size: 12px;
     }
     
     .portfolio-filters {
-        padding: 0 1rem 40px 1rem;
+        padding: 0 1rem 30px 1rem;
     }
     
     .filters-container {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
     }
     
     .filter-group {
-        min-width: auto;
+        width: 100%;
     }
     
     .filter-options {
-        gap: 0.25rem;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
     
     .filter-btn {
@@ -656,24 +650,44 @@ body {
     }
     
     .projects-grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 1.5rem;
     }
     
     .project-card {
-        padding: 1.5rem;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .project-card:nth-child(1),
+    .project-card:nth-child(2),
+    .project-card:nth-child(3),
+    .project-card:nth-child(4),
+    .project-card:nth-child(5),
+    .project-card:nth-child(6),
+    .project-card:nth-child(7),
+    .project-card:nth-child(8) {
+        grid-column: unset;
+        grid-row: unset;
     }
     
     .project-image {
-        height: 200px;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        height: auto;
+        object-fit: cover;
     }
     
     .project-title {
         font-size: 20px;
+        margin-top: 1rem;
     }
     
     .project-description {
         font-size: 13px;
+        margin-top: 0.5rem;
     }
     
     .load-more-container {
@@ -755,20 +769,29 @@ body {
         padding: 0 1rem 30px 1rem;
     }
     
+    .projects-grid {
+        gap: 1rem;
+    }
+    
     .project-card {
-        padding: 1rem;
+        padding: 0;
     }
     
     .project-image {
-        height: 180px;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        height: auto;
+        object-fit: cover;
     }
     
     .project-title {
         font-size: 18px;
+        margin-top: 0.75rem;
     }
     
     .project-description {
         font-size: 12px;
+        margin-top: 0.5rem;
     }
     
     .project-tag {
@@ -783,6 +806,10 @@ body {
     .load-more-btn {
         padding: 0.7rem 1.2rem;
         font-size: 12px;
+    }
+    
+    .projects-divider {
+        display: none;
     }
 }
 
